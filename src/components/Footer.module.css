@@ -1,0 +1,89 @@
+.footer {
+  background: var(--black);
+  border-top: 1px solid rgba(196, 162, 101, 0.12);
+  padding: 2.5rem 1.5rem 2rem;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.logo {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logoAccent {
+  color: #c4a265;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem 1.75rem;
+}
+
+.nav a {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav a:hover {
+  color: #c4a265;
+}
+
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.social a {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #c4a265;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.social a:hover {
+  opacity: 0.8;
+}
+
+.copy {
+  margin: 2rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(154, 148, 137, 0.15);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 639px) {
+  .top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

@@ -1,0 +1,132 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1rem 1.5rem;
+  transition:
+    background 0.35s ease,
+    backdrop-filter 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.92) 0%,
+    rgba(10, 10, 10, 0.35) 55%,
+    transparent 100%
+  );
+  border-bottom: 1px solid transparent;
+}
+
+.navbar.scrolled {
+  background: rgba(20, 18, 16, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: rgba(196, 162, 101, 0.35);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.logo {
+  flex-shrink: 0;
+  text-decoration: none;
+  color: inherit;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.logoAccent {
+  color: #c4a265;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex: 1;
+  justify-content: flex-end;
+  margin-right: 2rem;
+}
+
+.link {
+  position: relative;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #9a9489;
+  text-decoration: none;
+  padding-bottom: 0.25rem;
+  transition: color 0.25s ease;
+}
+
+.link:hover {
+  color: #e8e2d8;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: #c4a265;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s ease;
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+}
+
+.cta {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.25rem;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #c4a265;
+  border: 1px solid #c4a265;
+  background: transparent;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.cta:hover {
+  background: #c4a265;
+  color: #0a0a0a;
+  border-color: #c4a265;
+}
+
+@media (max-width: 767px) {
+  .links {
+    display: none;
+  }
+
+  .inner {
+    gap: 1rem;
+  }
+}

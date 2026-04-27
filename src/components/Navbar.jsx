@@ -11,6 +11,8 @@ const NAV_LINKS = [
   { label: "Health", href: "/health" },
   { label: "Recovery", href: "/recovery" },
   { label: "Athletes", href: "/athletes" },
+  { label: "Membership", href: "/membership" },
+  { label: "Schedule", href: "/schedule" },
   { label: "Contact Us", href: "/contact" },
 ];
 

@@ -3,12 +3,10 @@
   background: var(--black);
 }
 
-.row {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  max-width: 1100px;
+.inner {
+  max-width: 40rem;
   margin: 0 auto;
+  text-align: center;
   opacity: 0;
   transform: translateY(28px);
   transition:
@@ -16,71 +14,52 @@
     transform 0.85s ease;
 }
 
-.section.visible .row {
+.section.visible .inner {
   opacity: 1;
   transform: translateY(0);
 }
 
-.item {
-  flex: 1;
-  text-align: center;
-  padding: 1.5rem 2rem;
-  min-width: 0;
-}
-
-.divider {
-  width: 1px;
-  align-self: stretch;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(196, 162, 101, 0.45),
-    transparent
-  );
-  flex-shrink: 0;
-}
-
-.title {
+.heading {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(2.25rem, 5vw, 3.25rem);
-  color: #c4a265;
-  margin: 0 0 0.75rem;
+  font-size: clamp(1.85rem, 4vw, 2.5rem);
+  color: var(--carbon);
+  margin: 0 0 1.25rem;
   letter-spacing: 0.02em;
+  line-height: 1.2;
 }
 
-.subtitle {
+.body {
   font-family: var(--sans);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  font-weight: 400;
+  line-height: 1.7;
   color: var(--text-muted);
-  margin: 0;
-  line-height: 1.5;
+  margin: 0 0 2rem;
 }
 
-@media (max-width: 767px) {
-  .row {
-    flex-direction: column;
-    gap: 0;
-  }
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.75rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--linen);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
 
-  .divider {
-    display: none;
-  }
-
-  .item {
-    padding: 1.75rem 0;
-    border-bottom: 1px solid rgba(196, 162, 101, 0.15);
-  }
-
-  .item:last-of-type {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-
-  .item:first-of-type {
-    padding-top: 0;
-  }
+.cta:hover {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: var(--linen);
 }

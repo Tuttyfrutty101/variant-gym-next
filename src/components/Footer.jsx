@@ -2,8 +2,8 @@ import Link from "next/link";
 import styles from "./Footer.module.css";
 
 const NAV = [
-  { label: "Memberships", href: "#memberships" },
-  { label: "Schedule", href: "#schedule" },
+  { label: "Membership", href: "/membership" },
+  { label: "Schedule", href: "/schedule" },
   { label: "Careers", href: "#careers" },
   { label: "Privacy Policy", href: "/privacy-policy" },
 ];

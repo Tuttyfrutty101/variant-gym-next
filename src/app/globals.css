@@ -1,18 +1,34 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700&display=swap");
 @import "tailwindcss";
 
 :root {
-  --black: #0a0a0a;
-  --white: #f5f2ed;
-  --cream: #e8e2d8;
-  --warm-gray: #9a9489;
-  --accent: #c4a265;
-  --accent-dark: #a8894f;
-  --deep: #1a1714;
-  --card-bg: #141210;
-  --text-muted: #706b63;
-  --serif: "Cormorant Garamond", Georgia, serif;
-  --sans: "Outfit", sans-serif;
+  /* Mood board palette */
+  --carbon: #1c1b1b;
+  --pewter: #8b8884;
+  --brick: #8f3e3e;
+  --brick-dark: #743333;
+  --stone: #c4b5a2;
+  --linen: #f6f3ec;
+  --celadon: #a8b0a3;
+  --paper: #fffcf7;
+  --band: #e8e3d9;
+
+  /* Semantic tokens — light theme */
+  --black: var(--linen);
+  --white: var(--linen);
+  --cream: var(--stone);
+  --warm-gray: var(--pewter);
+  --accent: var(--brick);
+  --accent-dark: var(--brick-dark);
+  --deep: var(--band);
+  --card-bg: var(--paper);
+  --text-muted: var(--pewter);
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: "Montserrat", system-ui, sans-serif;
+  --accent-rgb: 143, 62, 62;
+  --carbon-rgb: 28, 27, 27;
+  --pewter-rgb: 139, 136, 132;
+  --linen-rgb: 246, 243, 236;
 }
 
 html {
@@ -23,12 +39,33 @@ body {
   position: relative;
   margin: 0;
   min-height: 100%;
-  background: var(--black);
-  color: var(--white);
+  background: var(--linen);
+  color: var(--carbon);
   font-family: var(--sans);
+  font-weight: 400;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--carbon);
+  margin: 0 0 1.25rem;
+  line-height: 1.15;
+}
+
+h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.65rem, 3vw, 2.15rem);
+  color: var(--carbon);
+  margin: 0 0 1rem;
+  line-height: 1.2;
 }
 
 /* Offset fixed navbar on inner routes (home uses full-bleed hero). */
@@ -42,7 +79,7 @@ body::after {
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.022;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
@@ -50,7 +87,7 @@ body::after {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--accent) var(--deep);
+  scrollbar-color: var(--accent) var(--band);
 }
 
 *::-webkit-scrollbar {
@@ -59,7 +96,7 @@ body::after {
 }
 
 *::-webkit-scrollbar-track {
-  background: var(--deep);
+  background: var(--band);
 }
 
 *::-webkit-scrollbar-thumb {

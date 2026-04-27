@@ -41,11 +41,15 @@
   background:
     linear-gradient(
       to bottom,
-      rgba(10, 10, 10, 0.35) 0%,
-      rgba(10, 10, 10, 0.55) 45%,
-      #0a0a0a 100%
+      rgba(var(--linen-rgb), 0.78) 0%,
+      rgba(var(--linen-rgb), 0.38) 42%,
+      rgba(var(--linen-rgb), 0.12) 100%
     ),
-    linear-gradient(to right, rgba(10, 10, 10, 0.75) 0%, transparent 55%);
+    linear-gradient(
+      to right,
+      rgba(var(--linen-rgb), 0.72) 0%,
+      transparent 58%
+    );
 }
 
 .inner {
@@ -62,7 +66,7 @@
   font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: #c4a265;
+  color: var(--accent);
   margin: 0 0 1rem;
   opacity: 0;
   animation: fadeUp 0.9s ease forwards;
@@ -70,12 +74,13 @@
 }
 
 .title {
-  font-family: var(--serif);
-  font-weight: 300;
-  font-size: clamp(3rem, 6vw, 5.5rem);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  color: var(--white);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  line-height: 1.12;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--carbon);
   margin: 0 0 1.25rem;
   opacity: 0;
   animation: fadeUp 0.9s ease forwards;
@@ -87,15 +92,15 @@
 }
 
 .titleAccent {
-  font-style: italic;
-  color: #c4a265;
+  font-weight: 700;
+  color: var(--accent);
 }
 
 .subtitle {
   font-family: var(--sans);
   font-size: clamp(0.95rem, 1.5vw, 1.05rem);
   line-height: 1.65;
-  color: #9a9489;
+  color: var(--pewter);
   margin: 0 0 2rem;
   max-width: 38rem;
   opacity: 0;
@@ -123,9 +128,9 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
-  color: #0a0a0a;
-  background: #c4a265;
-  border: 1px solid #c4a265;
+  color: var(--linen);
+  background: var(--accent);
+  border: 1px solid var(--accent);
   transition:
     background 0.25s ease,
     color 0.25s ease,
@@ -133,9 +138,9 @@
 }
 
 .btnPrimary:hover {
-  background: #a8894f;
-  border-color: #a8894f;
-  color: #0a0a0a;
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: var(--linen);
 }
 
 .btnSecondary {
@@ -149,9 +154,9 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
-  color: #f5f2ed;
+  color: var(--carbon);
   background: transparent;
-  border: 1px solid rgba(245, 242, 237, 0.85);
+  border: 1px solid rgba(var(--carbon-rgb), 0.35);
   transition:
     background 0.25s ease,
     color 0.25s ease,
@@ -159,8 +164,8 @@
 }
 
 .btnSecondary:hover {
-  background: rgba(245, 242, 237, 0.08);
-  border-color: #f5f2ed;
+  background: rgba(var(--carbon-rgb), 0.05);
+  border-color: var(--carbon);
 }
 
 @keyframes fadeUp {

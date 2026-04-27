@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./Footer.module.css";
 
 const NAV = [
@@ -35,10 +36,10 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.top}>
-          <a href="#" className={styles.logo}>
+          <Link href="/" className={styles.logo}>
             VARIANT
             <span className={styles.logoAccent}> TRAINING LAB</span>
-          </a>
+          </Link>
 
           <nav className={styles.nav} aria-label="Footer">
             {NAV.map((item) => (

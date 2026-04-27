@@ -1,4 +1,5 @@
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 
 const siteName = "Variant Training Lab";
 const tagline = "Do what you love. Enjoy it for a lifetime.";
@@ -47,7 +48,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body style={{ fontFamily: "var(--sans)" }}>{children}</body>
+      <body style={{ fontFamily: "var(--sans)" }}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }

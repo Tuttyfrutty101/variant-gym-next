@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
@@ -29,9 +30,9 @@ export default function Hero() {
           <a href="#contact" className={styles.btnPrimary}>
             Schedule a Tour
           </a>
-          <a href="#services" className={styles.btnSecondary}>
+          <Link href="/training" className={styles.btnSecondary}>
             Explore Services
-          </a>
+          </Link>
         </div>
       </div>
     </section>

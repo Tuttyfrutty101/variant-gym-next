@@ -31,6 +31,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Offset fixed navbar on inner routes (home uses full-bleed hero). */
+.siteBelowNav {
+  padding-top: 5.25rem;
+}
+
 body::after {
   content: "";
   position: fixed;

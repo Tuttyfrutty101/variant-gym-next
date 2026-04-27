@@ -1,0 +1,118 @@
+.section {
+  position: relative;
+  padding: clamp(3.25rem, 7vw, 5rem) 1.5rem;
+  background: linear-gradient(
+    165deg,
+    var(--accent) 0%,
+    var(--accent-dark) 100%
+  );
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(10, 10, 10, 0.25),
+    rgba(10, 10, 10, 0.45),
+    rgba(10, 10, 10, 0.25),
+    transparent
+  );
+}
+
+.inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.section.visible .inner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.badge {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--black);
+  padding: 0.45rem 0.9rem;
+  margin: 0 0 1.25rem;
+  border-radius: 2px;
+}
+
+.title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.65rem, 4vw, 2.35rem);
+  color: var(--black);
+  margin: 0 0 1rem;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.body {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: rgba(10, 10, 10, 0.82);
+  margin: 0 0 1.5rem;
+}
+
+.finePrint {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: rgba(10, 10, 10, 0.58);
+  margin: 0 0 1.5rem;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.75rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cream);
+  background: var(--black);
+  border: 1px solid var(--black);
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.cta:hover {
+  background: var(--deep);
+  border-color: var(--deep);
+  color: var(--cream);
+}
+
+.cta:active {
+  transform: scale(0.98);
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--black);
+  outline-offset: 3px;
+}

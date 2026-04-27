@@ -1,3 +1,15 @@
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .navbar {
   position: fixed;
   top: 0;
@@ -19,8 +31,9 @@
   border-bottom: 1px solid transparent;
 }
 
-.navbar.scrolled {
-  background: rgba(20, 18, 16, 0.92);
+.navbar.scrolled,
+.navbar.menuOpen {
+  background: rgba(20, 18, 16, 0.96);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom-color: rgba(196, 162, 101, 0.35);
@@ -28,6 +41,8 @@
 }
 
 .inner {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -52,50 +67,14 @@
   color: #c4a265;
 }
 
-.links {
+.actions {
   display: flex;
   align-items: center;
-  gap: 2rem;
-  flex: 1;
-  justify-content: flex-end;
-  margin-right: 2rem;
-}
-
-.link {
-  position: relative;
-  font-family: var(--sans);
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #9a9489;
-  text-decoration: none;
-  padding-bottom: 0.25rem;
-  transition: color 0.25s ease;
-}
-
-.link:hover {
-  color: #e8e2d8;
-}
-
-.link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
-  background: #c4a265;
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.3s ease;
-}
-
-.link:hover::after {
-  transform: scaleX(1);
+  gap: 1rem;
+  flex-shrink: 0;
 }
 
 .cta {
-  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -121,12 +100,158 @@
   border-color: #c4a265;
 }
 
-@media (max-width: 767px) {
-  .links {
+.menuBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid rgba(196, 162, 101, 0.45);
+  background: rgba(10, 10, 10, 0.35);
+  color: #e8e2d8;
+  cursor: pointer;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.menuBtn:hover {
+  border-color: #c4a265;
+  background: rgba(196, 162, 101, 0.12);
+}
+
+.menuIcon {
+  position: relative;
+  display: block;
+  width: 1.15rem;
+  height: 1px;
+  background: currentColor;
+  transition: background 0.2s ease;
+}
+
+.menuIcon::before,
+.menuIcon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transition:
+    transform 0.3s ease,
+    top 0.3s ease,
+    background 0.2s ease;
+}
+
+.menuIcon::before {
+  top: -6px;
+}
+
+.menuIcon::after {
+  top: 6px;
+}
+
+.menuIconOpen {
+  background: transparent;
+}
+
+.menuIconOpen::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.menuIconOpen::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+.menuPanel {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.menuPanelOpen {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.menuBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 5, 5, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.menuNav {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(22rem, 92vw);
+  padding: 6.5rem 1.75rem 2rem;
+  background: linear-gradient(
+    165deg,
+    rgba(26, 23, 20, 0.98) 0%,
+    rgba(14, 12, 10, 0.99) 100%
+  );
+  border-left: 1px solid rgba(196, 162, 101, 0.25);
+  box-shadow: -12px 0 48px rgba(0, 0, 0, 0.45);
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.menuPanelOpen .menuNav {
+  transform: translateX(0);
+}
+
+.menuList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.menuLink {
+  display: block;
+  padding: 0.85rem 0;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #9a9489;
+  border-bottom: 1px solid rgba(196, 162, 101, 0.12);
+  transition: color 0.25s ease, padding-left 0.25s ease;
+}
+
+.menuLink:hover {
+  color: #e8e2d8;
+  padding-left: 0.35rem;
+}
+
+.menuLinkActive {
+  color: #c4a265;
+}
+
+.menuLinkActive:hover {
+  color: #d4b27a;
+}
+
+@media (max-width: 479px) {
+  .cta {
     display: none;
   }
 
   .inner {
-    gap: 1rem;
+    gap: 0.75rem;
   }
 }

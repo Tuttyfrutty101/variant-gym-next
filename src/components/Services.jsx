@@ -21,7 +21,7 @@ const CARDS = [
   },
   {
     symbol: "▲",
-    title: "Recovery Suite",
+    title: "Health Suite",
     text: "Hyperbaric oxygen therapy, red light therapy, contrast therapy, infrared sauna, cold plunge, and compression.",
   },
 ];

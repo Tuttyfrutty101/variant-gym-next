@@ -1,17 +1,17 @@
 import Footer from "@/components/Footer";
-import Testimonial from "@/components/Testimonial";
+import Athletes from "@/components/athletes/Athletes";
 
 export const metadata = {
   title: "Athletes",
   description:
-    "How Variant Training Lab supports dedicated athletes with data-driven coaching in Santa Barbara.",
+    "Sport- and position-specific training at Variant Training Lab — injury prevention, performance targets, and coaching aligned to your competitive calendar in Santa Barbara.",
 };
 
 export default function AthletesPage() {
   return (
     <>
       <main className="siteBelowNav">
-        <Testimonial />
+        <Athletes />
       </main>
       <Footer />
     </>

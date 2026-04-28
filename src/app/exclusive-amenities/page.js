@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 export const metadata = {
   title: "Exclusive Amenities",
   description:
-    "Member amenities and elevated details at Variant Training Lab in Santa Barbara.",
+    "Premium locker rooms, cold plunge, infrared sauna, red light therapy, hyperbaric oxygen, and more — included with membership at Variant Training Lab.",
 };
 
 export default function ExclusiveAmenitiesPage() {

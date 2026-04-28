@@ -1,38 +1,28 @@
 "use client";
 
 import OfferingsSnapSection from "@/components/OfferingsSnapSection";
+import { TRAINING_FORMATS } from "@/data/trainingFormats";
 
-const ITEMS = [
-  {
-    title: "Personal Training",
-    text: "One-on-one coaching built around your body, schedule, and performance goals.",
-    href: "/training",
-  },
-  {
-    title: "Signature Classes",
-    text: "Expert-led sessions in a motivating group setting — structure without guesswork.",
-    href: "/training",
-  },
-  {
-    title: "Small Group Privates",
-    text: "Semi-private coaching for individualized attention with the energy of a small team.",
-    href: "/training",
-  },
-  {
-    title: "Open Training",
-    text: "Floor access and premium equipment when you want to train on your own terms.",
-    href: "/training",
-  },
-];
+const ITEMS = TRAINING_FORMATS.map((f) => ({
+  title: f.title,
+  text: f.text,
+  href: "/training",
+  scheduleHref: f.scheduleHref,
+  linkAriaLabel: `${f.title}: open training page`,
+}));
+
+const EXCLUSIVE_ACCESS_PROMO =
+  "Get exclusive access to 1000+ exercises, personalized programs, nutrition, and travel programs.";
 
 export default function TrainingOfferings() {
   return (
     <OfferingsSnapSection
-      headingId="training-offerings-heading"
-      tag="Training"
-      heading="Four ways to move with us"
+      hideSectionHeader
+      cornerTitle="Training"
+      sectionAriaLabel="Training — Four ways to move with us"
+      bottomPromoText={EXCLUSIVE_ACCESS_PROMO}
       items={ITEMS}
-      cardEyebrow="Training"
+      largeCardTitles
       defaultCtaText="View training"
       scrollTrackAriaLabel="Training formats — swipe or scroll sideways to see all four"
     />

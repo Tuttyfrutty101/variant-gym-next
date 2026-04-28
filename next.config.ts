@@ -4,8 +4,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/health",
-        destination: "/physical-therapy",
+        source: "/recovery",
+        destination: "/health",
         permanent: true,
       },
     ];

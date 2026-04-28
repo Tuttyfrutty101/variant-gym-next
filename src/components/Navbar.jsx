@@ -10,7 +10,7 @@ const NAV_LINKS = [
   { label: "Training", href: "/training" },
   { label: "Physical Therapy", href: "/physical-therapy" },
   { label: "Exclusive Amenities", href: "/exclusive-amenities" },
-  { label: "Recovery", href: "/recovery" },
+  { label: "Health", href: "/health" },
   { label: "Athletes", href: "/athletes" },
   { label: "Membership", href: "/membership" },
   { label: "Schedule", href: "/schedule" },

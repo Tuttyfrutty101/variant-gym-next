@@ -14,9 +14,9 @@ const ITEMS = [
     href: "/physical-therapy",
   },
   {
-    title: "Recovery",
+    title: "Health",
     text: "Modalities and space to restore your body between hard training and busy life.",
-    href: "/recovery",
+    href: "/health",
   },
   {
     title: "Athletes",
@@ -35,12 +35,12 @@ const CARD_BACKGROUNDS = [
 export default function ExploreCarousel() {
   return (
     <OfferingsSnapSection
-      headingId="explore-offerings-heading"
-      tag="Member experience"
-      heading="Therapy, recovery, amenities, and athlete programs"
+      hideSectionHeader
+      cornerTitle="Member experience"
+      sectionAriaLabel="Member experience — Therapy, health, amenities, and athlete programs"
       items={ITEMS}
-      cardEyebrow="Member experience"
-      scrollTrackAriaLabel="Therapy, recovery, amenities, and athlete programs — swipe or scroll sideways to explore"
+      largeCardTitles
+      scrollTrackAriaLabel="Therapy, health, amenities, and athlete programs — swipe or scroll sideways to explore"
       cardBackgrounds={CARD_BACKGROUNDS}
       autoAdvanceCardMs={3000}
     />

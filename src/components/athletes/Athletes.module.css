@@ -1,0 +1,221 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  min-height: min(76vh, 40rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: clamp(5.5rem, 14vw, 8rem) 1.5rem clamp(3rem, 8vw, 4.5rem);
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.04);
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      165deg,
+      rgba(var(--linen-rgb), 0.96) 0%,
+      rgba(var(--linen-rgb), 0.72) 48%,
+      rgba(var(--linen-rgb), 0.38) 100%
+    ),
+    linear-gradient(to bottom, rgba(var(--linen-rgb), 0.4) 0%, transparent 42%);
+}
+
+.heroInner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 42rem;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.85s ease,
+    transform 0.85s ease;
+}
+
+.heroVisible .heroInner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.heroMainTitle {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--carbon);
+  margin: 0 0 1.35rem;
+  line-height: 1.12;
+}
+
+.heroSupport {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(0.94rem, 2vw, 1.05rem);
+  letter-spacing: 0.03em;
+  line-height: 1.35;
+  color: var(--accent);
+  margin: 0 auto 2rem;
+  max-width: 40rem;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.85rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--linen);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.ctaPrimary:hover {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+}
+
+.details {
+  padding: clamp(3.5rem, 9vw, 6rem) 1.5rem clamp(4rem, 10vw, 7rem);
+  background: var(--black);
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 3.5rem);
+  align-items: center;
+  max-width: 1080px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.85s ease,
+    transform 0.85s ease;
+}
+
+.detailsVisible .detailsGrid {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.detailsVisual {
+  position: relative;
+  padding: 0 1rem 1rem 0;
+}
+
+.detailsFrame {
+  position: absolute;
+  inset: auto 0 0 auto;
+  width: calc(100% - 1.25rem);
+  height: calc(100% - 1.25rem);
+  border: 1px solid rgba(var(--accent-rgb), 0.5);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.detailsImageWrap {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.detailsImage {
+  object-fit: cover;
+}
+
+.detailsCopy {
+  padding: 0.35rem 0;
+}
+
+.detailsHeading {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.65rem, 3.2vw, 2.15rem);
+  color: var(--carbon);
+  line-height: 1.2;
+  margin: 0 0 1rem;
+  letter-spacing: 0.02em;
+}
+
+.detailsLead {
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin: 0 0 1.5rem;
+}
+
+.bullets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.bullets li {
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  padding-left: 1.1rem;
+  border-left: 2px solid rgba(var(--accent-rgb), 0.45);
+}
+
+.bullets strong {
+  color: var(--carbon);
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .detailsGrid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
+  .detailsVisual {
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 539px) {
+  .hero {
+    min-height: min(82vh, 38rem);
+    align-items: flex-end;
+    padding-bottom: clamp(2.5rem, 8vw, 3.5rem);
+  }
+}

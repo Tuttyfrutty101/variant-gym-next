@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import styles from "./OfferingsSnapSection.module.css";
 
@@ -49,18 +49,75 @@ function burstSnap(el) {
   });
 }
 
+/** Which carousel slide index is aligned to the snap anchor (mobile horizontal strip). */
+function getCarouselCenteredItemIndex(el) {
+  if (!el || getComputedStyle(el).display === "contents") return null;
+
+  const items = [...el.querySelectorAll("ul > li")];
+  if (items.length === 0) return null;
+
+  const style = getComputedStyle(el);
+  const pad = Number.parseFloat(style.scrollPaddingInlineStart || style.scrollPaddingLeft) || 0;
+  const root = el.getBoundingClientRect();
+  const anchorX = root.left + pad;
+
+  let bestIdx = 0;
+  let bestDist = Infinity;
+
+  for (let i = 0; i < items.length; i++) {
+    const r = items[i].getBoundingClientRect();
+    const dist = Math.abs(r.left - anchorX);
+    if (dist < bestDist) {
+      bestDist = dist;
+      bestIdx = i;
+    }
+  }
+  return bestIdx;
+}
+
+/** Scroll the horizontal strip so slide `index` snaps to the anchor — same geometry as manual scrolling. */
+function scrollCarouselToItemIndex(trackEl, index) {
+  const items = [...trackEl.querySelectorAll("ul > li")];
+  const li = items[index];
+  if (!li) return;
+
+  const style = getComputedStyle(trackEl);
+  const pad =
+    Number.parseFloat(style.scrollPaddingInlineStart || style.scrollPaddingLeft) || 0;
+  const root = trackEl.getBoundingClientRect();
+  const anchorX = root.left + pad;
+  const r = li.getBoundingClientRect();
+  const next = Math.min(
+    trackEl.scrollWidth - trackEl.clientWidth,
+    Math.max(0, trackEl.scrollLeft + (r.left - anchorX)),
+  );
+
+  /* Instant scroll — reliable inside overflow (scrollTo/smooth + scrollend are flaky cross-browser). */
+  trackEl.scrollLeft = next;
+  burstSnap(trackEl);
+  requestAnimationFrame(() => {
+    burstSnap(trackEl);
+    requestAnimationFrame(() => burstSnap(trackEl));
+  });
+}
+
 /**
  * @param {object} props
  * @param {string} props.headingId
  * @param {string} props.tag
  * @param {string} props.heading
- * @param {Array<{ title: string; text: string; href: string; linkAriaLabel?: string; ctaText?: string }>} props.items
- * @param {string} props.cardEyebrow
+ * @param {Array<{ title: string; text: string; href: string; linkAriaLabel?: string; ctaText?: string; scheduleHref?: string }>} props.items
+ * @param {string} [props.cardEyebrow] - Small uppercase label above card title (omit to hide)
+ * @param {boolean} [props.largeCardTitles] - Larger card title typography (home training strip)
  * @param {string} [props.defaultCtaText]
  * @param {string} props.scrollTrackAriaLabel
  * @param {string} [props.backgroundImageUrl] - Static section bg when `cardBackgrounds` is not set
- * @param {string[]} [props.cardBackgrounds] - One image URL per item; crossfades with the active card (scroll on mobile, hover on desktop)
+ * @param {string[]} [props.cardBackgrounds] - One image URL per item; crossfades with the active card (scroll on mobile; hover only when 2×2 grid shows without auto-advance timer)
  * @param {number} [props.autoAdvanceCardMs] - When set (e.g. 2000), cycles the selected card on this interval only while the 2×2 grid is visible (≥768px). Paused when tab is hidden; disabled when `prefers-reduced-motion: reduce`.
+ * @param {boolean} [props.hideSectionHeader] - Omit tag + main heading (still pass headingId only when header is shown)
+ * @param {string} [props.sectionAriaLabel] - Landmark label when header is hidden (defaults to scrollTrackAriaLabel)
+ * @param {string} [props.cornerTitle] - Optional label pinned top-left of the section (accent color), e.g. “Training”
+ * @param {string} [props.bottomPromoText] - Optional overlay strip at bottom (static bg sections only); grey fade + copy
  */
 export default function OfferingsSnapSection({
   headingId,
@@ -73,6 +130,11 @@ export default function OfferingsSnapSection({
   backgroundImageUrl = DEFAULT_BG,
   cardBackgrounds,
   autoAdvanceCardMs,
+  hideSectionHeader = false,
+  sectionAriaLabel,
+  cornerTitle,
+  bottomPromoText,
+  largeCardTitles = false,
 }) {
   const [ref, visible] = useInView();
   const scrollRef = useRef(null);
@@ -94,33 +156,59 @@ export default function OfferingsSnapSection({
     return () => mq.removeEventListener("change", sync);
   }, []);
 
+  /* Hover only drives the bg when the 2×2 grid is visible; carousel/mobile uses scroll + IO only. */
   const hoverSelectsCard =
-    dynamicBg && !(autoAdvanceCardMs && gridWide);
-
-  const onPointerRelease = useCallback((e) => {
-    if (e.pointerType === "mouse" && e.button !== 0) return;
-    if (!window.matchMedia(SNAP_QUERY).matches) return;
-    const el = scrollRef.current;
-    if (!el) return;
-    burstSnap(el);
-  }, []);
+    dynamicBg && gridWide && !autoAdvanceCardMs;
 
   useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
+    const track = scrollRef.current;
+    if (!track) return;
 
-    el.addEventListener("pointerup", onPointerRelease);
-    el.addEventListener("pointercancel", onPointerRelease);
+    const mqSnap = window.matchMedia(SNAP_QUERY);
+
+    const onPointerRelease = (e) => {
+      if (!mqSnap.matches) return;
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      burstSnap(track);
+    };
+
+    /* Native capture fires before React/Next delegated handlers — stopImmediatePropagation blocks router navigation. */
+    const onClickCapture = (e) => {
+      if (!mqSnap.matches) return;
+      if (getComputedStyle(track).display === "contents") return;
+
+      const li = typeof e.target?.closest === "function" ? e.target.closest("li") : null;
+      if (!li) return;
+      const ul = track.querySelector("ul");
+      if (!ul || !ul.contains(li)) return;
+
+      const lis = [...ul.children];
+      const i = lis.indexOf(li);
+      if (i < 0) return;
+
+      const centered = getCarouselCenteredItemIndex(track);
+      if (centered === null) return;
+      if (i === centered) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+
+      scrollCarouselToItemIndex(track, i);
+    };
+
+    track.addEventListener("pointerup", onPointerRelease);
+    track.addEventListener("pointercancel", onPointerRelease);
+    track.addEventListener("click", onClickCapture, true);
 
     return () => {
-      el.removeEventListener("pointerup", onPointerRelease);
-      el.removeEventListener("pointercancel", onPointerRelease);
+      track.removeEventListener("pointerup", onPointerRelease);
+      track.removeEventListener("pointercancel", onPointerRelease);
+      track.removeEventListener("click", onClickCapture, true);
     };
-  }, [onPointerRelease]);
+  }, [items.length]);
 
   useEffect(() => {
-    if (!dynamicBg) return;
-
     let obs = null;
 
     const setup = () => {
@@ -133,31 +221,58 @@ export default function OfferingsSnapSection({
       if (!lis.length) return;
 
       const mobile = window.matchMedia(SNAP_QUERY).matches;
-      /* Desktop 2×2 + auto-advance: use hover + timer only (viewport IO fights the timer). */
-      if (!mobile && autoAdvanceCardMs) return;
-
       const trackIsScroller =
         track && getComputedStyle(track).display !== "contents";
-      const root = mobile && trackIsScroller ? track : null;
+      const rootCarousel = mobile && trackIsScroller ? track : null;
+
+      /* Mobile horizontal strip: track centered slide — training + member experience */
+      if (rootCarousel) {
+        obs = new IntersectionObserver(
+          (entries) => {
+            for (const en of entries) {
+              const idx = lis.indexOf(en.target);
+              if (idx >= 0) ratiosRef.current[idx] = en.intersectionRatio;
+            }
+            let best = 0;
+            let maxR = -1;
+            for (let j = 0; j < lis.length; j++) {
+              const r = ratiosRef.current[j] ?? 0;
+              if (r > maxR) {
+                maxR = r;
+                best = j;
+              }
+            }
+            if (maxR > 0.08) setActiveBgIndex(best);
+          },
+          { root: rootCarousel, threshold: [0, 0.1, 0.25, 0.4, 0.55, 0.7, 0.85, 1] },
+        );
+
+        lis.forEach((li) => obs.observe(li));
+        return;
+      }
+
+      /* Desktop member experience + auto-advance: timer only (viewport IO fights the timer). */
+      if (!dynamicBg) return;
+      if (autoAdvanceCardMs) return;
 
       obs = new IntersectionObserver(
         (entries) => {
           for (const en of entries) {
-            const i = lis.indexOf(en.target);
-            if (i >= 0) ratiosRef.current[i] = en.intersectionRatio;
+            const idx = lis.indexOf(en.target);
+            if (idx >= 0) ratiosRef.current[idx] = en.intersectionRatio;
           }
           let best = 0;
           let maxR = -1;
-          for (let i = 0; i < lis.length; i++) {
-            const r = ratiosRef.current[i] ?? 0;
+          for (let j = 0; j < lis.length; j++) {
+            const r = ratiosRef.current[j] ?? 0;
             if (r > maxR) {
               maxR = r;
-              best = i;
+              best = j;
             }
           }
           if (maxR > 0.08) setActiveBgIndex(best);
         },
-        { root, threshold: [0, 0.1, 0.25, 0.4, 0.55, 0.7, 0.85, 1] },
+        { root: null, threshold: [0, 0.1, 0.25, 0.4, 0.55, 0.7, 0.85, 1] },
       );
 
       lis.forEach((li) => obs.observe(li));
@@ -207,12 +322,16 @@ export default function OfferingsSnapSection({
 
   const bg = `url("${backgroundImageUrl.replace(/"/g, '\\"')}")`;
 
+  const sectionLandmarkLabel =
+    hideSectionHeader ? sectionAriaLabel ?? scrollTrackAriaLabel : undefined;
+
   return (
     <section
       ref={ref}
-      className={`${styles.section} ${visible ? styles.visible : ""} ${dynamicBg ? styles.dynamicBg : ""}`}
+      className={`${styles.section} ${visible ? styles.visible : ""} ${dynamicBg ? styles.dynamicBg : ""} ${hideSectionHeader ? styles.noSectionHeader : ""} ${bottomPromoText ? styles.hasBottomPromo : ""} ${largeCardTitles ? styles.largeCardTitles : ""}`}
       style={dynamicBg ? undefined : { "--offerings-bg-image": bg }}
-      aria-labelledby={headingId}
+      aria-labelledby={hideSectionHeader ? undefined : headingId}
+      aria-label={hideSectionHeader ? sectionLandmarkLabel : undefined}
     >
       {dynamicBg ? (
         <div className={styles.bgStack} aria-hidden>
@@ -224,17 +343,24 @@ export default function OfferingsSnapSection({
               style={{ backgroundImage: `url(${url})` }}
             />
           ))}
-          <div className={styles.bgScrim} />
         </div>
       ) : null}
 
+      {cornerTitle ? (
+        <p className={styles.cornerTitle} aria-hidden="true">
+          {cornerTitle}
+        </p>
+      ) : null}
+
       <div className={styles.inner}>
-        <header className={styles.header}>
-          <p className={styles.tag}>{tag}</p>
-          <h2 id={headingId} className={styles.heading}>
-            {heading}
-          </h2>
-        </header>
+        {!hideSectionHeader ? (
+          <header className={styles.header}>
+            <p className={styles.tag}>{tag}</p>
+            <h2 id={headingId} className={styles.heading}>
+              {heading}
+            </h2>
+          </header>
+        ) : null}
 
         <div ref={scrollRef} className={styles.scrollTrack} aria-label={scrollTrackAriaLabel}>
           <ul className={styles.grid}>
@@ -251,30 +377,52 @@ export default function OfferingsSnapSection({
                     hoverSelectsCard ? () => setActiveBgIndex(i) : undefined
                   }
                 >
-                  <Link
-                    href={item.href}
+                  <article
                     className={`${styles.card} ${dynamicBg && i === activeBgIndex ? styles.cardBgSelected : ""}`}
                     aria-label={aria}
                     aria-current={dynamicBg && i === activeBgIndex ? "true" : undefined}
                   >
-                    <span className={styles.cardTag} aria-hidden>
-                      {cardEyebrow}
-                    </span>
-                    <h3 className={styles.cardTitle}>{item.title}</h3>
+                    {cardEyebrow ? (
+                      <span className={styles.cardTag} aria-hidden>
+                        {cardEyebrow}
+                      </span>
+                    ) : null}
+                    <h3 className={styles.cardTitle}>
+                      <Link href={item.href} className={styles.cardTitleLink}>
+                        {item.title}
+                      </Link>
+                    </h3>
                     <p className={styles.cardText}>{item.text}</p>
-                    <span className={styles.cardCta}>
+                    {item.scheduleHref ? (
+                      <p className={styles.cardScheduleWrap}>
+                        <Link
+                          href={item.scheduleHref}
+                          className={styles.cardScheduleLink}
+                        >
+                          See schedule
+                        </Link>
+                      </p>
+                    ) : null}
+                    <Link href={item.href} className={styles.cardCta}>
                       {cta}
                       <span className={styles.cardCtaArrow} aria-hidden>
                         →
                       </span>
-                    </span>
-                  </Link>
+                    </Link>
+                  </article>
                 </li>
               );
             })}
           </ul>
         </div>
       </div>
+
+      {bottomPromoText ? (
+        <aside className={styles.bottomPromo} aria-label="Digital membership benefits">
+          <div className={styles.bottomPromoGradient} aria-hidden />
+          <p className={styles.bottomPromoText}>{bottomPromoText}</p>
+        </aside>
+      ) : null}
     </section>
   );
 }

@@ -1,0 +1,324 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(3.5rem, 8vw, 5.5rem) 1.5rem;
+  background-color: var(--deep);
+  background-image:
+    linear-gradient(
+      165deg,
+      rgba(var(--linen-rgb), 0.88) 0%,
+      rgba(var(--linen-rgb), 0.72) 38%,
+      rgba(var(--linen-rgb), 0.82) 100%
+    ),
+    var(--offerings-bg-image);
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat;
+}
+
+/* Per-card backgrounds (Explore): stack + scrim replace the static section image */
+.section.dynamicBg {
+  background-image: none;
+}
+
+.bgStack {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bgSlide {
+  position: absolute;
+  inset: -5%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.bgSlide[data-active="true"] {
+  opacity: 1;
+}
+
+.bgScrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    165deg,
+    rgba(var(--linen-rgb), 0.88) 0%,
+    rgba(var(--linen-rgb), 0.72) 38%,
+    rgba(var(--linen-rgb), 0.82) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bgSlide {
+    transition-duration: 0.01ms;
+  }
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 2;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(var(--accent-rgb), 0.35),
+    var(--accent),
+    rgba(var(--accent-rgb), 0.35),
+    transparent
+  );
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.scrollTrack {
+  display: contents;
+}
+
+.header {
+  text-align: center;
+  max-width: 36rem;
+  margin: 0 auto 2.75rem;
+  padding-bottom: calc(1rem + clamp(2.85rem, 7.5vw, 5.1rem));
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.75s ease,
+    transform 0.75s ease;
+}
+
+.section.visible .header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tag {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.75rem;
+}
+
+.heading {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.65rem, 3.5vw, 2.25rem);
+  color: var(--carbon);
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.15rem;
+}
+
+.item {
+  margin: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 11.5rem;
+  padding: 1.5rem 1.35rem 1.35rem;
+  background: var(--paper);
+  border: 1px solid rgba(var(--carbon-rgb), 0.08);
+  text-decoration: none;
+  color: inherit;
+  text-align: left;
+  transition:
+    opacity 0.65s ease,
+    transform 0.35s ease,
+    border-color 0.25s ease,
+    box-shadow 0.35s ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.section.visible .item:nth-child(1) .card {
+  transition-delay: 0.05s;
+}
+
+.section.visible .item:nth-child(2) .card {
+  transition-delay: 0.12s;
+}
+
+.section.visible .item:nth-child(3) .card {
+  transition-delay: 0.19s;
+}
+
+.section.visible .item:nth-child(4) .card {
+  transition-delay: 0.26s;
+}
+
+.section.visible .card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(var(--accent-rgb), 0.25);
+  box-shadow: 0 16px 40px rgba(var(--carbon-rgb), 0.08);
+}
+
+/* 2×2 grid: card tied to the visible background (Explore only, via JS class) */
+@media (min-width: 768px) {
+  .cardBgSelected {
+    background: linear-gradient(
+      145deg,
+      rgba(var(--linen-rgb), 0.55) 0%,
+      rgba(var(--accent-rgb), 0.14) 48%,
+      rgba(var(--accent-rgb), 0.08) 100%
+    ),
+      var(--paper);
+    border-color: rgba(var(--accent-rgb), 0.5);
+    box-shadow:
+      0 0 0 1px rgba(var(--accent-rgb), 0.18),
+      0 12px 32px rgba(var(--accent-rgb), 0.1);
+  }
+
+  .cardBgSelected:hover {
+    transform: translateY(-4px);
+    border-color: rgba(var(--accent-rgb), 0.62);
+    box-shadow:
+      0 0 0 1px rgba(var(--accent-rgb), 0.22),
+      0 16px 40px rgba(var(--accent-rgb), 0.14);
+  }
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.cardTag {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.65rem;
+}
+
+.cardTitle {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--carbon);
+  margin: 0 0 0.5rem;
+  line-height: 1.35;
+}
+
+.cardText {
+  font-family: var(--sans);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0 0 auto;
+  flex: 1;
+  padding-bottom: 1rem;
+}
+
+.cardCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: auto;
+}
+
+.cardCtaArrow {
+  transition: transform 0.2s ease;
+}
+
+.card:hover .cardCtaArrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 767px) {
+  .scrollTrack {
+    display: block;
+    container-type: inline-size;
+    container-name: offerings-snap;
+    width: calc(100% + 3rem);
+    max-width: none;
+    margin-inline: -1.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: auto;
+    scroll-padding-inline: 1.5rem;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollTrack::-webkit-scrollbar {
+    display: none;
+  }
+
+  .grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 1.15rem;
+    width: max-content;
+    padding-inline: 1.5rem;
+    padding-bottom: 0.4rem;
+    padding-inline-end: max(1.5rem, calc(25cqw - 0.5rem));
+  }
+
+  .item {
+    flex: 0 0 auto;
+    width: calc(75vw - 2.25rem);
+    width: calc(75cqw - 0.5rem);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .card {
+    min-height: 11rem;
+    height: 100%;
+  }
+}
+
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .item {
+    scroll-snap-stop: normal;
+  }
+}

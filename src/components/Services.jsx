@@ -11,7 +11,7 @@ const CARDS = [
   },
   {
     symbol: "✦",
-    title: "Health & Prevention",
+    title: "Physical Therapy",
     text: "In-house physical therapy, injury prevention, medical consultations, nutrition guidance, and longevity testing.",
   },
   {

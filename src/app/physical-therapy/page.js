@@ -3,12 +3,12 @@ import Footer from "@/components/Footer";
 import Philosophy from "@/components/Philosophy";
 
 export const metadata = {
-  title: "Health",
+  title: "Physical Therapy",
   description:
-    "Integrated health, prevention, and longevity-focused services at Variant Training Lab.",
+    "Expert physical therapy and integrated clinical care at Variant Training Lab in Santa Barbara.",
 };
 
-export default function HealthPage() {
+export default function PhysicalTherapyPage() {
   return (
     <>
       <main className="siteBelowNav">

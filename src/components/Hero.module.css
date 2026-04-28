@@ -96,25 +96,13 @@
   color: var(--accent);
 }
 
-.subtitle {
-  font-family: var(--sans);
-  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
-  line-height: 1.65;
-  color: var(--pewter);
-  margin: 0 0 2rem;
-  max-width: 38rem;
-  opacity: 0;
-  animation: fadeUp 0.9s ease forwards;
-  animation-delay: 0.4s;
-}
-
 .actions {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   opacity: 0;
   animation: fadeUp 0.9s ease forwards;
-  animation-delay: 0.6s;
+  animation-delay: 0.4s;
 }
 
 .btnPrimary {

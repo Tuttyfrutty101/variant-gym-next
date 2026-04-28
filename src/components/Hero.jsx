@@ -14,17 +14,7 @@ export default function Hero() {
       <div className={styles.inner}>
         <p className={styles.tag}>Santa Barbara&apos;s Premier Training Facility</p>
 
-        <h1 className={styles.title}>
-          <span className={styles.titleLine}>Do What You Love.</span>
-          <span className={styles.titleLine}>
-            <span className={styles.titleAccent}>Enjoy It</span> for a Lifetime.
-          </span>
-        </h1>
-
-        <p className={styles.subtitle}>
-          Data-driven training, world-class recovery, and integrated health services
-          — designed around your body, your goals, and your life.
-        </p>
+        <h1 className={styles.title}>Variant Training Lab</h1>
 
         <div className={styles.actions}>
           <a href="#contact" className={styles.btnPrimary}>

@@ -8,7 +8,8 @@ import styles from "./Navbar.module.css";
 const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Training", href: "/training" },
-  { label: "Health", href: "/health" },
+  { label: "Physical Therapy", href: "/physical-therapy" },
+  { label: "Exclusive Amenities", href: "/exclusive-amenities" },
   { label: "Recovery", href: "/recovery" },
   { label: "Athletes", href: "/athletes" },
   { label: "Membership", href: "/membership" },

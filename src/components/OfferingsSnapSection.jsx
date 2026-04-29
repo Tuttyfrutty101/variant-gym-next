@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import styles from "./OfferingsSnapSection.module.css";
 
@@ -117,7 +117,8 @@ function scrollCarouselToItemIndex(trackEl, index) {
  * @param {boolean} [props.hideSectionHeader] - Omit tag + main heading (still pass headingId only when header is shown)
  * @param {string} [props.sectionAriaLabel] - Landmark label when header is hidden (defaults to scrollTrackAriaLabel)
  * @param {string} [props.cornerTitle] - Optional label pinned top-left of the section (accent color), e.g. “Training”
- * @param {string} [props.bottomPromoText] - Optional overlay strip at bottom (static bg sections only); grey fade + copy
+ * @param {string} [props.bottomPromoText] - Legacy: single block of copy (prefer `bottomPromo`)
+ * @param {{ eyebrow?: string; heading: string; body: string; cta?: { text: string; href: string } }} [props.bottomPromo] - Card-style promo at bottom (static bg)
  */
 export default function OfferingsSnapSection({
   headingId,
@@ -134,6 +135,7 @@ export default function OfferingsSnapSection({
   sectionAriaLabel,
   cornerTitle,
   bottomPromoText,
+  bottomPromo,
   largeCardTitles = false,
 }) {
   const [ref, visible] = useInView();
@@ -147,6 +149,7 @@ export default function OfferingsSnapSection({
 
   const [activeBgIndex, setActiveBgIndex] = useState(0);
   const [gridWide, setGridWide] = useState(false);
+  const bottomPromoHeadingId = useId();
 
   useEffect(() => {
     const mq = window.matchMedia(GRID_QUERY);
@@ -322,13 +325,22 @@ export default function OfferingsSnapSection({
 
   const bg = `url("${backgroundImageUrl.replace(/"/g, '\\"')}")`;
 
+  const bottomPromoResolved =
+    bottomPromo ??
+    (bottomPromoText
+      ? {
+          heading: "",
+          body: bottomPromoText,
+        }
+      : null);
+
   const sectionLandmarkLabel =
     hideSectionHeader ? sectionAriaLabel ?? scrollTrackAriaLabel : undefined;
 
   return (
     <section
       ref={ref}
-      className={`${styles.section} ${visible ? styles.visible : ""} ${dynamicBg ? styles.dynamicBg : ""} ${hideSectionHeader ? styles.noSectionHeader : ""} ${bottomPromoText ? styles.hasBottomPromo : ""} ${largeCardTitles ? styles.largeCardTitles : ""}`}
+      className={`${styles.section} ${visible ? styles.visible : ""} ${dynamicBg ? styles.dynamicBg : ""} ${hideSectionHeader ? styles.noSectionHeader : ""} ${bottomPromoResolved ? styles.hasBottomPromo : ""} ${largeCardTitles ? styles.largeCardTitles : ""}`}
       style={dynamicBg ? undefined : { "--offerings-bg-image": bg }}
       aria-labelledby={hideSectionHeader ? undefined : headingId}
       aria-label={hideSectionHeader ? sectionLandmarkLabel : undefined}
@@ -417,10 +429,48 @@ export default function OfferingsSnapSection({
         </div>
       </div>
 
-      {bottomPromoText ? (
-        <aside className={styles.bottomPromo} aria-label="Digital membership benefits">
+      {bottomPromoResolved ? (
+        <aside
+          className={styles.bottomPromo}
+          aria-labelledby={
+            bottomPromoResolved.heading ? bottomPromoHeadingId : undefined
+          }
+          aria-label={
+            bottomPromoResolved.heading
+              ? undefined
+              : "Membership and digital program benefits"
+          }
+        >
           <div className={styles.bottomPromoGradient} aria-hidden />
-          <p className={styles.bottomPromoText}>{bottomPromoText}</p>
+          <div className={styles.bottomPromoInner}>
+            <article className={styles.bottomPromoCard}>
+              {bottomPromoResolved.eyebrow ? (
+                <p className={styles.bottomPromoEyebrow}>
+                  {bottomPromoResolved.eyebrow}
+                </p>
+              ) : null}
+              {bottomPromoResolved.heading ? (
+                <h3
+                  id={bottomPromoHeadingId}
+                  className={styles.bottomPromoHeading}
+                >
+                  {bottomPromoResolved.heading}
+                </h3>
+              ) : null}
+              <p className={styles.bottomPromoBody}>{bottomPromoResolved.body}</p>
+              {bottomPromoResolved.cta ? (
+                <Link
+                  href={bottomPromoResolved.cta.href}
+                  className={`${styles.cardCta} ${styles.bottomPromoCta}`}
+                >
+                  {bottomPromoResolved.cta.text}
+                  <span className={styles.cardCtaArrow} aria-hidden>
+                    →
+                  </span>
+                </Link>
+              ) : null}
+            </article>
+          </div>
         </aside>
       ) : null}
     </section>

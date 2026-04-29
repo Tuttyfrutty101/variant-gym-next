@@ -63,7 +63,7 @@ export default function Navbar() {
     <header
       className={`${styles.navbar} ${scrolled ? styles.scrolled : ""} ${menuOpen ? styles.menuOpen : ""}`}
     >
-      <div className={styles.inner}>
+      <div className={styles.inner} {...(menuOpen ? { inert: "" } : {})}>
         <Link href="/" className={styles.logo} onClick={closeMenu}>
           VARIANT
           <span className={styles.logoAccent}> TRAINING LAB</span>
@@ -107,6 +107,17 @@ export default function Navbar() {
           onClick={closeMenu}
         />
         <nav className={styles.menuNav} aria-label="Primary">
+          <button
+            type="button"
+            className={`${styles.menuBtn} ${styles.menuCloseDrawer}`}
+            aria-label="Close navigation menu"
+            onClick={closeMenu}
+          >
+            <span
+              className={`${styles.menuIcon} ${styles.menuIconOpen}`}
+              aria-hidden
+            />
+          </button>
           <ul className={styles.menuList}>
             {NAV_LINKS.map(({ label, href }) => {
               const active =

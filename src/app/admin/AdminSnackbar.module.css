@@ -1,0 +1,72 @@
+.snackbar {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  z-index: 10000;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  max-width: min(32rem, calc(100vw - 2rem));
+  padding: 0.85rem 1rem;
+  box-sizing: border-box;
+  font-family: var(--sans);
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--carbon);
+  background: var(--paper);
+  border-radius: 4px;
+  border: 1px solid rgba(var(--carbon-rgb), 0.12);
+  box-shadow:
+    0 0.35rem 1rem rgba(var(--carbon-rgb), 0.12),
+    0 1.25rem 2.5rem rgba(var(--carbon-rgb), 0.08);
+  transform: translateX(-50%);
+  animation: adminSnackIn 0.28s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snackbar {
+    animation: none;
+  }
+}
+
+@keyframes adminSnackIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0.65rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.snackbarSuccess {
+  border-left: 4px solid #2d6a4f;
+}
+
+.snackbarError {
+  border-left: 4px solid var(--accent);
+}
+
+.snackbarText {
+  flex: 1;
+  min-width: 0;
+}
+
+.snackbarDismiss {
+  flex-shrink: 0;
+  margin: -0.15rem -0.25rem -0.15rem 0;
+  padding: 0.2rem 0.45rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.snackbarDismiss:hover {
+  color: var(--carbon);
+  background: rgba(var(--carbon-rgb), 0.06);
+}

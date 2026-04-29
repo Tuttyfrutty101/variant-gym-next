@@ -1,5 +1,5 @@
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import ConditionalNavbar from "@/components/ConditionalNavbar";
 
 const siteName = "Variant Training Lab";
 const tagline = "Do what you love. Enjoy it for a lifetime.";
@@ -49,7 +49,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body style={{ fontFamily: "var(--sans)" }}>
-        <Navbar />
+        <ConditionalNavbar />
         {children}
       </body>
     </html>

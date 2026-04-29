@@ -1,0 +1,119 @@
+.root {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: 0.35rem 1rem;
+  align-items: baseline;
+  margin: 0;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(var(--carbon-rgb), 0.08);
+}
+
+.row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.day {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--carbon);
+}
+
+.hours {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.compact {
+  max-width: min(18rem, 100%);
+}
+
+.compact .row {
+  padding: 0.25rem 0;
+}
+
+.compact .day {
+  font-size: 0.65rem;
+}
+
+.compact .hours {
+  font-size: 0.72rem;
+}
+
+/* Single grid on <dl>; rows use display:contents so times share one column width. */
+.root.contactTone {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  column-gap: 1rem;
+  align-items: baseline;
+  width: max-content;
+  max-width: 100%;
+}
+
+.contactRow {
+  display: contents;
+}
+
+.contactTone .day {
+  color: var(--cream);
+  padding: 0.35rem 0;
+  margin: 0;
+  border-bottom: 1px solid rgba(var(--carbon-rgb), 0.12);
+}
+
+.contactTone .hours {
+  color: var(--text-muted);
+  text-align: right;
+  padding: 0.35rem 0;
+  margin: 0;
+  border-bottom: 1px solid rgba(var(--carbon-rgb), 0.12);
+}
+
+.contactTone .day:last-of-type,
+.contactTone .hours:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.compact.contactTone .day,
+.compact.contactTone .hours {
+  padding: 0.25rem 0;
+}
+
+.onAccent .day {
+  color: var(--linen);
+}
+
+.onAccent .hours {
+  color: rgba(var(--linen-rgb), 0.88);
+}
+
+.onAccent .row {
+  border-bottom-color: rgba(var(--linen-rgb), 0.22);
+}
+
+.onBand .day {
+  color: var(--cream);
+}
+
+.onBand .hours {
+  color: rgba(var(--linen-rgb), 0.82);
+}
+
+.onBand .row {
+  border-bottom-color: rgba(var(--linen-rgb), 0.12);
+}

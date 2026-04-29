@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import Link from "next/link";
+import { useRef, useState } from "react";
+import BusinessHoursList from "@/components/BusinessHoursList";
 import styles from "./Contact.module.css";
 
 const INITIAL = {
@@ -13,47 +14,70 @@ const INITIAL = {
   goals: "",
 };
 
-export default function Contact() {
+export default function Contact({ contactInfo, hours }) {
+  const thankYouDialogRef = useRef(null);
   const [form, setForm] = useState(INITIAL);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
 
   function update(field) {
     return (e) => {
+      if (thankYouDialogRef.current?.open) thankYouDialogRef.current.close();
       setForm((prev) => ({ ...prev, [field]: e.target.value }));
-      setSuccess(null);
       setError(null);
     };
+  }
+
+  function closeThankYou() {
+    thankYouDialogRef.current?.close();
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
-    setSuccess(null);
     setError(null);
+    if (thankYouDialogRef.current?.open) thankYouDialogRef.current.close();
 
-    const name = `${form.firstName.trim()} ${form.lastName.trim()}`.trim();
-    const email = form.email.trim();
-    const phone = form.phone.trim();
-    const interest = form.interest;
-    const goals = form.goals.trim();
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: form.firstName.trim(),
+          lastName: form.lastName.trim(),
+          email: form.email.trim(),
+          phone: form.phone.trim(),
+          interest: form.interest,
+          goals: form.goals.trim(),
+        }),
+      });
 
-    const { error: submitError } = await supabase
-      .from("contact_submissions")
-      .insert({ name, email, phone, interest, goals });
+      let data = null;
+      try {
+        data = await res.json();
+      } catch {
+        data = null;
+      }
 
-    setLoading(false);
+      if (!res.ok) {
+        const msg =
+          data && typeof data.error === "string"
+            ? data.error
+            : "Something went wrong. Please try again.";
+        setError(msg);
+        return;
+      }
 
-    if (submitError) {
-      setError(submitError.message ?? "Something went wrong. Please try again.");
-      return;
+      setForm(INITIAL);
+      thankYouDialogRef.current?.showModal();
+      queueMicrotask(() => {
+        document.getElementById("contact-book-tour")?.focus();
+      });
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
-
-    setSuccess(
-      "Thank you — your message was received. Our team will be in touch soon.",
-    );
-    setForm(INITIAL);
   }
 
   return (
@@ -79,35 +103,39 @@ export default function Contact() {
               <span className={styles.icon} aria-hidden>
                 ⌖
               </span>
-              <span>314 Anacapa St., Santa Barbara, CA 93101</span>
+              <span>{contactInfo.address}</span>
             </li>
             <li>
               <span className={styles.icon} aria-hidden>
                 ☏
               </span>
-              <a href="tel:+18058378475" className={styles.detailLink}>
-                (805) 837-8475
+              <a href={contactInfo.phoneTel} className={styles.detailLink}>
+                {contactInfo.phoneDisplay}
               </a>
-            </li>
-            <li>
-              <span className={styles.icon} aria-hidden>
-                ◷
-              </span>
-              <span>
-                Mon–Thu: 6:30am–6:30pm, Fri: 6:30am–2:00pm, Sat: 8:00am–1:00pm,
-                Sun: Closed
-              </span>
             </li>
             <li>
               <span className={styles.icon} aria-hidden>
                 ✉
               </span>
               <a
-                href="mailto:info@varianttraininglab.com"
+                href={`mailto:${contactInfo.email}`}
                 className={styles.detailLink}
               >
-                info@varianttraininglab.com
+                {contactInfo.email}
               </a>
+            </li>
+            <li className={styles.hoursRow}>
+              <span className={styles.icon} aria-hidden>
+                ◷
+              </span>
+              <div className={styles.hoursWrap}>
+                <BusinessHoursList
+                  hours={hours}
+                  tone="contact"
+                  className={styles.hoursList}
+                  id="contact-hours"
+                />
+              </div>
             </li>
           </ul>
         </div>
@@ -222,11 +250,6 @@ export default function Contact() {
             {loading ? "Sending…" : "Submit"}
           </button>
 
-          {success ? (
-            <p className={`${styles.feedback} ${styles.feedbackSuccess}`}>
-              {success}
-            </p>
-          ) : null}
           {error ? (
             <p className={`${styles.feedback} ${styles.feedbackError}`}>
               {error}
@@ -234,6 +257,45 @@ export default function Contact() {
           ) : null}
         </form>
       </div>
+
+      <dialog
+        ref={thankYouDialogRef}
+        className={styles.thankYouDialog}
+        aria-labelledby="contact-thankyou-title"
+        onClick={(e) => {
+          if (e.target === thankYouDialogRef.current) {
+            closeThankYou();
+          }
+        }}
+      >
+        <div
+          className={styles.thankYouInner}
+          role="presentation"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              closeThankYou();
+            }
+          }}
+        >
+          <div
+            className={styles.thankYouPanel}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p id="contact-thankyou-title" className={styles.thankYouText}>
+              Thank you for reaching out to Variant Training Lab. We will be in
+              touch shortly.
+            </p>
+            <Link
+              id="contact-book-tour"
+              href="/schedule"
+              className={styles.thankYouTourBtn}
+              onClick={closeThankYou}
+            >
+              Book a tour
+            </Link>
+          </div>
+        </div>
+      </dialog>
     </section>
   );
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useInView } from "@/hooks/useInView";
 import styles from "./SpringPromo.module.css";
 
-export default function SpringPromo() {
+export default function SpringPromo({ promotion }) {
   const [ref, visible] = useInView();
 
   return (
@@ -15,20 +15,14 @@ export default function SpringPromo() {
       aria-labelledby="spring-offer-heading"
     >
       <div className={styles.inner}>
-        <p className={styles.badge}>Limited time · Spring</p>
+        <p className={styles.badge}>{promotion.badge}</p>
         <h2 id="spring-offer-heading" className={styles.title}>
-          Spring membership offer
+          {promotion.title}
         </h2>
-        <p className={styles.body}>
-          Join before Memorial Day and we&apos;ll waive your enrollment fee,
-          plus include two guest passes so you can train with a partner on us.
-        </p>
-        <p className={styles.finePrint}>
-          Offer valid for new memberships through May 26, 2026. Not combinable
-          with other promotions.
-        </p>
+        <p className={styles.body}>{promotion.body}</p>
+        <p className={styles.finePrint}>{promotion.finePrint}</p>
         <Link href="#contact" className={styles.cta}>
-          Claim this offer
+          {promotion.ctaLabel}
         </Link>
       </div>
     </section>

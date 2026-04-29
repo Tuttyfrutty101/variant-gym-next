@@ -6,17 +6,29 @@ import Philosophy from "@/components/Philosophy";
 import SpringPromo from "@/components/SpringPromo";
 import TrainingOfferings from "@/components/TrainingOfferings";
 import Testimonial from "@/components/Testimonial";
+import {
+  FALLBACK_HOMEPAGE_TESTIMONIAL,
+  getHomepageTestimonials,
+} from "@/lib/homepageTestimonial";
+import { getSiteContent } from "@/lib/siteContent";
 
-export default function Home() {
+export const revalidate = 60;
+
+export default async function Home() {
+  const fromDb = await getHomepageTestimonials();
+  const testimonials =
+    fromDb && fromDb.length > 0 ? fromDb : [FALLBACK_HOMEPAGE_TESTIMONIAL];
+  const site = await getSiteContent();
+
   return (
     <>
       <Hero />
       <Philosophy />
       <TrainingOfferings />
       <ExploreCarousel />
-      <SpringPromo />
-      <Testimonial />
-      <Contact />
+      <SpringPromo promotion={site.promotion} />
+      <Testimonial testimonials={testimonials} />
+      <Contact contactInfo={site.contact} hours={site.hours} />
       <Footer />
     </>
   );

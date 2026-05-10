@@ -16,8 +16,11 @@ export default function AdminHomePage() {
         <Link className={styles.cardLink} href="/admin/contact">
           Contact (address, phone, email)
         </Link>
+        <Link className={styles.cardLink} href="/admin/schedule">
+          Class schedule (weekly classes)
+        </Link>
         <Link className={styles.cardLink} href="/admin/promotion">
-          Spring / promo block
+          Promo block
         </Link>
         <Link className={styles.cardLink} href="/admin/testimonials">
           Testimonials

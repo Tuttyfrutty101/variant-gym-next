@@ -19,24 +19,14 @@
   padding: 1rem 1.5rem;
   color: var(--carbon);
   transition:
-    background 0.35s ease,
-    backdrop-filter 0.35s ease,
     border-color 0.35s ease,
     box-shadow 0.35s ease;
-  background: linear-gradient(
-    to bottom,
-    rgba(var(--linen-rgb), 0.94) 0%,
-    rgba(var(--linen-rgb), 0.72) 55%,
-    transparent 100%
-  );
+  background: var(--linen);
   border-bottom: 1px solid transparent;
 }
 
 .navbar.scrolled,
 .navbar.menuOpen {
-  background: rgba(var(--linen-rgb), 0.97);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   border-bottom-color: rgba(var(--accent-rgb), 0.22);
   box-shadow: 0 4px 24px rgba(var(--carbon-rgb), 0.06);
 }
@@ -71,16 +61,16 @@
   flex-shrink: 0;
   text-decoration: none;
   color: inherit;
-  font-family: var(--sans);
-  font-weight: 600;
-  font-size: 0.85rem;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  line-height: 0;
 }
 
-.logoAccent {
-  color: var(--accent);
+.logoImg {
+  display: block;
+  height: clamp(2.2rem, 6.875vw, 3.575rem);
+  width: auto;
+  max-width: min(calc(72vw * 1.1), 462px);
 }
 
 .actions {
@@ -287,4 +277,46 @@
   .inner {
     gap: 0.75rem;
   }
+}
+
+/* Home — dark marketing theme (carbon / linen / stone) */
+.navbar.onDarkHome {
+  color: var(--linen);
+  background: var(--carbon);
+}
+
+.navbar.onDarkHome.scrolled,
+.navbar.onDarkHome.menuOpen {
+  border-bottom-color: rgba(var(--stone-rgb), 0.35);
+  box-shadow: 0 4px 28px rgba(0, 0, 0, 0.35);
+}
+
+.navbar.onDarkHome .menuBtn {
+  border-color: rgba(var(--linen-rgb), 0.22);
+  background: rgba(var(--linen-rgb), 0.08);
+  color: var(--linen);
+}
+
+.navbar.onDarkHome .menuBtn:hover {
+  border-color: rgba(var(--accent-rgb), 0.55);
+  background: rgba(var(--linen-rgb), 0.12);
+}
+
+.navbar.onDarkHome .menuBackdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.navbar.onDarkHome .menuNav {
+  background: linear-gradient(165deg, #2a2a2a 0%, var(--carbon) 100%);
+  border-left-color: rgba(var(--stone-rgb), 0.35);
+  box-shadow: -12px 0 48px rgba(0, 0, 0, 0.4);
+}
+
+.navbar.onDarkHome .menuLink {
+  color: var(--stone);
+  border-bottom-color: rgba(var(--stone-rgb), 0.22);
+}
+
+.navbar.onDarkHome .menuLink:hover {
+  color: var(--linen);
 }

@@ -19,7 +19,7 @@ export const TRAINING_FORMATS = [
   {
     id: "small-group-privates",
     title: "Small Group Privates",
-    text: "The facility is intentionally designed with advanced equipment, education, and assessment protocols to create personalized performance plans tailored to your needs, wants, and goals.",
+    text: "Coach-led small groups with tailored programming and performance assessments.",
     image:
       "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1200&q=80",
     imageAlt: "Small group strength training",

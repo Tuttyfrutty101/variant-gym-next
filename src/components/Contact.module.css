@@ -30,6 +30,28 @@
   align-items: start;
 }
 
+.leftColumn {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.introBlock {
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .leftColumn {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .form {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
 .infoTag {
   font-family: var(--sans);
   font-size: 0.68rem;
@@ -303,7 +325,70 @@
     grid-template-columns: 1fr;
   }
 
+  .leftColumn {
+    display: contents;
+  }
+
+  .introBlock {
+    order: 1;
+  }
+
+  .form {
+    order: 2;
+  }
+
+  .details {
+    order: 3;
+  }
+
   .row2 {
     grid-template-columns: 1fr;
   }
+}
+
+:global(.homeMarketingDark) .section {
+  background: var(--carbon);
+}
+
+:global(.homeMarketingDark) .infoHeading {
+  color: var(--linen);
+}
+
+:global(.homeMarketingDark) .infoBody {
+  color: rgba(var(--stone-rgb), 0.92);
+}
+
+:global(.homeMarketingDark) .details li {
+  color: rgba(var(--stone-rgb), 0.88);
+}
+
+:global(.homeMarketingDark) .label {
+  color: rgba(var(--stone-rgb), 0.85);
+}
+
+:global(.homeMarketingDark) .input,
+:global(.homeMarketingDark) .select,
+:global(.homeMarketingDark) .textarea {
+  color: var(--linen);
+  background: rgba(var(--linen-rgb), 0.06);
+  border-color: rgba(var(--stone-rgb), 0.4);
+}
+
+:global(.homeMarketingDark) .input::placeholder,
+:global(.homeMarketingDark) .textarea::placeholder {
+  color: rgba(var(--stone-rgb), 0.55);
+}
+
+:global(.homeMarketingDark) .select {
+  background-color: rgba(var(--linen-rgb), 0.06);
+}
+
+:global(.homeMarketingDark) .thankYouPanel {
+  background: rgba(var(--linen-rgb), 0.08);
+  border-color: rgba(var(--stone-rgb), 0.4);
+  box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.45);
+}
+
+:global(.homeMarketingDark) .thankYouText {
+  color: var(--linen);
 }

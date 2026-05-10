@@ -118,7 +118,8 @@ function scrollCarouselToItemIndex(trackEl, index) {
  * @param {string} [props.sectionAriaLabel] - Landmark label when header is hidden (defaults to scrollTrackAriaLabel)
  * @param {string} [props.cornerTitle] - Optional label pinned top-left of the section (accent color), e.g. “Training”
  * @param {string} [props.bottomPromoText] - Legacy: single block of copy (prefer `bottomPromo`)
- * @param {{ eyebrow?: string; heading: string; body: string; cta?: { text: string; href: string } }} [props.bottomPromo] - Card-style promo at bottom (static bg)
+ * @param {{ eyebrow?: string; heading: string; body: string; cta?: { text: string; href: string } }} [props.bottomPromo] - Card-style promo at the bottom (static bg)
+ * @param {boolean} [props.ambientDark] - Dark scrim over photography (home marketing theme)
  */
 export default function OfferingsSnapSection({
   headingId,
@@ -137,6 +138,7 @@ export default function OfferingsSnapSection({
   bottomPromoText,
   bottomPromo,
   largeCardTitles = false,
+  ambientDark = false,
 }) {
   const [ref, visible] = useInView();
   const scrollRef = useRef(null);
@@ -356,6 +358,10 @@ export default function OfferingsSnapSection({
             />
           ))}
         </div>
+      ) : null}
+
+      {ambientDark ? (
+        <div className={styles.ambientScrim} aria-hidden />
       ) : null}
 
       {cornerTitle ? (

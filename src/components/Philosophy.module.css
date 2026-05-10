@@ -63,3 +63,15 @@
   border-color: var(--accent-dark);
   color: var(--linen);
 }
+
+:global(.homeMarketingDark) .section {
+  background: var(--carbon);
+}
+
+:global(.homeMarketingDark) .heading {
+  color: var(--linen);
+}
+
+:global(.homeMarketingDark) .body {
+  color: rgba(var(--stone-rgb), 0.92);
+}

@@ -9,7 +9,8 @@ import styles from "./admin.module.css";
 const LINKS = [
   { href: "/admin/hours", label: "Hours" },
   { href: "/admin/contact", label: "Contact" },
-  { href: "/admin/promotion", label: "Promotion" },
+  { href: "/admin/schedule", label: "Class schedule" },
+  { href: "/admin/promotion", label: "Promo block" },
   { href: "/admin/testimonials", label: "Testimonials" },
 ];
 

@@ -6,7 +6,7 @@ export default async function AdminPromotionPage() {
   const supabase = await createSupabaseServerClient();
   const { data } = await supabase
     .from("site_promotion")
-    .select("id, badge, title, body, fine_print, cta_label")
+    .select("id, badge, title, body, fine_print, cta_label, visible")
     .limit(1)
     .maybeSingle();
 
@@ -19,12 +19,13 @@ export default async function AdminPromotionPage() {
           body: data.body ?? "",
           fine_print: data.fine_print ?? "",
           cta_label: data.cta_label ?? "",
+          visible: data.visible !== false,
         }
       : null;
 
   return (
     <>
-      <h1 className={styles.h1}>Promotion</h1>
+      <h1 className={styles.h1}>Promo block</h1>
       <p className={styles.lead}>
         Homepage promo band (above testimonials). The call-to-action always
         goes to the contact form on the home page.

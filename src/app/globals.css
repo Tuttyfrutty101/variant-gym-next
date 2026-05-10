@@ -3,12 +3,12 @@
 
 :root {
   /* Mood board palette */
-  --carbon: #1c1b1b;
-  --pewter: #8b8884;
-  --brick: #8f3e3e;
-  --brick-dark: #743333;
-  --stone: #c4b5a2;
-  --linen: #f6f3ec;
+  --carbon: #1e1e1e;
+  --pewter: #9d9d9c;
+  --brick: #a23e2e;
+  --brick-dark: #863528;
+  --stone: #d4c6b7;
+  --linen: #f4f2ee;
   --celadon: #a8b0a3;
   --paper: #fffcf7;
   --band: #e8e3d9;
@@ -25,10 +25,12 @@
   --text-muted: var(--pewter);
   --serif: Georgia, "Times New Roman", serif;
   --sans: "Montserrat", system-ui, sans-serif;
-  --accent-rgb: 143, 62, 62;
-  --carbon-rgb: 28, 27, 27;
-  --pewter-rgb: 139, 136, 132;
-  --linen-rgb: 246, 243, 236;
+  --accent-rgb: 162, 62, 46;
+  --carbon-rgb: 30, 30, 30;
+  --pewter-rgb: 157, 157, 156;
+  --linen-rgb: 244, 242, 238;
+  --stone-rgb: 212, 198, 183;
+  --celadon-rgb: 168, 176, 163;
 }
 
 html {
@@ -48,6 +50,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body:has(.homeMarketingDark) {
+  background: var(--carbon);
+  color: var(--linen);
+}
+
 h1 {
   font-family: var(--sans);
   font-weight: 600;
@@ -59,6 +66,10 @@ h1 {
   line-height: 1.15;
 }
 
+body:has(.homeMarketingDark) h1 {
+  color: var(--linen);
+}
+
 h2 {
   font-family: var(--serif);
   font-weight: 400;
@@ -66,6 +77,10 @@ h2 {
   color: var(--carbon);
   margin: 0 0 1rem;
   line-height: 1.2;
+}
+
+body:has(.homeMarketingDark) h2 {
+  color: var(--linen);
 }
 
 /* Offset fixed navbar on inner routes (home uses full-bleed hero). */
@@ -106,4 +121,12 @@ body::after {
 
 *::-webkit-scrollbar-thumb:hover {
   background: var(--accent-dark);
+}
+
+body:has(.homeMarketingDark) * {
+  scrollbar-color: var(--accent) rgba(var(--linen-rgb), 0.08);
+}
+
+body:has(.homeMarketingDark) *::-webkit-scrollbar-track {
+  background: rgba(var(--linen-rgb), 0.06);
 }

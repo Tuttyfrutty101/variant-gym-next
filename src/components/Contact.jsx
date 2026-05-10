@@ -87,17 +87,19 @@ export default function Contact({ contactInfo, hours }) {
       aria-labelledby="contact-heading"
     >
       <div className={styles.inner}>
-        <div>
-          <p className={styles.infoTag}>Get Started</p>
-          <h2 id="contact-heading" className={styles.infoHeading}>
-            Begin Your Journey Here
-          </h2>
-          <p className={styles.infoBody}>
-            Complete the form and our team will review your application and
-            reach out to schedule a tour. Every membership begins with a
-            comprehensive onboarding with a Lab Technician and Physical
-            Therapist.
-          </p>
+        <div className={styles.leftColumn}>
+          <div className={styles.introBlock}>
+            <p className={styles.infoTag}>Get Started</p>
+            <h2 id="contact-heading" className={styles.infoHeading}>
+              Begin Your Journey Here
+            </h2>
+            <p className={styles.infoBody}>
+              Complete the form and our team will review your application and
+              reach out to schedule a tour. Every membership begins with a
+              comprehensive onboarding with a Lab Technician and Physical
+              Therapist.
+            </p>
+          </div>
           <ul className={styles.details}>
             <li>
               <span className={styles.icon} aria-hidden>
@@ -287,7 +289,7 @@ export default function Contact({ contactInfo, hours }) {
             </p>
             <Link
               id="contact-book-tour"
-              href="/schedule"
+              href="/consultation"
               className={styles.thankYouTourBtn}
               onClick={closeThankYou}
             >

@@ -43,6 +43,7 @@ export default function ExploreCarousel() {
       scrollTrackAriaLabel="Therapy, health, amenities, and athlete programs — swipe or scroll sideways to explore"
       cardBackgrounds={CARD_BACKGROUNDS}
       autoAdvanceCardMs={3000}
+      ambientDark
     />
   );
 }

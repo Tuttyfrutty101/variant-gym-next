@@ -1,9 +1,17 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useId, useState } from "react";
 import styles from "./Navbar.module.css";
+
+const LOGO_WHITE = "/logos/VTL_White_Horizontal-01.png";
+const LOGO_BLACK = "/logos/VTL_Black_Horizontal-01.png";
+
+/** Intrinsic pixels (~2.80:1); display size controlled in CSS */
+const LOGO_WIDTH = 364;
+const LOGO_HEIGHT = 130;
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -14,11 +22,13 @@ const NAV_LINKS = [
   { label: "Athletes", href: "/athletes" },
   { label: "Membership", href: "/membership" },
   { label: "Schedule", href: "/schedule" },
+  { label: "Consultation", href: "/consultation" },
   { label: "Contact Us", href: "/contact" },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
+  const onDarkHome = pathname === "/";
   const menuId = useId();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -61,12 +71,19 @@ export default function Navbar() {
 
   return (
     <header
-      className={`${styles.navbar} ${scrolled ? styles.scrolled : ""} ${menuOpen ? styles.menuOpen : ""}`}
+      className={`${styles.navbar} ${onDarkHome ? styles.onDarkHome : ""} ${scrolled ? styles.scrolled : ""} ${menuOpen ? styles.menuOpen : ""}`}
     >
       <div className={styles.inner} {...(menuOpen ? { inert: "" } : {})}>
         <Link href="/" className={styles.logo} onClick={closeMenu}>
-          VARIANT
-          <span className={styles.logoAccent}> TRAINING LAB</span>
+          <Image
+            src={onDarkHome ? LOGO_WHITE : LOGO_BLACK}
+            alt="Variant Training Lab — Home"
+            width={LOGO_WIDTH}
+            height={LOGO_HEIGHT}
+            className={styles.logoImg}
+            priority
+            sizes="(max-width: 479px) 264px, 418px"
+          />
         </Link>
 
         <div className={styles.actions}>

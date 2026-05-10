@@ -19,30 +19,27 @@ const HIGHLIGHTS = [
   {
     title: "Cold plunge",
     text: "Contrast-ready pools to reset tissues, sharpen recovery, and complement hard training.",
-    image:
-      "https://images.unsplash.com/photo-1545389336-cf090694435e?w=900&q=80",
-    imageAlt: "Cold plunge pool with stone surround",
+    image: "/images/cold%20plunge.png",
+    imageAlt: "Cold plunge pool",
   },
   {
     title: "Infrared sauna",
-    text: "Deep heat for circulation and relaxation between sessions — without leaving the building.",
-    image:
-      "https://images.unsplash.com/photo-1600334129128-bfc628525391?w=900&q=80",
-    imageAlt: "Wooden sauna interior with soft lighting",
+    text: "Private sessions for circulation and relaxation between trainings.",
+    image: "/images/sauna.jpg",
+    imageAlt: "Infrared sauna interior",
   },
   {
     title: "Red light therapy",
-    text: "Targeted photobiomodulation to support tissue repair and consistency in your routine.",
+    text: "Boost collagen, reduce pain and inflammation in joints and muscles.",
     image:
       "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80",
     imageAlt: "Clinical wellness treatment setting",
   },
   {
     title: "Hyperbaric oxygen",
-    text: "Pressurized oxygen sessions designed to aid recovery when your schedule demands more.",
-    image:
-      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=900&q=80",
-    imageAlt: "Medical oxygen therapy equipment in a calm suite",
+    text: "60-90 minute Pressurized oxygen sessions designed to aid recovery, sleep, and energy.",
+    image: "/images/hyperbarix.jpg",
+    imageAlt: "Hyperbaric oxygen therapy chamber",
   },
   {
     title: "And more",

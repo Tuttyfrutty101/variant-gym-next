@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import styles from "./Testimonial.module.css";
 
-const AUTO_MS = 3000;
+const AUTO_MS = 9000;
 
 function PrevIcon() {
   return (
@@ -43,7 +43,13 @@ export default function Testimonial({ testimonials }) {
   const n = list.length;
   const [activeIndex, setActiveIndex] = useState(0);
   const [restartSignal, setRestartSignal] = useState(0);
+  const [expanded, setExpanded] = useState(false);
+  const [hasOverflow, setHasOverflow] = useState(false);
+  const quoteRef = useRef(null);
   const [ref, visible] = useInView();
+
+  const safeIndex = n > 0 ? Math.min(activeIndex, n - 1) : 0;
+  const quoteKey = n > 0 ? String(list[safeIndex]?.quote ?? "") : "";
 
   const bumpAutoAdvance = useCallback(() => {
     setRestartSignal((s) => s + 1);
@@ -60,11 +66,37 @@ export default function Testimonial({ testimonials }) {
     return () => window.clearInterval(id);
   }, [n, restartSignal]);
 
+  useEffect(() => {
+    setExpanded(false);
+  }, [safeIndex]);
+
+  useLayoutEffect(() => {
+    if (n === 0 || expanded) return undefined;
+    const el = quoteRef.current;
+    if (!el) return undefined;
+
+    const update = () => {
+      setHasOverflow(el.scrollHeight > el.clientHeight + 2);
+    };
+
+    update();
+    let innerFrame = 0;
+    const outerFrame = requestAnimationFrame(() => {
+      innerFrame = requestAnimationFrame(update);
+    });
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => {
+      cancelAnimationFrame(outerFrame);
+      cancelAnimationFrame(innerFrame);
+      ro.disconnect();
+    };
+  }, [n, safeIndex, expanded, visible, quoteKey]);
+
   if (n === 0) {
     return null;
   }
 
-  const safeIndex = Math.min(activeIndex, n - 1);
   const current = list[safeIndex];
   const slideId = "testimonial-slide";
   const showNav = n > 1;
@@ -111,7 +143,7 @@ export default function Testimonial({ testimonials }) {
 
           <div
             id={slideId}
-            className={styles.slide}
+            className={`${styles.slide} ${expanded ? styles.slideExpanded : ""}`}
             aria-live="polite"
             aria-atomic="true"
           >
@@ -128,9 +160,13 @@ export default function Testimonial({ testimonials }) {
             ) : (
               <div className={styles.portraitSpacer} aria-hidden />
             )}
-            <div className={styles.quoteSlot}>
+            <div
+              className={`${styles.quoteSlot} ${expanded ? styles.quoteSlotExpanded : ""} ${hasOverflow ? styles.quoteSlotWithExpand : ""}`}
+            >
               <blockquote
-                className={styles.quote}
+                ref={quoteRef}
+                id={`${slideId}-quote`}
+                className={`${styles.quote} ${expanded ? styles.quoteExpanded : ""}`}
                 title={current.quote}
               >
                 <span className={styles.quoteOpen} aria-hidden>
@@ -142,6 +178,17 @@ export default function Testimonial({ testimonials }) {
                 </span>
               </blockquote>
             </div>
+            {hasOverflow ? (
+              <button
+                type="button"
+                className={styles.expandBtn}
+                aria-expanded={expanded}
+                aria-controls={`${slideId}-quote`}
+                onClick={() => setExpanded((v) => !v)}
+              >
+                {expanded ? "See less" : "See more"}
+              </button>
+            ) : null}
             <p className={styles.cite}>
               <strong>{current.name}</strong>, {current.title}
             </p>

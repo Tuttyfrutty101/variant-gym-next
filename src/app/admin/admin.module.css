@@ -287,3 +287,84 @@
 .addNew {
   margin-bottom: 2rem;
 }
+
+.scheduleTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+}
+
+.scheduleTab {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid rgba(var(--carbon-rgb), 0.18);
+  border-radius: 2px;
+  background: var(--paper);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.scheduleTab:hover {
+  border-color: rgba(var(--carbon-rgb), 0.35);
+  color: var(--carbon);
+}
+
+.scheduleTabActive {
+  border-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.08);
+  color: var(--carbon);
+}
+
+.scheduleDayBlock {
+  margin-bottom: 1.5rem;
+}
+
+.scheduleDayTitle {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.classRowCard {
+  border: 1px solid rgba(var(--carbon-rgb), 0.12);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: var(--paper);
+}
+
+.mutedSmall {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.secondaryOutline {
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+  align-self: flex-start;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.55rem 1rem;
+  border: 1px solid rgba(var(--carbon-rgb), 0.28);
+  background: transparent;
+  color: var(--carbon);
+  cursor: pointer;
+}
+
+.secondaryOutline:hover {
+  border-color: var(--carbon);
+  background: rgba(var(--carbon-rgb), 0.04);
+}

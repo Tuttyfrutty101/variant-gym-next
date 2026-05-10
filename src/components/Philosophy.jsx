@@ -19,7 +19,7 @@ export default function Philosophy() {
         </h2>
         <p className={styles.body}>
           Unlimited Open Training, flexible 1:1 &amp; small group privates, and
-          amenities to relax and rejuvenate. A fresh new standard of health and
+          exclusive amenities to relax and rejuvenate. A fresh new take on health and
           wellness.
         </p>
         <Link href="/membership" className={styles.cta}>

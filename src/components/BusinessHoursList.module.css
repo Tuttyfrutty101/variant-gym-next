@@ -94,6 +94,16 @@
   padding: 0.25rem 0;
 }
 
+:global(.homeMarketingDark) .contactTone .day {
+  color: rgba(var(--stone-rgb), 0.95);
+  border-bottom-color: rgba(var(--stone-rgb), 0.28);
+}
+
+:global(.homeMarketingDark) .contactTone .hours {
+  color: rgba(var(--stone-rgb), 0.78);
+  border-bottom-color: rgba(var(--stone-rgb), 0.28);
+}
+
 .onAccent .day {
   color: var(--linen);
 }

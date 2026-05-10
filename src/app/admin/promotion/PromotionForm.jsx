@@ -15,10 +15,11 @@ const MAX = {
 
 const CTA_HREF = "#contact";
 
-/** @param {{ initial: Record<string, string> & { id: string } | null }} props */
+/** @param {{ initial: Record<string, string | boolean> & { id: string; visible?: boolean } | null }} props */
 export default function PromotionForm({ initial }) {
   const { showSnackbar } = useAdminSnackbar();
   const [id, setId] = useState(initial?.id ?? null);
+  const [visible, setVisible] = useState(initial?.visible !== false);
   const [badge, setBadge] = useState(initial?.badge ?? "");
   const [title, setTitle] = useState(initial?.title ?? "");
   const [body, setBody] = useState(initial?.body ?? "");
@@ -38,6 +39,7 @@ export default function PromotionForm({ initial }) {
         fine_print: fine_print.trim().slice(0, MAX.fine_print),
         cta_label: cta_label.trim().slice(0, MAX.cta_label),
         cta_href: CTA_HREF,
+        visible,
       };
 
       if (id) {
@@ -69,6 +71,24 @@ export default function PromotionForm({ initial }) {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
+      <div className={styles.field}>
+        <div className={styles.checkboxRow} style={{ marginTop: "0.15rem" }}>
+          <input
+            id="promo-visible"
+            type="checkbox"
+            checked={visible}
+            onChange={(e) => setVisible(e.target.checked)}
+          />
+          <label htmlFor="promo-visible">Show promo block on homepage</label>
+        </div>
+        <p
+          className={styles.lead}
+          style={{ marginTop: "0.45rem", marginBottom: 0, fontSize: "0.78rem" }}
+        >
+          When off, the promo band is hidden on the public site (content is
+          saved for next time).
+        </p>
+      </div>
       <div className={styles.field}>
         <label htmlFor="promo-badge">Badge</label>
         <input

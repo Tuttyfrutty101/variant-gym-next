@@ -21,7 +21,6 @@ export default function Hero() {
           <source src={HERO_VIDEO_MP4} type="video/mp4" />
         </video>
       </div>
-      <div className={styles.overlay} aria-hidden />
 
       <div className={styles.inner}>
         <p className={styles.tag}>Santa Barbara&apos;s Premier Training Facility</p>

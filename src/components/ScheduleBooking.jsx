@@ -8,7 +8,7 @@ export default function ScheduleBooking() {
   return (
     <div className={styles.page}>
       <header className={styles.intro}>
-        <p className={styles.kicker}>Schedule</p>
+        <p className={styles.kicker}>Consultation</p>
         <h1 className={styles.title}>Book a consultation</h1>
         <p className={styles.lead}>
           Non-members can reserve a consultation through our booking portal. Use

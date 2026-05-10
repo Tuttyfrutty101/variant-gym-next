@@ -1,4 +1,5 @@
 import Contact from "@/components/Contact";
+import DigitalAccessSection from "@/components/DigitalAccessSection";
 import ExploreCarousel from "@/components/ExploreCarousel";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
@@ -21,15 +22,18 @@ export default async function Home() {
   const site = await getSiteContent();
 
   return (
-    <>
+    <main className="homeMarketingDark">
       <Hero />
       <Philosophy />
       <TrainingOfferings />
+      <DigitalAccessSection />
       <ExploreCarousel />
-      <SpringPromo promotion={site.promotion} />
+      {site.promotion.visible !== false ? (
+        <SpringPromo promotion={site.promotion} />
+      ) : null}
       <Testimonial testimonials={testimonials} />
       <Contact contactInfo={site.contact} hours={site.hours} />
       <Footer />
-    </>
+    </main>
   );
 }

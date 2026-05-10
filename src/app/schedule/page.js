@@ -1,17 +1,22 @@
+import ClassSchedule from "@/components/ClassSchedule";
 import Footer from "@/components/Footer";
-import ScheduleBooking from "@/components/ScheduleBooking";
+import { getClassSchedule } from "@/lib/siteContent";
 
 export const metadata = {
   title: "Schedule",
   description:
-    "Book a consultation at Variant Training Lab — reserve a time through our online scheduler for non-members in Santa Barbara.",
+    "View Variant Training Lab class offerings by day — times and class names updated regularly.",
 };
 
-export default function SchedulePage() {
+export const revalidate = 60;
+
+export default async function SchedulePage() {
+  const days = await getClassSchedule();
+
   return (
     <>
       <main className="siteBelowNav">
-        <ScheduleBooking />
+        <ClassSchedule days={days} />
       </main>
       <Footer />
     </>

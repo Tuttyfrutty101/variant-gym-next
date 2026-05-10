@@ -38,6 +38,7 @@ export const FALLBACK_SITE_CONTENT = {
     finePrint:
       "Offer valid for new memberships through May 26, 2026. Not combinable with other promotions.",
     ctaLabel: "Claim this offer",
+    visible: true,
   },
 };
 
@@ -71,7 +72,7 @@ export async function getSiteContent() {
     supabase.from("site_contact_info").select("address, phone_display, phone_tel, email").limit(1).maybeSingle(),
     supabase
       .from("site_promotion")
-      .select("badge, title, body, fine_print, cta_label")
+      .select("badge, title, body, fine_print, cta_label, visible")
       .limit(1)
       .maybeSingle(),
   ]);
@@ -113,7 +114,62 @@ export async function getSiteContent() {
           body: p.body,
           finePrint: p.fine_print,
           ctaLabel: p.cta_label,
+          visible: p.visible !== false,
         };
 
   return { hours, contact, promotion };
+}
+
+/** @typedef {{ id: string; name: string; time: string }} SiteClassRow */
+
+/**
+ * Weekly class list for /schedule (anon). Safe for Server Components.
+ * @returns {Promise<Array<{ dayIndex: number; weekday: string; classes: SiteClassRow[] }>>}
+ */
+export async function getClassSchedule() {
+  const empty = WEEKDAY_NAMES_MON_FIRST.map((weekday, dayIndex) => ({
+    dayIndex,
+    weekday,
+    classes: [],
+  }));
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (typeof url !== "string" || !url.startsWith("http") || typeof key !== "string") {
+    return empty;
+  }
+
+  const supabase = createClient(url, key);
+  const res = await supabase
+    .from("site_class_schedule")
+    .select("id, day_index, sort_order, class_name, class_time")
+    .order("day_index", { ascending: true })
+    .order("sort_order", { ascending: true });
+
+  if (res.error || !Array.isArray(res.data)) {
+    return empty;
+  }
+
+  /** @type {Map<number, SiteClassRow[]>} */
+  const byDay = new Map(WEEKDAY_NAMES_MON_FIRST.map((_, dayIndex) => [dayIndex, []]));
+
+  for (const row of res.data) {
+    const di = row.day_index;
+    if (typeof di !== "number" || di < 0 || di > 6) continue;
+    const list = byDay.get(di);
+    if (!list) continue;
+    const name = typeof row.class_name === "string" ? row.class_name : "";
+    const time = typeof row.class_time === "string" ? row.class_time : "";
+    list.push({
+      id: typeof row.id === "string" ? row.id : "",
+      name,
+      time,
+    });
+  }
+
+  return WEEKDAY_NAMES_MON_FIRST.map((weekday, dayIndex) => ({
+    dayIndex,
+    weekday,
+    classes: byDay.get(dayIndex) ?? [],
+  }));
 }

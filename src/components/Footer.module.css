@@ -87,3 +87,21 @@
     align-items: stretch;
   }
 }
+
+:global(.homeMarketingDark) .footer {
+  background: var(--carbon);
+  border-top-color: rgba(var(--stone-rgb), 0.28);
+}
+
+:global(.homeMarketingDark) .logo {
+  color: var(--linen);
+}
+
+:global(.homeMarketingDark) .nav a {
+  color: rgba(var(--stone-rgb), 0.88);
+}
+
+:global(.homeMarketingDark) .copy {
+  border-top-color: rgba(var(--stone-rgb), 0.28);
+  color: rgba(var(--stone-rgb), 0.75);
+}

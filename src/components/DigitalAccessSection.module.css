@@ -1,0 +1,138 @@
+.section {
+  position: relative;
+  padding: clamp(3.25rem, 8vw, 6rem) 1.5rem;
+  background: var(--carbon);
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(var(--accent-rgb), 0.35),
+    var(--accent),
+    rgba(var(--accent-rgb), 0.35),
+    transparent
+  );
+}
+
+.inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
+  gap: clamp(2.25rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.copy {
+  min-width: 0;
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.heading {
+  margin: 0 0 1.15rem;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 3.8vw, 2.45rem);
+  line-height: 1.18;
+  letter-spacing: 0.02em;
+  color: var(--linen);
+}
+
+.lede {
+  margin: 0 0 1.75rem;
+  font-family: var(--sans);
+  font-size: clamp(0.92rem, 2vw, 1.02rem);
+  font-weight: 400;
+  line-height: 1.7;
+  color: rgba(var(--stone-rgb), 0.94);
+  max-width: 34rem;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.85rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--linen);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.cta:hover {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+}
+
+.cta:active {
+  transform: scale(0.98);
+}
+
+.media {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 288px;
+  min-width: 0;
+  justify-self: center;
+}
+
+.video {
+  width: 100%;
+  height: auto;
+  display: block;
+  vertical-align: top;
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    max-width: 28rem;
+  }
+
+  .media {
+    order: -1;
+    max-width: min(288px, 78vw);
+  }
+
+  .copy {
+    text-align: center;
+  }
+
+  .lede {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta {
+    width: 100%;
+    max-width: 20rem;
+    box-sizing: border-box;
+  }
+}

@@ -36,6 +36,11 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--linen);
+}
+
+html:has(.homeMarketingDark) {
+  background: var(--carbon);
 }
 
 body {
@@ -86,7 +91,8 @@ body:has(.homeMarketingDark) h2 {
 
 /* Offset fixed navbar on inner routes (home uses full-bleed hero). */
 .siteBelowNav {
-  padding-top: calc(5.25rem + env(safe-area-inset-top, 0px));
+  padding-top: calc(6.5rem + constant(safe-area-inset-top));
+  padding-top: calc(6.5rem + env(safe-area-inset-top, 0px));
 }
 
 body::after {

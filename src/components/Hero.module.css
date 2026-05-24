@@ -10,8 +10,13 @@
 
 .bgLayer {
   position: absolute;
-  inset: 0;
   z-index: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Keep hero media out of the notch; navbar + html bg cover that band */
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top, 0px);
 }
 
 .bgVideo {

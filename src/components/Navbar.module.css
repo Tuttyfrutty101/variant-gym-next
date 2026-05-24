@@ -16,8 +16,10 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  /* Background fills the notch; .inner sits below safe-area-inset-top */
-  padding-top: calc(1rem + env(safe-area-inset-top, 0px));
+  display: flex;
+  flex-direction: column;
+  /* Horizontal + bottom padding; safe-area strip is .safeAreaTop */
+  padding-top: 0;
   padding-right: max(1.5rem, env(safe-area-inset-right, 0px));
   padding-bottom: 1rem;
   padding-left: max(1.5rem, env(safe-area-inset-left, 0px));
@@ -27,6 +29,32 @@
     box-shadow 0.35s ease;
   background: var(--linen);
   border-bottom: 1px solid transparent;
+}
+
+/* Opaque fill in the notch / status-bar region (content stays in .inner below) */
+.safeAreaTop {
+  flex-shrink: 0;
+  width: 100%;
+  height: constant(safe-area-inset-top);
+  height: env(safe-area-inset-top, 0px);
+  min-height: constant(safe-area-inset-top);
+  min-height: env(safe-area-inset-top, 0px);
+  background: inherit;
+}
+
+.inner {
+  position: relative;
+  z-index: 4;
+  flex-shrink: 0;
+  width: 100%;
+  padding-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .navbar.scrolled,
@@ -48,17 +76,6 @@
 
 .navbar.menuOpen .inner {
   z-index: 1;
-}
-
-.inner {
-  position: relative;
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  max-width: 1280px;
-  margin: 0 auto;
 }
 
 .logo {

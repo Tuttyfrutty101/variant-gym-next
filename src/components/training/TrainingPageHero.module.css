@@ -11,8 +11,12 @@
 
 .heroBg {
   position: absolute;
-  inset: 0;
   z-index: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top, 0px);
   overflow: hidden;
 }
 
@@ -29,8 +33,12 @@
 
 .heroOverlay {
   position: absolute;
-  inset: 0;
   z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top, 0px);
   background:
     linear-gradient(
       165deg,

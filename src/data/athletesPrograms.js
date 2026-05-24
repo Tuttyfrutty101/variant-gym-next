@@ -29,6 +29,4 @@ export const ATHLETES_PROGRAMS = [
   },
 ];
 
-export const TYLER_BOYD_VIDEO = encodeURI(
-  "/videos/Tyler Boyd pro athlete landscape.mp4",
-);
+export { TYLER_BOYD_VIDEO } from "@/data/siteVideos";

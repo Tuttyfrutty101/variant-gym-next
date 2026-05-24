@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useInView } from "@/hooks/useInView";
 import PhysicalTherapyOfferings from "@/components/physical-therapy/PhysicalTherapyOfferings";
 import PhysicalTherapyGallery from "@/components/physical-therapy/PhysicalTherapyGallery";
+import { TREAT_EXPLAINED_VIDEO } from "@/data/siteVideos";
 import styles from "./PhysicalTherapy.module.css";
 
 const HERO_IMG = encodeURI(
@@ -12,8 +13,6 @@ const HERO_IMG = encodeURI(
 );
 
 const DETAIL_IMG = "/images/DSC02846.jpg";
-
-const TREAT_VIDEO = encodeURI("/videos/variant Treat explained landscape.mp4");
 
 export default function PhysicalTherapy() {
   const [heroRef, heroVisible] = useInView();
@@ -116,7 +115,7 @@ export default function PhysicalTherapy() {
               preload="metadata"
               aria-label="Variant Treat explained"
             >
-              <source src={TREAT_VIDEO} type="video/mp4" />
+              <source src={TREAT_EXPLAINED_VIDEO} type="video/mp4" />
             </video>
           </div>
         </div>

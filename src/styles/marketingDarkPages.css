@@ -170,23 +170,19 @@
   background: rgba(var(--linen-rgb), 0.04);
 }
 
-.homeMarketingDark [class*="arrow"] {
+.homeMarketingDark [class*="_arrow__"],
+.homeMarketingDark [class*="_arrowPrev__"],
+.homeMarketingDark [class*="_arrowNext__"] {
   background: rgba(var(--linen-rgb), 0.1);
   border-color: rgba(var(--linen-rgb), 0.22);
   color: var(--linen);
 }
 
-.homeMarketingDark [class*="arrow"]:hover {
+.homeMarketingDark [class*="_arrow__"]:hover,
+.homeMarketingDark [class*="_arrowPrev__"]:hover,
+.homeMarketingDark [class*="_arrowNext__"]:hover {
   background: rgba(var(--linen-rgb), 0.16);
   border-color: rgba(var(--linen-rgb), 0.35);
-}
-
-.homeMarketingDark [class*="dot"] {
-  background: rgba(var(--linen-rgb), 0.25);
-}
-
-.homeMarketingDark [class*="dotActive"] {
-  background: var(--accent);
 }
 
 .homeMarketingDark [class*="SimpleMarketingSection_body"],

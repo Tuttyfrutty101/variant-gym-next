@@ -5,6 +5,12 @@ const siteName = "Variant Training Lab";
 const tagline = "Do what you love. Enjoy it for a lifetime.";
 const address = "314 Anacapa St, Santa Barbara, CA 93101";
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata = {
   metadataBase: new URL("https://varianttraininglab.com"),
   title: {

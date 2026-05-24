@@ -16,7 +16,11 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 1rem 1.5rem;
+  /* Background fills the notch; .inner sits below safe-area-inset-top */
+  padding-top: calc(1rem + env(safe-area-inset-top, 0px));
+  padding-right: max(1.5rem, env(safe-area-inset-right, 0px));
+  padding-bottom: 1rem;
+  padding-left: max(1.5rem, env(safe-area-inset-left, 0px));
   color: var(--carbon);
   transition:
     border-color 0.35s ease,

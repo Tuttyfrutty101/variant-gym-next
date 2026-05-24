@@ -273,9 +273,33 @@
   }
 }
 
-/* Light band between dark marketing sections (#carbon above) and contact (#deep) below */
+/* Dark marketing shell — keep testimonial band consistent with page */
 :global(.homeMarketingDark) .section {
-  background: var(--paper);
-  border-top: 1px solid rgba(var(--carbon-rgb), 0.08);
-  border-bottom: 1px solid rgba(var(--carbon-rgb), 0.08);
+  background: var(--carbon);
+  border-top: 1px solid rgba(var(--linen-rgb), 0.08);
+  border-bottom: 1px solid rgba(var(--linen-rgb), 0.08);
+}
+
+:global(.homeMarketingDark) .quote {
+  color: var(--linen);
+}
+
+:global(.homeMarketingDark) .cite {
+  color: rgba(var(--stone-rgb), 0.88);
+}
+
+:global(.homeMarketingDark) .cite strong {
+  color: var(--linen);
+}
+
+:global(.homeMarketingDark) .dot {
+  background: rgba(var(--linen-rgb), 0.4);
+}
+
+:global(.homeMarketingDark) .dot:hover {
+  background: rgba(var(--linen-rgb), 0.58);
+}
+
+:global(.homeMarketingDark) .dotActive {
+  background: var(--accent);
 }

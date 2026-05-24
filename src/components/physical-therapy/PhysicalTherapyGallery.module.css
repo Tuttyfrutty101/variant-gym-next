@@ -166,6 +166,18 @@
   outline-offset: 3px;
 }
 
+:global(.homeMarketingDark) .dot {
+  background: rgba(var(--linen-rgb), 0.4);
+}
+
+:global(.homeMarketingDark) .dot:hover {
+  background: rgba(var(--linen-rgb), 0.58);
+}
+
+:global(.homeMarketingDark) .dotActive {
+  background: var(--accent);
+}
+
 @media (max-width: 767px) {
   .carousel {
     padding: 0 clamp(2rem, 6vw, 2.5rem);

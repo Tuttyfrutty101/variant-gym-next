@@ -86,7 +86,7 @@ body:has(.homeMarketingDark) h2 {
 
 /* Offset fixed navbar on inner routes (home uses full-bleed hero). */
 .siteBelowNav {
-  padding-top: 5.25rem;
+  padding-top: calc(5.25rem + env(safe-area-inset-top, 0px));
 }
 
 body::after {

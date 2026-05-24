@@ -12,24 +12,21 @@ export const TRAINING_FORMATS = [
     id: "signature-classes",
     title: "Signature Classes",
     text: "Unlimited signature classes, 30–60 minutes.",
-    image:
-      "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1200&q=80",
-    imageAlt: "Group fitness class in session",
+    image: "/images/DSC02033.jpg",
+    imageAlt: "Signature class at Variant Training Lab",
   },
   {
     id: "small-group-privates",
     title: "Small Group Privates",
     text: "Coach-led small groups with tailored programming and performance assessments.",
-    image:
-      "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1200&q=80",
-    imageAlt: "Small group strength training",
+    image: "/images/DSC02099.jpg",
+    imageAlt: "Small group private training at Variant Training Lab",
   },
   {
     id: "open-training",
     title: "Open Training",
     text: "Train on your terms. Open Monday–Saturday.",
-    image:
-      "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=1200&q=80",
-    imageAlt: "Open gym floor with racks and equipment",
+    image: "/images/DSC02465.jpg",
+    imageAlt: "Open training at Variant Training Lab",
   },
 ];

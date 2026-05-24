@@ -5,16 +5,14 @@ import Link from "next/link";
 import { useInView } from "@/hooks/useInView";
 import styles from "./ExclusiveAmenities.module.css";
 
-const HERO_BG =
-  "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1800&q=80";
+const HERO_BG = "/images/sauna.jpg";
 
 const HIGHLIGHTS = [
   {
-    title: "Premium locker rooms",
+    title: "Premium locker room",
     text: "Spacious suites, secure storage, and calm arrivals — every visit feels considered.",
-    image:
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf45?w=900&q=80",
-    imageAlt: "Premium locker room benches and wood lockers",
+    image: "/images/5b1677cbaa226dd64d79cff7a5a4f3c5.jpg",
+    imageAlt: "Premium locker room at Variant Training Lab",
   },
   {
     title: "Cold plunge",
@@ -44,9 +42,8 @@ const HIGHLIGHTS = [
   {
     title: "And more",
     text: "Towel service, hydration bar, premium showers, lounge space, and concierge support — details that stay out of your way.",
-    image:
-      "https://images.unsplash.com/photo-1497366216548-375260702974?w=900&q=80",
-    imageAlt: "Bright modern lounge with seating",
+    image: encodeURI("/images/Screenshot 2026-05-23 at 7.09.40 PM.png"),
+    imageAlt: "Variant Training Lab lounge and amenities",
   },
 ];
 
@@ -69,8 +66,8 @@ export default function ExclusiveAmenities() {
         <div className={styles.heroInner}>
           <h1 className={styles.heroMainTitle}>Exclusive amenities</h1>
           <p className={styles.heroSupport}>
-            Our recovery services deliver spa-like care that feels luxurious, calming,
-            and intentionally designed to help your body reset, restore, and feel its best.
+            Discover private recovery services designed to help your body reset,
+            restore, and feel its best.
           </p>
           <div className={styles.heroActions}>
             <Link href="/contact" className={styles.ctaPrimary}>
@@ -88,7 +85,7 @@ export default function ExclusiveAmenities() {
       >
         <div className={styles.sectionInner}>
           <h2 id="amenities-heading" className={styles.sectionHeading}>
-            What membership unlocks
+            Included Monthly
           </h2>
           <div className={styles.grid}>
             {HIGHLIGHTS.map((item) => (

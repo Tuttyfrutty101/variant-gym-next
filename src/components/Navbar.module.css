@@ -59,10 +59,18 @@
 
 .logo {
   flex-shrink: 0;
+  min-width: 0;
   text-decoration: none;
   color: inherit;
   display: flex;
   align-items: center;
+  gap: 0.65rem;
+  line-height: 1.15;
+}
+
+.logoMark {
+  display: flex;
+  flex-shrink: 0;
   line-height: 0;
 }
 
@@ -71,6 +79,21 @@
   height: clamp(2.2rem, 6.875vw, 3.575rem);
   width: auto;
   max-width: min(calc(72vw * 1.1), 462px);
+}
+
+.logoWordmark {
+  flex-shrink: 1;
+  min-width: 0;
+  font-family: var(--sans);
+  font-size: clamp(0.78rem, 2.15vw, 0.98rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--carbon);
+}
+
+.logoWordmarkAccent {
+  color: var(--accent);
 }
 
 .actions {
@@ -279,10 +302,59 @@
   }
 }
 
-/* Home — dark marketing theme (carbon / linen / stone) */
+body:has(.homeMarketingDark) .navbar {
+  color: var(--linen);
+  background: var(--carbon);
+}
+
+body:has(.homeMarketingDark) .navbar .logoWordmark {
+  color: var(--linen);
+}
+
+body:has(.homeMarketingDark) .navbar.scrolled,
+body:has(.homeMarketingDark) .navbar.menuOpen {
+  border-bottom-color: rgba(var(--stone-rgb), 0.35);
+  box-shadow: 0 4px 28px rgba(0, 0, 0, 0.35);
+}
+
+body:has(.homeMarketingDark) .navbar .menuBtn {
+  border-color: rgba(var(--linen-rgb), 0.22);
+  background: rgba(var(--linen-rgb), 0.08);
+  color: var(--linen);
+}
+
+body:has(.homeMarketingDark) .navbar .menuBtn:hover {
+  border-color: rgba(var(--accent-rgb), 0.55);
+  background: rgba(var(--linen-rgb), 0.12);
+}
+
+body:has(.homeMarketingDark) .navbar .menuBackdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+body:has(.homeMarketingDark) .navbar .menuNav {
+  background: linear-gradient(165deg, #2a2a2a 0%, var(--carbon) 100%);
+  border-left-color: rgba(var(--stone-rgb), 0.35);
+  box-shadow: -12px 0 48px rgba(0, 0, 0, 0.4);
+}
+
+body:has(.homeMarketingDark) .navbar .menuLink {
+  color: var(--stone);
+  border-bottom-color: rgba(var(--stone-rgb), 0.22);
+}
+
+body:has(.homeMarketingDark) .navbar .menuLink:hover {
+  color: var(--linen);
+}
+
+/* Dark marketing navbar (home + training shell): carbon bar, linen type, drawer theme */
 .navbar.onDarkHome {
   color: var(--linen);
   background: var(--carbon);
+}
+
+.navbar.onDarkHome .logoWordmark {
+  color: var(--linen);
 }
 
 .navbar.onDarkHome.scrolled,

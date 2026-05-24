@@ -15,10 +15,10 @@ export default async function ContactPage() {
 
   return (
     <>
-      <main className="siteBelowNav">
+      <main className="homeMarketingDark siteBelowNav">
         <Contact contactInfo={site.contact} hours={site.hours} />
+        <Footer />
       </main>
-      <Footer />
     </>
   );
 }

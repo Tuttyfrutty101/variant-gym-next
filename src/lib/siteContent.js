@@ -120,7 +120,7 @@ export async function getSiteContent() {
   return { hours, contact, promotion };
 }
 
-/** @typedef {{ id: string; name: string; time: string }} SiteClassRow */
+/** @typedef {{ id: string; name: string; time: string; imageUrl: string | null }} SiteClassRow */
 
 /**
  * Weekly class list for /schedule (anon). Safe for Server Components.
@@ -142,7 +142,7 @@ export async function getClassSchedule() {
   const supabase = createClient(url, key);
   const res = await supabase
     .from("site_class_schedule")
-    .select("id, day_index, sort_order, class_name, class_time")
+    .select("id, day_index, sort_order, class_name, class_time, image_url")
     .order("day_index", { ascending: true })
     .order("sort_order", { ascending: true });
 
@@ -160,10 +160,15 @@ export async function getClassSchedule() {
     if (!list) continue;
     const name = typeof row.class_name === "string" ? row.class_name : "";
     const time = typeof row.class_time === "string" ? row.class_time : "";
+    const imageUrl =
+      typeof row.image_url === "string" && row.image_url.trim().length > 0
+        ? row.image_url.trim()
+        : null;
     list.push({
       id: typeof row.id === "string" ? row.id : "",
       name,
       time,
+      imageUrl,
     });
   }
 

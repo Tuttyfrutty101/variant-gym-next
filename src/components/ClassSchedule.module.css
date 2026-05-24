@@ -25,7 +25,7 @@
   font-size: clamp(1.75rem, 4vw, 2.35rem);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--carbon);
+  color: var(--linen);
   margin: 0 0 1rem;
   line-height: 1.15;
 }
@@ -34,14 +34,24 @@
   font-family: var(--sans);
   font-size: clamp(0.94rem, 2vw, 1.02rem);
   line-height: 1.65;
-  color: var(--text-muted);
+  color: rgba(var(--stone-rgb), 0.88);
   margin: 0;
+}
+
+.hoursNote {
+  margin: 0.65rem 0 0;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  line-height: 1.45;
+  color: rgba(var(--stone-rgb), 0.75);
 }
 
 .tabsWrap {
   max-width: 720px;
   margin: 0 auto;
   padding: 0 1.5rem;
+  background: transparent;
+  border: none;
 }
 
 .tabList {
@@ -52,6 +62,8 @@
   padding-bottom: 0.35rem;
   margin-bottom: 1.25rem;
   scrollbar-width: thin;
+  background: transparent;
+  border: none;
 }
 
 .tab {
@@ -62,10 +74,10 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 0.55rem 0.85rem;
-  border: 1px solid rgba(var(--carbon-rgb), 0.18);
+  border: 1px solid rgba(var(--linen-rgb), 0.15);
   border-radius: 2px;
-  background: var(--paper);
-  color: var(--text-muted);
+  background: rgba(var(--linen-rgb), 0.06);
+  color: rgba(var(--stone-rgb), 0.88);
   cursor: pointer;
   transition:
     border-color 0.2s ease,
@@ -74,14 +86,14 @@
 }
 
 .tab:hover {
-  border-color: rgba(var(--carbon-rgb), 0.35);
-  color: var(--carbon);
+  border-color: rgba(var(--linen-rgb), 0.28);
+  color: var(--linen);
 }
 
 .tabActive {
   border-color: var(--accent);
-  background: rgba(var(--accent-rgb), 0.08);
-  color: var(--carbon);
+  background: rgba(var(--accent-rgb), 0.15);
+  color: var(--linen);
 }
 
 .tabShort {
@@ -132,16 +144,41 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  border-top: 1px solid rgba(var(--carbon-rgb), 0.12);
+  border-top: 1px solid rgba(var(--linen-rgb), 0.12);
 }
 
 .row {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 1rem 1.25rem;
-  align-items: baseline;
+  align-items: center;
   padding: 0.95rem 0;
-  border-bottom: 1px solid rgba(var(--carbon-rgb), 0.08);
+  border-bottom: 1px solid rgba(var(--linen-rgb), 0.08);
+}
+
+.classMain {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.classPhoto,
+.classPhotoPlaceholder {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.classPhoto {
+  object-fit: cover;
+  background: rgba(var(--linen-rgb), 0.08);
+}
+
+.classPhotoPlaceholder {
+  background: rgba(var(--linen-rgb), 0.08);
+  border: 1px solid rgba(var(--linen-rgb), 0.12);
 }
 
 .className {
@@ -149,7 +186,7 @@
   font-weight: 600;
   font-size: 0.98rem;
   letter-spacing: 0.02em;
-  color: var(--carbon);
+  color: var(--linen);
 }
 
 .classTime {
@@ -168,5 +205,6 @@
 
   .classTime {
     text-align: left;
+    padding-left: calc(2.75rem + 0.85rem);
   }
 }

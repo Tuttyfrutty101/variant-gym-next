@@ -6,12 +6,12 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useId, useState } from "react";
 import styles from "./Navbar.module.css";
 
-const LOGO_WHITE = "/logos/VTL_White_Horizontal-01.png";
-const LOGO_BLACK = "/logos/VTL_Black_Horizontal-01.png";
+const LOGO_CIRC_WHITE = "/logos/VTL_Circ_White-01.png";
+const LOGO_CIRC_BLACK = "/logos/VTL_Circ_Black-01.jpg";
 
-/** Intrinsic pixels (~2.80:1); display size controlled in CSS */
-const LOGO_WIDTH = 364;
-const LOGO_HEIGHT = 130;
+/** Intrinsic pixels (~1:1 circle mark); display size controlled in CSS */
+const LOGO_MARK_WIDTH = 1255;
+const LOGO_MARK_HEIGHT = 1240;
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -22,13 +22,13 @@ const NAV_LINKS = [
   { label: "Athletes", href: "/athletes" },
   { label: "Membership", href: "/membership" },
   { label: "Schedule", href: "/schedule" },
-  { label: "Consultation", href: "/consultation" },
   { label: "Contact Us", href: "/contact" },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
-  const onDarkHome = pathname === "/";
+  const darkMarketingNav =
+    pathname != null && !pathname.startsWith("/admin");
   const menuId = useId();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -71,19 +71,25 @@ export default function Navbar() {
 
   return (
     <header
-      className={`${styles.navbar} ${onDarkHome ? styles.onDarkHome : ""} ${scrolled ? styles.scrolled : ""} ${menuOpen ? styles.menuOpen : ""}`}
+      className={`${styles.navbar} ${darkMarketingNav ? styles.onDarkHome : ""} ${scrolled ? styles.scrolled : ""} ${menuOpen ? styles.menuOpen : ""}`}
     >
       <div className={styles.inner} {...(menuOpen ? { inert: "" } : {})}>
         <Link href="/" className={styles.logo} onClick={closeMenu}>
-          <Image
-            src={onDarkHome ? LOGO_WHITE : LOGO_BLACK}
-            alt="Variant Training Lab — Home"
-            width={LOGO_WIDTH}
-            height={LOGO_HEIGHT}
-            className={styles.logoImg}
-            priority
-            sizes="(max-width: 479px) 264px, 418px"
-          />
+          <span className={styles.logoMark}>
+            <Image
+              src={darkMarketingNav ? LOGO_CIRC_WHITE : LOGO_CIRC_BLACK}
+              alt=""
+              width={LOGO_MARK_WIDTH}
+              height={LOGO_MARK_HEIGHT}
+              className={styles.logoImg}
+              priority
+              sizes="(max-width: 479px) 44px, 52px"
+            />
+          </span>
+          <span className={styles.logoWordmark}>
+            Variant{" "}
+            <span className={styles.logoWordmarkAccent}>Training Lab</span>
+          </span>
         </Link>
 
         <div className={styles.actions}>

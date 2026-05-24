@@ -34,6 +34,11 @@
   opacity: 1;
 }
 
+.section.plainDark {
+  background-image: none;
+  background-color: var(--carbon);
+}
+
 .ambientScrim {
   position: absolute;
   inset: 0;
@@ -60,24 +65,6 @@
   pointer-events: none;
   line-height: 1.15;
   max-width: min(22rem, calc(100vw - 1rem));
-}
-
-.section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  z-index: 2;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(var(--accent-rgb), 0.35),
-    var(--accent),
-    rgba(var(--accent-rgb), 0.35),
-    transparent
-  );
 }
 
 /* Training bottom promo: full bleed H; flush bottom of section */

@@ -4,23 +4,6 @@
   background: var(--carbon);
 }
 
-.section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(var(--accent-rgb), 0.35),
-    var(--accent),
-    rgba(var(--accent-rgb), 0.35),
-    transparent
-  );
-}
-
 .inner {
   max-width: 1180px;
   margin: 0 auto;

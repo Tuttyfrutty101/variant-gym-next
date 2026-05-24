@@ -10,10 +10,10 @@ export const metadata = {
 export default function MembershipPage() {
   return (
     <>
-      <main className="siteBelowNav">
+      <main className="homeMarketingDark siteBelowNav">
         <Membership />
+        <Footer />
       </main>
-      <Footer />
     </>
   );
 }

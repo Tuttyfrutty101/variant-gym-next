@@ -10,10 +10,10 @@ export const metadata = {
 export default function HealthPage() {
   return (
     <>
-      <main className="siteBelowNav">
+      <main className="homeMarketingDark siteBelowNav">
         <Health />
+        <Footer />
       </main>
-      <Footer />
     </>
   );
 }

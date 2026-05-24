@@ -3,17 +3,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useInView } from "@/hooks/useInView";
+import PhysicalTherapyOfferings from "@/components/physical-therapy/PhysicalTherapyOfferings";
+import PhysicalTherapyGallery from "@/components/physical-therapy/PhysicalTherapyGallery";
 import styles from "./PhysicalTherapy.module.css";
 
-const HERO_IMG =
-  "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1800&q=80";
+const HERO_IMG = encodeURI(
+  "/images/Screenshot 2026-05-23 at 6.45.37 PM.png",
+);
 
-const DETAIL_IMG =
-  "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&q=80";
+const DETAIL_IMG = "/images/DSC02846.jpg";
+
+const TREAT_VIDEO = encodeURI("/videos/variant Treat explained landscape.mp4");
 
 export default function PhysicalTherapy() {
   const [heroRef, heroVisible] = useInView();
   const [detailRef, detailVisible] = useInView();
+  const [videoRef, videoVisible] = useInView();
 
   return (
     <>
@@ -56,7 +61,7 @@ export default function PhysicalTherapy() {
             <div className={styles.detailsImageWrap}>
               <Image
                 src={DETAIL_IMG}
-                alt=""
+                alt="Dr. Jon Sakoda at Variant Training Lab"
                 fill
                 sizes="(max-width: 767px) 100vw, 42vw"
                 className={styles.detailsImage}
@@ -65,29 +70,61 @@ export default function PhysicalTherapy() {
           </div>
           <div className={styles.detailsCopy}>
             <h2 id="pt-details-heading" className={styles.detailsHeading}>
-              Care that stays in motion with you
+              Meet Dr. Jon Sakoda
             </h2>
             <p className={styles.detailsLead}>
-              Injury rehab, prevention, and performance support — coordinated
-              with your coaches and tracked like everything else at Variant.
+              Jon was born and raised on the beautiful southern shore of Oahu, and moved to Santa Barbara to attend
+              Westmont College in 2005. He then completed his Doctor of Physical
+              Therapy degree at Chapman University in 2013, underwent a year
+              long residency through the USC/Kaiser didactic coursework and
+              curriculum, and became an Orthopedic Clinical Specialist (OCS)
+              shortly thereafter through the American Board of Physical Therapy
+              Specialties (ABPTS). After finishing his studies, Jon moved back to
+              Santa Barbara where he has been practicing physical therapy both
+              at Variant Training Lab and at Hayashida/Sutter Physical Therapy
+              for over a decade.
             </p>
-            <ul className={styles.bullets}>
-              <li>
-                <strong>No external queues</strong> — book directly through your
-                membership team.
-              </li>
-              <li>
-                <strong>Integrated sessions</strong> — therapy notes feed your
-                training plan, not a separate folder.
-              </li>
-              <li>
-                <strong>Transparent continuity</strong> — same facility, same
-                standards, from assessment back to the floor.
-              </li>
-            </ul>
+            <p className={styles.detailsBody}>
+              Jon has a passion for combining evidence-based PT practices with
+              movement analysis and training, helping people move well, feel
+              well, and thrive in whatever their life demands. In today&apos;s
+              world, physical therapy is most often utilized after a body tissue
+              becomes painful. This approach is excellent for uncovering root
+              causes of pain and finding permanent solutions. However, most
+              people don&apos;t think to seek out PT when they are healthy and
+              not in pain. A large part of Jon&apos;s focus at Variant Training
+              Lab is injury prevention, which includes identifying movement
+              dysfunction before problems occur. Physical Therapists are
+              movement experts, and correctly and accurately identifying
+              movement dysfunction plays a vital role in injury prevention.
+            </p>
           </div>
         </div>
       </section>
+
+      <section
+        ref={videoRef}
+        className={`${styles.treatVideo} ${videoVisible ? styles.visible : ""}`}
+        aria-label="Variant Treat explained"
+      >
+        <div className={styles.treatVideoInner}>
+          <div className={styles.treatVideoFrame}>
+            <video
+              className={styles.treatVideoPlayer}
+              controls
+              playsInline
+              preload="metadata"
+              aria-label="Variant Treat explained"
+            >
+              <source src={TREAT_VIDEO} type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      </section>
+
+      <PhysicalTherapyOfferings />
+
+      <PhysicalTherapyGallery />
     </>
   );
 }

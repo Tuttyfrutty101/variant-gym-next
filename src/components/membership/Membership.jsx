@@ -1,17 +1,65 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import styles from "./Membership.module.css";
 
-const HERO_BG =
-  "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1800&q=80";
+const HERO_BG = "/images/DSC02866-Edit.jpg";
 
 const ONBOARDING = [
-  { title: "Baseline testing", detail: "1 hour" },
-  { title: "Medical assessments", detail: "1 hour" },
-  { title: "1:1 Introductory session", detail: "1 hour" },
+  {
+    title: "Baseline testing",
+    detail: "1 hour",
+    description:
+      "Every program begins with expert-guided assessments designed to evaluate performance, biomechanics, and overall readiness.",
+  },
+  {
+    title: "Physical Therapy",
+    detail: "1 hour",
+    description:
+      "Quick test: Head to toe SMART screen assessing mobility and asymmetry. Address any concerns and previous medical history.",
+  },
+  {
+    title: "1:1 Introductory Session",
+    detail: "1 hour",
+    description:
+      "Review data results, discuss goals, and program design.",
+  },
 ];
+
+function OnboardingFlipCard({ item }) {
+  const [flipped, setFlipped] = useState(false);
+
+  return (
+    <li className={styles.onboardingItem}>
+      <button
+        type="button"
+        className={`${styles.flipCard} ${flipped ? styles.flipCardFlipped : ""}`}
+        onClick={() => setFlipped((v) => !v)}
+        aria-pressed={flipped}
+        aria-label={`${item.title}, ${item.detail}. ${flipped ? "Hide" : "Show"} details`}
+      >
+        <span className={styles.flipInner}>
+          <span className={styles.flipFront}>
+            <span className={styles.onboardingDuration}>{item.detail}</span>
+            <span className={styles.onboardingLabel}>{item.title}</span>
+            <span className={styles.flipHint} aria-hidden>
+              Tap to learn more
+            </span>
+          </span>
+          <span className={styles.flipBack}>
+            <span className={styles.onboardingBackLabel}>{item.title}</span>
+            <span className={styles.onboardingDescription}>{item.description}</span>
+            <span className={styles.flipHint} aria-hidden>
+              Tap to flip back
+            </span>
+          </span>
+        </span>
+      </button>
+    </li>
+  );
+}
 
 const MONTHLY_BENEFITS = [
   { text: "Unlimited Open Training" },
@@ -73,10 +121,7 @@ export default function Membership() {
           </h2>
           <ul className={styles.onboardingGrid}>
             {ONBOARDING.map((item) => (
-              <li key={item.title} className={styles.onboardingCard}>
-                <span className={styles.onboardingDuration}>{item.detail}</span>
-                <span className={styles.onboardingLabel}>{item.title}</span>
-              </li>
+              <OnboardingFlipCard key={item.title} item={item} />
             ))}
           </ul>
         </div>

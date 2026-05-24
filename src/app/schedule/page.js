@@ -15,10 +15,10 @@ export default async function SchedulePage() {
 
   return (
     <>
-      <main className="siteBelowNav">
+      <main className="homeMarketingDark siteBelowNav">
         <ClassSchedule days={days} />
+        <Footer />
       </main>
-      <Footer />
     </>
   );
 }

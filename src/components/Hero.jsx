@@ -27,12 +27,14 @@ export default function Hero() {
 
         <h1 className={styles.title}>Variant Training Lab</h1>
 
+        <p className={styles.strapline}>One Life. One Membership.</p>
+
         <div className={styles.actions}>
           <a href="#contact" className={styles.btnPrimary}>
             Schedule a Tour
           </a>
           <Link href="/membership" className={styles.btnSecondary}>
-            Explore Services
+            Explore Membership
           </Link>
         </div>
       </div>

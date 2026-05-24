@@ -273,37 +273,9 @@
   }
 }
 
+/* Light band between dark marketing sections (#carbon above) and contact (#deep) below */
 :global(.homeMarketingDark) .section {
-  background: var(--carbon);
-}
-
-:global(.homeMarketingDark) .quote {
-  color: var(--linen);
-}
-
-:global(.homeMarketingDark) .cite {
-  color: rgba(var(--stone-rgb), 0.92);
-}
-
-:global(.homeMarketingDark) .cite strong {
-  color: var(--linen);
-}
-
-:global(.homeMarketingDark) .arrow {
-  border-color: rgba(var(--stone-rgb), 0.45);
-  background: rgba(var(--linen-rgb), 0.08);
-  color: var(--linen);
-}
-
-:global(.homeMarketingDark) .arrow:hover {
-  background: rgba(var(--linen-rgb), 0.14);
-  border-color: rgba(var(--stone-rgb), 0.65);
-}
-
-:global(.homeMarketingDark) .dot {
-  background: rgba(var(--linen-rgb), 0.18);
-}
-
-:global(.homeMarketingDark) .dot:hover {
-  background: rgba(var(--linen-rgb), 0.32);
+  background: var(--paper);
+  border-top: 1px solid rgba(var(--carbon-rgb), 0.08);
+  border-bottom: 1px solid rgba(var(--carbon-rgb), 0.08);
 }

@@ -2,15 +2,25 @@
 
 import { useState } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import TestimonialImageUpload from "../testimonials/TestimonialImageUpload";
 import { useAdminSnackbar } from "../AdminSnackbarContext";
 import styles from "../admin.module.css";
+
+function newClassRow() {
+  return {
+    clientKey: crypto.randomUUID(),
+    name: "",
+    time: "",
+    image_url: "",
+  };
+}
 
 /**
  * @param {{
  *   initial: Array<{
  *     day_index: number;
  *     weekday: string;
- *     classes: Array<{ name: string; time: string }>;
+ *     classes: Array<{ clientKey: string; name: string; time: string; image_url: string }>;
  *   }>;
  * }} props
  */
@@ -19,6 +29,7 @@ export default function ClassScheduleForm({ initial }) {
   const [days, setDays] = useState(initial);
   const [activeDay, setActiveDay] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
 
   const active =
     days.find((d) => d.day_index === activeDay) ??
@@ -39,7 +50,7 @@ export default function ClassScheduleForm({ initial }) {
   function addRow(dayIndex) {
     const d = days.find((x) => x.day_index === dayIndex);
     if (!d) return;
-    setClassesForDay(dayIndex, [...d.classes, { name: "", time: "" }]);
+    setClassesForDay(dayIndex, [...d.classes, newClassRow()]);
   }
 
   function removeRow(dayIndex, rowIndex) {
@@ -75,18 +86,20 @@ export default function ClassScheduleForm({ initial }) {
         return;
       }
 
-      /** @type {{ day_index: number; sort_order: number; class_name: string; class_time: string }[]} */
+      /** @type {{ day_index: number; sort_order: number; class_name: string; class_time: string; image_url: string | null }[]} */
       const inserts = [];
       for (const day of days) {
         day.classes.forEach((c, i) => {
           const name = c.name.trim();
           const time = c.time.trim();
           if (!name && !time) return;
+          const imageUrl = c.image_url.trim();
           inserts.push({
             day_index: day.day_index,
             sort_order: i,
             class_name: name || "—",
             class_time: time || "—",
+            image_url: imageUrl.length > 0 ? imageUrl : null,
           });
         });
       }
@@ -134,7 +147,24 @@ export default function ClassScheduleForm({ initial }) {
           <p className={styles.mutedSmall}>No rows yet — add a class below.</p>
         ) : (
           active.classes.map((c, rowIndex) => (
-            <div key={`${active.day_index}-${rowIndex}`} className={styles.classRowCard}>
+            <div key={c.clientKey} className={styles.classRowCard}>
+              <div className={styles.field}>
+                <span className={styles.fieldLabel}>Class photo</span>
+                <TestimonialImageUpload
+                  bucket="class-schedule-images"
+                  maxBytes={20 * 1024 * 1024}
+                  resizeMaxPx={256}
+                  folderKey={c.clientKey}
+                  value={c.image_url}
+                  fieldId={`class-photo-${c.clientKey}`}
+                  onError={setUploadError}
+                  onChange={(url) =>
+                    patchRow(active.day_index, rowIndex, {
+                      image_url: url ?? "",
+                    })
+                  }
+                />
+              </div>
               <div className={styles.row2}>
                 <div className={styles.field}>
                   <label htmlFor={`cn-${active.day_index}-${rowIndex}`}>Class name</label>
@@ -173,6 +203,11 @@ export default function ClassScheduleForm({ initial }) {
             </div>
           ))
         )}
+        {uploadError ? (
+          <p className={styles.formError} role="alert">
+            {uploadError}
+          </p>
+        ) : null}
         <button
           type="button"
           className={styles.secondaryOutline}

@@ -10,12 +10,12 @@ const ITEMS = [
   },
   {
     title: "Physical Therapy",
-    text: "Clinical care, injury rehab, and prevention so you stay strong for the long run.",
+    text: "In-house clinical care, injury rehab, and mobility maintenance.",
     href: "/physical-therapy",
   },
   {
     title: "Health",
-    text: "Modalities and space to restore your body between hard training and busy life.",
+    text: "Advance recovery modalities to restore the body between training sessions and busy life.",
     href: "/health",
   },
   {
@@ -36,8 +36,8 @@ export default function ExploreCarousel() {
   return (
     <OfferingsSnapSection
       hideSectionHeader
-      cornerTitle="Member experience"
-      sectionAriaLabel="Member experience — Therapy, health, amenities, and athlete programs"
+      cornerTitle="Membership experience"
+      sectionAriaLabel="Membership experience — Therapy, health, amenities, and athlete programs"
       items={ITEMS}
       largeCardTitles
       scrollTrackAriaLabel="Therapy, health, amenities, and athlete programs — swipe or scroll sideways to explore"

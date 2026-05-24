@@ -11,6 +11,45 @@ const GRID_QUERY = "(min-width: 768px)";
 const DEFAULT_BG =
   "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=80";
 
+function scrollToHashTarget(href) {
+  const hashIdx = href.indexOf("#");
+  if (hashIdx === -1) return false;
+
+  const id = href.slice(hashIdx + 1);
+  if (!id) return false;
+
+  const el = document.getElementById(id);
+  if (!el) return false;
+
+  el.scrollIntoView({ behavior: "smooth", block: "start" });
+  return true;
+}
+
+function CardLink({ href, className, children }) {
+  const isHash = href.includes("#");
+
+  if (isHash) {
+    return (
+      <a
+        href={href}
+        className={className}
+        onClick={(e) => {
+          e.preventDefault();
+          scrollToHashTarget(href);
+        }}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  );
+}
+
 function snapCarouselToNearest(el) {
   if (!el || el.scrollWidth <= el.clientWidth + 1) return;
 
@@ -119,7 +158,7 @@ function scrollCarouselToItemIndex(trackEl, index) {
  * @param {string} [props.cornerTitle] - Optional label pinned top-left of the section (accent color), e.g. “Training”
  * @param {string} [props.bottomPromoText] - Legacy: single block of copy (prefer `bottomPromo`)
  * @param {{ eyebrow?: string; heading: string; body: string; cta?: { text: string; href: string } }} [props.bottomPromo] - Card-style promo at the bottom (static bg)
- * @param {boolean} [props.ambientDark] - Dark scrim over photography (home marketing theme)
+ * @param {boolean} [props.plainDark] - Solid carbon background (no photography or scrim)
  */
 export default function OfferingsSnapSection({
   headingId,
@@ -139,6 +178,7 @@ export default function OfferingsSnapSection({
   bottomPromo,
   largeCardTitles = false,
   ambientDark = false,
+  plainDark = false,
 }) {
   const [ref, visible] = useInView();
   const scrollRef = useRef(null);
@@ -342,8 +382,8 @@ export default function OfferingsSnapSection({
   return (
     <section
       ref={ref}
-      className={`${styles.section} ${visible ? styles.visible : ""} ${dynamicBg ? styles.dynamicBg : ""} ${hideSectionHeader ? styles.noSectionHeader : ""} ${bottomPromoResolved ? styles.hasBottomPromo : ""} ${largeCardTitles ? styles.largeCardTitles : ""}`}
-      style={dynamicBg ? undefined : { "--offerings-bg-image": bg }}
+      className={`${styles.section} ${visible ? styles.visible : ""} ${dynamicBg ? styles.dynamicBg : ""} ${plainDark ? styles.plainDark : ""} ${hideSectionHeader ? styles.noSectionHeader : ""} ${bottomPromoResolved ? styles.hasBottomPromo : ""} ${largeCardTitles ? styles.largeCardTitles : ""}`}
+      style={dynamicBg || plainDark ? undefined : { "--offerings-bg-image": bg }}
       aria-labelledby={hideSectionHeader ? undefined : headingId}
       aria-label={hideSectionHeader ? sectionLandmarkLabel : undefined}
     >
@@ -360,7 +400,7 @@ export default function OfferingsSnapSection({
         </div>
       ) : null}
 
-      {ambientDark ? (
+      {ambientDark && !plainDark ? (
         <div className={styles.ambientScrim} aria-hidden />
       ) : null}
 
@@ -406,9 +446,9 @@ export default function OfferingsSnapSection({
                       </span>
                     ) : null}
                     <h3 className={styles.cardTitle}>
-                      <Link href={item.href} className={styles.cardTitleLink}>
+                      <CardLink href={item.href} className={styles.cardTitleLink}>
                         {item.title}
-                      </Link>
+                      </CardLink>
                     </h3>
                     <p className={styles.cardText}>{item.text}</p>
                     {item.scheduleHref ? (
@@ -421,12 +461,12 @@ export default function OfferingsSnapSection({
                         </Link>
                       </p>
                     ) : null}
-                    <Link href={item.href} className={styles.cardCta}>
+                    <CardLink href={item.href} className={styles.cardCta}>
                       {cta}
                       <span className={styles.cardCtaArrow} aria-hidden>
                         →
                       </span>
-                    </Link>
+                    </CardLink>
                   </article>
                 </li>
               );

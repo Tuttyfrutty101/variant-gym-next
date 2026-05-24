@@ -287,14 +287,6 @@ export default function Contact({ contactInfo, hours }) {
               Thank you for reaching out to Variant Training Lab. We will be in
               touch shortly.
             </p>
-            <Link
-              id="contact-book-tour"
-              href="/consultation"
-              className={styles.thankYouTourBtn}
-              onClick={closeThankYou}
-            >
-              Book a tour
-            </Link>
           </div>
         </div>
       </dialog>

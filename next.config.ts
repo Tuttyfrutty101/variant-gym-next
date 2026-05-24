@@ -20,6 +20,11 @@ const nextConfig: NextConfig = {
         destination: "/health",
         permanent: true,
       },
+      {
+        source: "/consultation",
+        destination: "/contact",
+        permanent: true,
+      },
     ];
   },
   images: {

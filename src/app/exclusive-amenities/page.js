@@ -10,10 +10,10 @@ export const metadata = {
 export default function ExclusiveAmenitiesPage() {
   return (
     <>
-      <main className="siteBelowNav">
+      <main className="homeMarketingDark siteBelowNav">
         <ExclusiveAmenities />
+        <Footer />
       </main>
-      <Footer />
     </>
   );
 }

@@ -26,8 +26,8 @@ export default async function Home() {
       <Hero />
       <Philosophy />
       <TrainingOfferings />
-      <DigitalAccessSection />
       <ExploreCarousel />
+      <DigitalAccessSection />
       {site.promotion.visible !== false ? (
         <SpringPromo promotion={site.promotion} />
       ) : null}

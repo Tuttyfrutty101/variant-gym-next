@@ -2,10 +2,11 @@
 
 import { useId, useRef, useState } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { resizeImageFile } from "@/lib/resizeImageFile";
 import styles from "./TestimonialImageUpload.module.css";
 
 const BUCKET = "testimonial-images";
-const MAX_BYTES = 5 * 1024 * 1024;
+const DEFAULT_MAX_BYTES = 5 * 1024 * 1024;
 const ALLOWED = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 const MIME_EXT = {
@@ -14,6 +15,12 @@ const MIME_EXT = {
   "image/webp": "webp",
 };
 
+/** @param {number} bytes */
+function formatMaxSize(bytes) {
+  const mb = bytes / (1024 * 1024);
+  return Number.isInteger(mb) ? `${mb}MB` : `${mb.toFixed(1)}MB`;
+}
+
 /**
  * @param {Object} props
  * @param {string} props.value
@@ -21,6 +28,9 @@ const MIME_EXT = {
  * @param {string} props.folderKey — UUID folder under the bucket (row id or draft id)
  * @param {(message: string | null) => void} [props.onError]
  * @param {string} [props.fieldId] — label `for` / input id stem
+ * @param {string} [props.bucket] — storage bucket (default testimonial-images)
+ * @param {number} [props.maxBytes] — max upload size (default 5MB)
+ * @param {number} [props.resizeMaxPx] — resize longest edge before upload (optional)
  */
 export default function TestimonialImageUpload({
   value,
@@ -28,6 +38,9 @@ export default function TestimonialImageUpload({
   folderKey,
   onError,
   fieldId: fieldIdProp,
+  bucket = BUCKET,
+  maxBytes = DEFAULT_MAX_BYTES,
+  resizeMaxPx,
 }) {
   const reactId = useId();
   const fieldId = fieldIdProp ?? `headshot-${reactId.replace(/:/g, "")}`;
@@ -50,12 +63,22 @@ export default function TestimonialImageUpload({
       onError?.("Please choose a JPEG, PNG, or WebP image.");
       return;
     }
-    if (file.size > MAX_BYTES) {
-      onError?.("Image must be 5MB or smaller.");
+    if (file.size > maxBytes) {
+      onError?.(`Image must be ${formatMaxSize(maxBytes)} or smaller.`);
       return;
     }
 
-    const ext = MIME_EXT[file.type];
+    let uploadFile = file;
+    if (typeof resizeMaxPx === "number" && resizeMaxPx > 0) {
+      try {
+        uploadFile = await resizeImageFile(file, resizeMaxPx);
+      } catch {
+        onError?.("Could not prepare image for upload.");
+        return;
+      }
+    }
+
+    const ext = MIME_EXT[uploadFile.type] ?? "webp";
     if (!ext) {
       onError?.("Unsupported image type.");
       return;
@@ -66,15 +89,15 @@ export default function TestimonialImageUpload({
     setUploading(true);
     try {
       const supabase = createSupabaseBrowserClient();
-      const { error } = await supabase.storage.from(BUCKET).upload(path, file, {
+      const { error } = await supabase.storage.from(bucket).upload(path, uploadFile, {
         upsert: true,
-        contentType: file.type,
+        contentType: uploadFile.type,
       });
       if (error) {
         onError?.(error.message);
         return;
       }
-      const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
+      const { data } = supabase.storage.from(bucket).getPublicUrl(path);
       if (!data?.publicUrl) {
         onError?.("Could not resolve image URL.");
         return;
@@ -122,7 +145,12 @@ export default function TestimonialImageUpload({
           </button>
         </div>
       </div>
-      <p className={styles.hint}>JPEG, PNG, or WebP · up to 5MB</p>
+      <p className={styles.hint}>
+        JPEG, PNG, or WebP · up to {formatMaxSize(maxBytes)}
+        {typeof resizeMaxPx === "number" && resizeMaxPx > 0
+          ? ` · optimized to ${resizeMaxPx}px for fast loading`
+          : ""}
+      </p>
     </div>
   );
 }

@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Large local videos — host externally, don't commit to GitHub
+public/videos/variant drone landscape.mp4
+public/videos/Tyler Boyd pro athlete landscape.mp4
+public/videos/variant Treat explained landscape.mp4
+public/videos/variant Treat explained landscape.mov

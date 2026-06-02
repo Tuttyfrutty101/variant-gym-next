@@ -7,7 +7,9 @@ export default async function AdminSchedulePage() {
   const supabase = await createSupabaseServerClient();
   const { data: rows } = await supabase
     .from("site_class_schedule")
-    .select("id, day_index, sort_order, class_name, class_time, image_url")
+    .select(
+      "id, day_index, sort_order, class_name, class_time, class_description, image_url",
+    )
     .order("day_index", { ascending: true })
     .order("sort_order", { ascending: true });
 
@@ -21,6 +23,8 @@ export default async function AdminSchedulePage() {
         clientKey: typeof r.id === "string" ? r.id : crypto.randomUUID(),
         name: typeof r.class_name === "string" ? r.class_name : "",
         time: typeof r.class_time === "string" ? r.class_time : "",
+        description:
+          typeof r.class_description === "string" ? r.class_description : "",
         image_url:
           typeof r.image_url === "string" ? r.image_url : "",
       })),
@@ -30,7 +34,8 @@ export default async function AdminSchedulePage() {
     <>
       <h1 className={styles.h1}>Class schedule</h1>
       <p className={styles.lead}>
-        Set class names, times, and optional photos for each weekday. The public{" "}
+        Set class names, times, descriptions, and optional photos for each
+        weekday. The public{" "}
         <strong>Schedule</strong> page updates within about a minute after you
         save. Empty rows are skipped; clearing every row removes classes for
         that day.

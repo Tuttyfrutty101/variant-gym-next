@@ -21,7 +21,7 @@ export default function AthletesProSportVideo() {
             Tyler Boyd
           </h2>
           <p className={styles.lede}>
-            Professional athlete training at Variant Training Lab — performance,
+            Professional athlete training at Variant Training Lab: performance,
             preparation, and recovery built for the demands of elite sport.
           </p>
         </header>

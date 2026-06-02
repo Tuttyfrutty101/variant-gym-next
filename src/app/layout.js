@@ -19,7 +19,7 @@ export const metadata = {
     template: `%s | ${siteName}`,
   },
   description:
-    "Luxury training facility in Santa Barbara offering data-driven training, physical therapy, and recovery services. Elevate performance with science-backed coaching in an elevated environment.",
+    "Luxury training facility in Santa Barbara offering data driven training, physical therapy, and recovery services. Elevate performance with science backed coaching in an elevated environment.",
   keywords: [
     "Variant Training Lab",
     "Santa Barbara gym",
@@ -27,7 +27,7 @@ export const metadata = {
     "personal training Santa Barbara",
     "physical therapy Santa Barbara",
     "recovery services",
-    "data-driven training",
+    "data driven training",
     "sports performance",
     "Anacapa Street gym",
     address,
@@ -39,12 +39,12 @@ export const metadata = {
     url: "/",
     siteName,
     title: `${siteName} | Luxury Training & Recovery`,
-    description: `${tagline} Data-driven training, physical therapy, and recovery at ${address}.`,
+    description: `${tagline} Data driven training, physical therapy, and recovery at ${address}.`,
   },
   twitter: {
     card: "summary",
     title: `${siteName} | Luxury Training & Recovery`,
-    description: `${tagline} Data-driven training, physical therapy, and recovery in Santa Barbara.`,
+    description: `${tagline} Data driven training, physical therapy, and recovery in Santa Barbara.`,
   },
   robots: {
     index: true,

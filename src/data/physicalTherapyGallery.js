@@ -7,7 +7,7 @@ export const PT_GALLERY_PHOTOS = [
   },
   {
     src: "/images/DSC02361.jpg",
-    alt: "Client receiving hands-on treatment from Dr. Jon Sakoda",
+    alt: "Client receiving hands on treatment from Dr. Jon Sakoda",
   },
   {
     src: "/images/DSC02374.jpg",

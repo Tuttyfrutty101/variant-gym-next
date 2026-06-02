@@ -15,10 +15,10 @@ const PROGRAM_ITEMS = [
   "Women's Program",
   "Pilates X Strength",
   "Injury Rehab Program",
-  "\"Pain\" Area-specific Program",
+  "\"Pain\" Area specific Program",
   "Surgery Preparation",
   "Travel Program",
-  "Sport-specific",
+  "Sport specific",
   "65+ Men & Women Program",
   "Speed and Agility",
 ];

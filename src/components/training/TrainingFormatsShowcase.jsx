@@ -27,7 +27,7 @@ function ActiveMediaPane({ active }) {
         playsInline
         preload="metadata"
         poster={media.poster}
-        aria-label={`${active.title} — promotional video`}
+        aria-label={`${active.title}: promotional video`}
       >
         <source src={media.src} type="video/mp4" />
       </video>
@@ -190,8 +190,8 @@ export default function TrainingFormatsShowcase() {
             </button>
           </div>
           <p className={styles.testsLead}>
-            We pair lab-grade assessments with coached training so your program
-            is built on real physiology—not guesswork—and adjusted as your
+            We pair lab grade assessments with coached training so your program
+            is built on real physiology, not guesswork, and adjusted as your
             metrics evolve.
           </p>
           <p className={styles.testsActions}>

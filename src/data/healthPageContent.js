@@ -1,4 +1,4 @@
-/** Health page — approach pillars (The Variant Approach grid). */
+/** Health page approach pillars (The Variant Approach grid). */
 
 export const HEALTH_APPROACH_PILLARS = [
   {
@@ -9,7 +9,7 @@ export const HEALTH_APPROACH_PILLARS = [
   {
     step: "02",
     title: "Strength & Movement",
-    body: "Programs are designed to build durable strength, improve movement quality, and support long-term joint and muscular health.",
+    body: "Programs are designed to build durable strength, improve movement quality, and support long term joint and muscular health.",
   },
   {
     step: "03",
@@ -18,7 +18,7 @@ export const HEALTH_APPROACH_PILLARS = [
   },
   {
     step: "04",
-    title: "Longevity-Focused Coaching",
+    title: "Longevity Focused Coaching",
     body: "Every recommendation is designed with the future in mind: maintaining capability, reducing unnecessary wear, and helping members continue doing what they love for longer.",
   },
 ];

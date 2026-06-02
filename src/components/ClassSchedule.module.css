@@ -148,12 +148,33 @@
 }
 
 .row {
+  border-bottom: 1px solid rgba(var(--linen-rgb), 0.08);
+}
+
+.rowButton {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 1rem 1.25rem;
   align-items: center;
+  width: 100%;
+  margin: 0;
   padding: 0.95rem 0;
-  border-bottom: 1px solid rgba(var(--linen-rgb), 0.08);
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  transition: background 0.2s ease;
+}
+
+.rowButton:hover {
+  background: rgba(var(--linen-rgb), 0.04);
+}
+
+.rowButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 
 .classMain {
@@ -198,7 +219,7 @@
 }
 
 @media (max-width: 479px) {
-  .row {
+  .rowButton {
     grid-template-columns: 1fr;
     gap: 0.35rem;
   }
@@ -207,4 +228,117 @@
     text-align: left;
     padding-left: calc(2.75rem + 0.85rem);
   }
+}
+
+.classDialog {
+  margin: auto;
+  padding: 0;
+  border: none;
+  max-width: 28rem;
+  width: calc(100% - 2.5rem);
+  background: var(--paper);
+  color: var(--carbon);
+  box-shadow:
+    0 4px 0 rgba(var(--accent-rgb), 0.12),
+    0 32px 64px rgba(var(--carbon-rgb), 0.22);
+}
+
+.classDialog::backdrop {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.classDialogInner {
+  padding: clamp(1.35rem, 4vw, 1.85rem);
+}
+
+.classDialogTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.classDialogTitle {
+  font-family: var(--sans);
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--carbon);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.classDialogDismiss {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid rgba(var(--carbon-rgb), 0.12);
+  background: transparent;
+  font-family: system-ui;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: 4px;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.classDialogDismiss:hover {
+  border-color: rgba(var(--accent-rgb), 0.35);
+  color: var(--carbon);
+}
+
+.classDialogPhoto {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.classDialogTime {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.85rem;
+}
+
+.classDialogBody {
+  font-family: var(--sans);
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+:global(.homeMarketingDark) .classDialog {
+  background: var(--carbon);
+  border: 1px solid rgba(var(--stone-rgb), 0.35);
+  color: var(--linen);
+}
+
+:global(.homeMarketingDark) .classDialogTitle {
+  color: var(--linen);
+}
+
+:global(.homeMarketingDark) .classDialogDismiss {
+  border-color: rgba(var(--stone-rgb), 0.35);
+  color: rgba(var(--stone-rgb), 0.9);
+}
+
+:global(.homeMarketingDark) .classDialogDismiss:hover {
+  border-color: rgba(var(--accent-rgb), 0.45);
+  color: var(--linen);
+}
+
+:global(.homeMarketingDark) .classDialogBody {
+  color: rgba(var(--stone-rgb), 0.92);
 }

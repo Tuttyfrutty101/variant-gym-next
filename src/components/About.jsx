@@ -45,8 +45,8 @@ export default function About() {
           <div className={styles.divider} aria-hidden />
           <p className={styles.text}>
             Our integrative team of medical clinicians, movement scientists, and
-            performance coaches use real-time data to develop a unique,
-            individualized approach to your training — not a cookie-cutter
+            performance coaches use real time data to develop a unique,
+            individualized approach to your training, not a generic
             program designed for people like you, but one built specifically for
             you.
           </p>

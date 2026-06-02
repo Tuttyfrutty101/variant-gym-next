@@ -5,14 +5,16 @@ import ClassSchedulePhoto from "./ClassSchedulePhoto";
 import { prefetchClassScheduleImages } from "@/lib/classScheduleImage";
 import styles from "./ClassSchedule.module.css";
 
-/** @typedef {{ id: string; name: string; time: string; imageUrl: string | null }} ClassEntry */
+/** @typedef {{ id: string; name: string; time: string; description: string | null; imageUrl: string | null }} ClassEntry */
 
 /**
  * @param {{ days: Array<{ dayIndex: number; weekday: string; classes: ClassEntry[] }> }} props
  */
 export default function ClassSchedule({ days }) {
   const baseId = useId();
+  const dialogRef = useRef(null);
   const [activeDay, setActiveDay] = useState(0);
+  const [selectedClass, setSelectedClass] = useState(null);
   const prefetchedDays = useRef(new Set());
 
   function prefetchDayImages(dayIndex) {
@@ -33,10 +35,40 @@ export default function ClassSchedule({ days }) {
 
   const panelId = `${baseId}-panel`;
   const classes = active.classes ?? [];
+  const dialogHeadingId = `${baseId}-class-dialog-title`;
 
   useEffect(() => {
     prefetchDayImages(activeDay);
   }, [activeDay, days]);
+
+  useEffect(() => {
+    dialogRef.current?.close();
+    setSelectedClass(null);
+  }, [activeDay]);
+
+  useEffect(() => {
+    const el = dialogRef.current;
+    if (!el) return undefined;
+
+    const onCancel = (e) => {
+      e.preventDefault();
+      el.close();
+      setSelectedClass(null);
+    };
+
+    el.addEventListener("cancel", onCancel);
+    return () => el.removeEventListener("cancel", onCancel);
+  }, []);
+
+  function openClass(c) {
+    setSelectedClass(c);
+    dialogRef.current?.showModal();
+  }
+
+  function closeDialog() {
+    dialogRef.current?.close();
+    setSelectedClass(null);
+  }
 
   return (
     <div className={styles.page}>
@@ -96,23 +128,71 @@ export default function ClassSchedule({ days }) {
                 key={c.id ? c.id : `${active.dayIndex}-${i}-${c.name}`}
                 className={styles.row}
               >
-                <div className={styles.classMain}>
-                  {c.imageUrl ? (
-                    <ClassSchedulePhoto
-                      url={c.imageUrl}
-                      priority={i < 6}
-                    />
-                  ) : (
-                    <div className={styles.classPhotoPlaceholder} aria-hidden />
-                  )}
-                  <span className={styles.className}>{c.name}</span>
-                </div>
-                <span className={styles.classTime}>{c.time}</span>
+                <button
+                  type="button"
+                  className={styles.rowButton}
+                  onClick={() => openClass(c)}
+                  aria-haspopup="dialog"
+                >
+                  <span className={styles.classMain}>
+                    {c.imageUrl ? (
+                      <ClassSchedulePhoto
+                        url={c.imageUrl}
+                        priority={i < 6}
+                      />
+                    ) : (
+                      <div
+                        className={styles.classPhotoPlaceholder}
+                        aria-hidden
+                      />
+                    )}
+                    <span className={styles.className}>{c.name}</span>
+                  </span>
+                  <span className={styles.classTime}>{c.time}</span>
+                </button>
               </li>
             ))}
           </ul>
         )}
       </section>
+
+      <dialog
+        ref={dialogRef}
+        className={styles.classDialog}
+        aria-labelledby={dialogHeadingId}
+        onClick={(e) => {
+          if (e.target === dialogRef.current) {
+            closeDialog();
+          }
+        }}
+      >
+        {selectedClass ? (
+          <div className={styles.classDialogInner}>
+            <div className={styles.classDialogTop}>
+              <h2 id={dialogHeadingId} className={styles.classDialogTitle}>
+                {selectedClass.name}
+              </h2>
+              <button
+                type="button"
+                className={styles.classDialogDismiss}
+                onClick={closeDialog}
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+            {selectedClass.imageUrl ? (
+              <div className={styles.classDialogPhoto}>
+                <ClassSchedulePhoto url={selectedClass.imageUrl} priority />
+              </div>
+            ) : null}
+            <p className={styles.classDialogTime}>{selectedClass.time}</p>
+            {selectedClass.description ? (
+              <p className={styles.classDialogBody}>{selectedClass.description}</p>
+            ) : null}
+          </div>
+        ) : null}
+      </dialog>
     </div>
   );
 }

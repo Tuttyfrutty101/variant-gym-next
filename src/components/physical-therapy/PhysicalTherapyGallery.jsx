@@ -88,10 +88,9 @@ export default function PhysicalTherapyGallery() {
     >
       <div className={styles.inner}>
         <header className={styles.header}>
-          <p className={styles.tag}>In session</p>
-          <h2 id="pt-gallery-heading" className={styles.heading}>
-            Working with members
-          </h2>
+          <p id="pt-gallery-heading" className={styles.tag}>
+            In session
+          </p>
         </header>
 
         <div

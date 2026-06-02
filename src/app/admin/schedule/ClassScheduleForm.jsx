@@ -11,6 +11,7 @@ function newClassRow() {
     clientKey: crypto.randomUUID(),
     name: "",
     time: "",
+    description: "",
     image_url: "",
   };
 }
@@ -20,7 +21,7 @@ function newClassRow() {
  *   initial: Array<{
  *     day_index: number;
  *     weekday: string;
- *     classes: Array<{ clientKey: string; name: string; time: string; image_url: string }>;
+ *     classes: Array<{ clientKey: string; name: string; time: string; description: string; image_url: string }>;
  *   }>;
  * }} props
  */
@@ -86,7 +87,7 @@ export default function ClassScheduleForm({ initial }) {
         return;
       }
 
-      /** @type {{ day_index: number; sort_order: number; class_name: string; class_time: string; image_url: string | null }[]} */
+      /** @type {{ day_index: number; sort_order: number; class_name: string; class_time: string; class_description: string | null; image_url: string | null }[]} */
       const inserts = [];
       for (const day of days) {
         day.classes.forEach((c, i) => {
@@ -94,11 +95,13 @@ export default function ClassScheduleForm({ initial }) {
           const time = c.time.trim();
           if (!name && !time) return;
           const imageUrl = c.image_url.trim();
+          const description = c.description.trim();
           inserts.push({
             day_index: day.day_index,
             sort_order: i,
             class_name: name || "—",
             class_time: time || "—",
+            class_description: description.length > 0 ? description : null,
             image_url: imageUrl.length > 0 ? imageUrl : null,
           });
         });
@@ -192,6 +195,24 @@ export default function ClassScheduleForm({ initial }) {
                     autoComplete="off"
                   />
                 </div>
+              </div>
+              <div className={styles.field}>
+                <label htmlFor={`cd-${active.day_index}-${rowIndex}`}>
+                  Description
+                </label>
+                <textarea
+                  id={`cd-${active.day_index}-${rowIndex}`}
+                  className={styles.textarea}
+                  value={c.description}
+                  onChange={(e) =>
+                    patchRow(active.day_index, rowIndex, {
+                      description: e.target.value,
+                    })
+                  }
+                  rows={4}
+                  maxLength={4000}
+                  placeholder="Shown when members tap this class on the schedule page."
+                />
               </div>
               <button
                 type="button"

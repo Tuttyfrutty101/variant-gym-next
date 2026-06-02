@@ -12,12 +12,12 @@ const CARDS = [
   {
     symbol: "✦",
     title: "Physical Therapy",
-    text: "In-house physical therapy, injury prevention, medical consultations, nutrition guidance, and longevity testing.",
+    text: "In house physical therapy, injury prevention, medical consultations, nutrition guidance, and longevity testing.",
   },
   {
     symbol: "◎",
     title: "Athlete Programs",
-    text: "Pro sport partnerships, athlete performance profiles, sport-specific injury protocols, and competition game plans.",
+    text: "Pro sport partnerships, athlete performance profiles, sport specific injury protocols, and competition game plans.",
   },
   {
     symbol: "▲",
@@ -42,7 +42,7 @@ export default function Services() {
           Train Smarter. Recover Faster.
         </h2>
         <p className={styles.subtitle}>
-          From performance coaching to clinical recovery — one team, one plan,
+          From performance coaching to clinical recovery: one team, one plan,
           aligned with your goals.
         </p>
       </header>

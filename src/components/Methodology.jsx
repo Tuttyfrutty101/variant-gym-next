@@ -16,7 +16,7 @@ const PHASES = [
   {
     id: "treat",
     label: "Treat",
-    body: "Hands-on medical expertise addresses movement quality, pain points, and sets the foundation for performance.",
+    body: "Hands on medical expertise addresses movement quality, pain points, and sets the foundation for performance.",
     startAngle: -45,
     endAngle: 45,
     labelAngle: 0,
@@ -24,7 +24,7 @@ const PHASES = [
   {
     id: "train",
     label: "Train",
-    body: "Your personalized program is built from your data — coached, tracked, and evolved as you progress.",
+    body: "Your personalized program is built from your data, coached, tracked, and evolved as you progress.",
     startAngle: 45,
     endAngle: 135,
     labelAngle: 90,
@@ -32,7 +32,7 @@ const PHASES = [
   {
     id: "live",
     label: "Live",
-    body: "We help you integrate strength, recovery, and habits into everyday life — so gains last beyond scheduled sessions.",
+    body: "We help you integrate strength, recovery, and habits into everyday life so gains last beyond scheduled sessions.",
     startAngle: 135,
     endAngle: 225,
     labelAngle: 180,

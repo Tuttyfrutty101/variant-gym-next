@@ -32,7 +32,7 @@ export const TRAINING_PAGE_ACCORDION = [
   {
     id: "signature-classes",
     title: "Signature Classes",
-    paragraphs: ["Unlimited signature classes, 30–60 minutes."],
+    paragraphs: ["Unlimited signature classes, 30 to 60 minutes."],
     exploreScheduleHref: "/schedule",
     exploreScheduleLabel: "Explore Schedule",
     media: {
@@ -44,7 +44,7 @@ export const TRAINING_PAGE_ACCORDION = [
   {
     id: "open-training",
     title: "Open Training",
-    paragraphs: ["Train on your terms. Open Monday–Saturday."],
+    paragraphs: ["Train on your terms. Open Monday through Saturday."],
     media: {
       kind: "image",
       src: "/images/DSC02465.jpg",
@@ -55,13 +55,13 @@ export const TRAINING_PAGE_ACCORDION = [
     id: "engineered-results",
     title: "Engineered Results",
     paragraphs: [
-      "Expert-led physiological and performance assessments establish your foundation, with ongoing data tracking designed to measure progress, refine strategy, and support continuous improvement toward evolving goals.",
+      "Expert led physiological and performance assessments establish your foundation, with ongoing data tracking designed to measure progress, refine strategy, and support continuous improvement toward evolving goals.",
     ],
     testingOverviewDialog: true,
     media: {
       kind: "image",
-      src: "/images/male-running-vo2-max-test-1296-728-header.avif",
-      alt: "VO₂ max treadmill assessment",
+      src: encodeURI("/images/Screenshot 2026-05-29 at 4.33.29\u202fPM.png"),
+      alt: "Performance and physiological testing at Variant Training Lab",
     },
   },
 ];

@@ -27,7 +27,7 @@ export default function Athletes() {
         <div className={styles.heroInner}>
           <h1 className={styles.heroMainTitle}>Athletes</h1>
           <p className={styles.heroSupport}>
-            Offering sport &amp; position-specific programs designed to reach
+            Offering sport and position specific programs designed to reach
             one&apos;s highest potential. Supports injury prevention while
             enhancing performance tailored to individual goals.
           </p>

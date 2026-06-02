@@ -12,7 +12,7 @@ const ONBOARDING = [
     title: "Baseline testing",
     detail: "1 hour",
     description:
-      "Every program begins with expert-guided assessments designed to evaluate performance, biomechanics, and overall readiness.",
+      "Every program begins with expert guided assessments designed to evaluate performance, biomechanics, and overall readiness.",
   },
   {
     title: "Physical Therapy",
@@ -71,7 +71,7 @@ const MONTHLY_BENEFITS = [
     text: "Continuous Program Design",
     linkAfter: { label: "See programs", href: "/programs" },
   },
-  { text: "Trainer Check-ins (1:1)" },
+  { text: "Trainer Check ins (1:1)" },
   { text: "Nutrition Guidance" },
   { text: "Unlimited Inbody Scans" },
   { text: "Mild Hyperbaric Oxygen Therapy" },

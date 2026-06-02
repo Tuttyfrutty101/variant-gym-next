@@ -168,6 +168,6 @@ export async function POST(request) {
   return NextResponse.json({
     ok: true,
     message:
-      "Thank you — your message was received. Our team will be in touch soon.",
+      "Thank you. Your message was received. Our team will be in touch soon.",
   });
 }

@@ -16,11 +16,11 @@ export default function TrainingOfferings() {
     <OfferingsSnapSection
       hideSectionHeader
       cornerTitle="Training"
-      sectionAriaLabel="Training — Four ways to move with us"
+      sectionAriaLabel="Training: four ways to move with us"
       items={ITEMS}
       largeCardTitles
       defaultCtaText="View training"
-      scrollTrackAriaLabel="Training formats — swipe or scroll sideways to see all four"
+      scrollTrackAriaLabel="Training formats. Swipe or scroll sideways to see all four"
       ambientDark
     />
   );

@@ -1,10 +1,10 @@
-/** Athletes page — snap carousel cards. */
+/** Athletes page snap carousel cards. */
 
 export const ATHLETES_PROGRAMS = [
   {
     id: "pro-sport-teams",
     title: "Pro Sport & Teams",
-    text: "Elite programming for professional athletes and organizations—integrated coaching, recovery, and performance support built around competitive calendars.",
+    text: "Elite programming for professional athletes and organizations: integrated coaching, recovery, and performance support built around competitive calendars.",
     href: "/athletes#pro-sport-teams",
     ctaText: "Watch film",
     linkAriaLabel: "Pro Sport & Teams: watch Tyler Boyd feature film",
@@ -18,13 +18,13 @@ export const ATHLETES_PROGRAMS = [
   {
     id: "injury-prevention",
     title: "Sport Specific Injury Prevention System",
-    text: "Position- and sport-specific screening and prep work designed to reduce injury risk without sacrificing the performance demands of your role.",
+    text: "Position and sport specific screening and prep work designed to reduce injury risk without sacrificing the performance demands of your role.",
     href: "/contact",
   },
   {
     id: "performance-game-plan",
     title: "Performance Game Plan",
-    text: "A coordinated roadmap across training, therapy, and recovery—milestones, adjustments, and accountability aligned to your competitive goals.",
+    text: "A coordinated roadmap across training, therapy, and recovery with milestones, adjustments, and accountability aligned to your competitive goals.",
     href: "/contact",
   },
 ];

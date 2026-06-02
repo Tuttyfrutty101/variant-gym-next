@@ -96,7 +96,7 @@ export default function Health() {
           <header className={styles.approachHeader}>
             <p className={styles.eyebrow}>The Variant Approach</p>
             <h2 id="health-approach-heading" className={styles.sectionTitle}>
-              An engineered approach to long-term performance
+              An engineered approach to long term performance
             </h2>
           </header>
           <ul className={styles.pillarGrid}>
@@ -124,7 +124,7 @@ export default function Health() {
           </h2>
           <p className={styles.ownershipBody}>
             Most people wait until pain, injury, or fatigue forces change.
-            Variant exists for those who want to take ownership earlier —
+            Variant exists for those who want to take ownership earlier,
             building a stronger, more resilient body before limitations appear.
           </p>
           <p className={styles.ownershipClosing}>

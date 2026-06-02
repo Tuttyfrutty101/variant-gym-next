@@ -10,13 +10,13 @@ const HERO_BG = "/images/sauna.jpg";
 const HIGHLIGHTS = [
   {
     title: "Premium locker room",
-    text: "Spacious suites, secure storage, and calm arrivals — every visit feels considered.",
-    image: "/images/5b1677cbaa226dd64d79cff7a5a4f3c5.jpg",
+    text: "Spacious suites, secure storage, and calm arrivals. Every visit feels considered.",
+    image: "/images/IMG_2686.jpeg",
     imageAlt: "Premium locker room at Variant Training Lab",
   },
   {
     title: "Cold plunge",
-    text: "Contrast-ready pools to reset tissues, sharpen recovery, and complement hard training.",
+    text: "Contrast ready pools to reset tissues, sharpen recovery, and complement hard training.",
     image: "/images/cold%20plunge.png",
     imageAlt: "Cold plunge pool",
   },
@@ -29,19 +29,12 @@ const HIGHLIGHTS = [
   {
     title: "Red light therapy",
     text: "Boost collagen, reduce pain and inflammation in joints and muscles.",
-    image:
-      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80",
+    image: "/images/jasdkjfhksaljdhf.jpeg",
     imageAlt: "Clinical wellness treatment setting",
   },
   {
-    title: "Hyperbaric oxygen",
-    text: "60-90 minute Pressurized oxygen sessions designed to aid recovery, sleep, and energy.",
-    image: "/images/hyperbarix.jpg",
-    imageAlt: "Hyperbaric oxygen therapy chamber",
-  },
-  {
     title: "And more",
-    text: "Towel service, hydration bar, premium showers, lounge space, and concierge support — details that stay out of your way.",
+    text: "Towel service, hydration bar, premium showers, lounge space, and concierge support. Details that stay out of your way.",
     image: encodeURI("/images/Screenshot 2026-05-23 at 7.09.40 PM.png"),
     imageAlt: "Variant Training Lab lounge and amenities",
   },

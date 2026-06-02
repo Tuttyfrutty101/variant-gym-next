@@ -5,7 +5,7 @@ import { getClassSchedule } from "@/lib/siteContent";
 export const metadata = {
   title: "Schedule",
   description:
-    "View Variant Training Lab class offerings by day — times and class names updated regularly.",
+    "View Variant Training Lab class offerings by day. Times and class names updated regularly.",
 };
 
 export const revalidate = 60;

@@ -84,7 +84,7 @@ export default function PhysicalTherapy() {
               for over a decade.
             </p>
             <p className={styles.detailsBody}>
-              Jon has a passion for combining evidence-based PT practices with
+              Jon has a passion for combining evidence based PT practices with
               movement analysis and training, helping people move well, feel
               well, and thrive in whatever their life demands. In today&apos;s
               world, physical therapy is most often utilized after a body tissue
@@ -100,6 +100,10 @@ export default function PhysicalTherapy() {
           </div>
         </div>
       </section>
+
+      <PhysicalTherapyGallery />
+
+      <PhysicalTherapyOfferings />
 
       <section
         ref={videoRef}
@@ -120,10 +124,6 @@ export default function PhysicalTherapy() {
           </div>
         </div>
       </section>
-
-      <PhysicalTherapyOfferings />
-
-      <PhysicalTherapyGallery />
     </>
   );
 }

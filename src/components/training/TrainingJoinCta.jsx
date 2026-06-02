@@ -19,7 +19,7 @@ export default function TrainingJoinCta() {
           Join Now
         </h2>
         <p className={styles.lede}>
-          Start with testing, coaching, and recovery built in—your first week is
+          Start with testing, coaching, and recovery built in. Your first week is
           designed to set the foundation for everything that follows.
         </p>
         <div className={styles.actions}>

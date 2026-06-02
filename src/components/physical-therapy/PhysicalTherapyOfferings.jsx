@@ -10,11 +10,11 @@ export default function PhysicalTherapyOfferings() {
     <OfferingsSnapSection
       hideSectionHeader
       cornerTitle="Clinical services"
-      sectionAriaLabel="Clinical services — Physical therapy, rehab, peri-operative care, and education"
+      sectionAriaLabel="Clinical services: physical therapy, rehab, peri operative care, and education"
       items={PHYSICAL_THERAPY_SERVICES}
       largeCardTitles
       defaultCtaText="Contact us"
-      scrollTrackAriaLabel="Physical therapy services — swipe or scroll sideways to explore all four"
+      scrollTrackAriaLabel="Physical therapy services. Swipe or scroll sideways to explore all four"
       backgroundImageUrl={CLINICAL_SERVICES_BG}
       ambientDark
     />

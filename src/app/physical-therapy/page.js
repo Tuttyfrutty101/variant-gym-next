@@ -4,7 +4,7 @@ import PhysicalTherapy from "@/components/physical-therapy/PhysicalTherapy";
 export const metadata = {
   title: "Physical Therapy",
   description:
-    "No wait times — physical therapy included with membership at Variant Training Lab. Clinical rehab and prevention in Santa Barbara.",
+    "No wait times. Physical therapy included with membership at Variant Training Lab. Clinical rehab and prevention in Santa Barbara.",
 };
 
 export default function PhysicalTherapyPage() {

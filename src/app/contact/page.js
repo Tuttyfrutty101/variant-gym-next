@@ -5,7 +5,7 @@ import { getSiteContent } from "@/lib/siteContent";
 export const metadata = {
   title: "Contact Us",
   description:
-    "Get in touch with Variant Training Lab — schedule a tour, ask about memberships, or tell us your goals.",
+    "Get in touch with Variant Training Lab. Schedule a tour, ask about memberships, or tell us your goals.",
 };
 
 export const revalidate = 60;

@@ -17,7 +17,7 @@ export default function DigitalAccessSection() {
           </h2>
           <p className={styles.lede}>
             Members get our full movement library, personalized programming,
-            nutrition guidance, and travel workouts—included with your
+            nutrition guidance, and travel workouts, included with your
             membership.
           </p>
           <Link href="/programs" className={styles.cta}>

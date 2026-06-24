@@ -74,7 +74,6 @@ const MONTHLY_BENEFITS = [
   { text: "Trainer Check ins (1:1)" },
   { text: "Nutrition Guidance" },
   { text: "Unlimited Inbody Scans" },
-  { text: "Mild Hyperbaric Oxygen Therapy" },
   {
     text: "Contrast Room (private cold plunge + infrared sauna)",
   },

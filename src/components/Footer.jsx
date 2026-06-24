@@ -4,7 +4,6 @@ import styles from "./Footer.module.css";
 const NAV = [
   { label: "Membership", href: "/membership" },
   { label: "Schedule", href: "/schedule" },
-  { label: "Careers", href: "#careers" },
   { label: "Privacy Policy", href: "/privacy-policy" },
 ];
 

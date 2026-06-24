@@ -1,4 +1,5 @@
 import "./globals.css";
+import Script from "next/script";
 import ConditionalNavbar from "@/components/ConditionalNavbar";
 
 const siteName = "Variant Training Lab";
@@ -59,6 +60,18 @@ export default function RootLayout({ children }) {
         <ConditionalNavbar />
         {children}
       </body>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=AW-16953424142"
+        strategy="afterInteractive"
+      />
+      <Script id="gtag-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-16953424142');
+        `}
+      </Script>
     </html>
   );
 }

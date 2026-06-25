@@ -101,9 +101,9 @@ export default function PhysicalTherapy() {
         </div>
       </section>
 
-      <PhysicalTherapyGallery />
-
       <PhysicalTherapyOfferings />
+
+      <PhysicalTherapyGallery />
 
       <section
         ref={videoRef}

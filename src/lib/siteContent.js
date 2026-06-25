@@ -38,7 +38,7 @@ export const FALLBACK_SITE_CONTENT = {
     finePrint:
       "Offer valid for new memberships through May 26, 2026. Not combinable with other promotions.",
     ctaLabel: "Claim this offer",
-    visible: true,
+    visible: false,
   },
 };
 

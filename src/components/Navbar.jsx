@@ -23,6 +23,7 @@ const NAV_LINKS = [
   { label: "Membership", href: "/membership" },
   { label: "Schedule", href: "/schedule" },
   { label: "Contact Us", href: "/contact" },
+  { label: "Get a Second Opinion", href: "/second-opinion" },
 ];
 
 export default function Navbar() {

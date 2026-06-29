@@ -14,6 +14,8 @@ export const viewport = {
 };
 
 export const metadata = {
+  verification: { google: "6AbTX7X93uYi9Gz9Nu4XbC4mCAJMN1f5w799zbvBeM8" },
+  verification: { google: "6AbTX7X93uYi9Gz9Nu4XbC4mCAJMN1f5w799zbvBeM8" },
   metadataBase: new URL("https://varianttraininglab.com"),
   title: {
     default: `${siteName} | ${tagline}`,

@@ -75,7 +75,7 @@ export default function Navbar() {
       className={`${styles.navbar} ${darkMarketingNav ? styles.onDarkHome : ""} ${scrolled ? styles.scrolled : ""} ${menuOpen ? styles.menuOpen : ""}`}
     >
       <div className={styles.safeAreaTop} aria-hidden />
-      <div className={styles.inner} {...(menuOpen ? { inert: "" } : {})}>
+      <div className={styles.inner} {...(menuOpen ? { inert: true } : {})}>
         <Link href="/" className={styles.logo} onClick={closeMenu}>
           <span className={styles.logoMark}>
             <Image

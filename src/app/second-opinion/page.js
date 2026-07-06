@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
-import Methodology from "@/components/Methodology";
+import SecondOpinionAssessment from "@/components/second-opinion/SecondOpinionAssessment";
 import SecondOpinionHero from "@/components/second-opinion/SecondOpinionHero";
+import SecondOpinionVsOnboarding from "@/components/second-opinion/SecondOpinionVsOnboarding";
 import TrainingJoinCta from "@/components/training/TrainingJoinCta";
 
 export const metadata = {
@@ -13,7 +14,8 @@ export default function SecondOpinionPage() {
   return (
     <main className="homeMarketingDark siteBelowNav">
       <SecondOpinionHero />
-      <Methodology />
+      <SecondOpinionAssessment />
+      <SecondOpinionVsOnboarding />
       <TrainingJoinCta />
       <Footer />
     </main>

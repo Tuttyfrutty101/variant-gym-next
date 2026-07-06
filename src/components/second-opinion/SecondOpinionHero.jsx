@@ -32,7 +32,7 @@ export default function SecondOpinionHero() {
           </p>
           <div className={styles.actions}>
             <Link href="/contact" className={styles.cta}>
-              Book a consultation
+              Book Second Opinion Assessment
             </Link>
           </div>
         </div>

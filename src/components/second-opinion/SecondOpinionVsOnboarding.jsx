@@ -16,7 +16,7 @@ const COLUMNS = [
       "Immediate data and feedback",
       "A clear path forward",
     ],
-    cta: { label: "Request the Assessment", href: "/contact" },
+    cta: { label: "Request the Assessment", modal: true },
     accent: true,
   },
   {
@@ -89,12 +89,22 @@ export default function SecondOpinionVsOnboarding() {
                   </li>
                 ))}
               </ul>
-              <Link
-                href={col.cta.href}
-                className={`${styles.cta} ${col.accent ? styles.ctaAccent : styles.ctaOutline}`}
-              >
-                {col.cta.label}
-              </Link>
+              {col.cta.modal ? (
+                <button
+                  type="button"
+                  className={`${styles.cta} ${col.accent ? styles.ctaAccent : styles.ctaOutline}`}
+                  onClick={() => window.dispatchEvent(new Event("open-so-modal"))}
+                >
+                  {col.cta.label}
+                </button>
+              ) : (
+                <Link
+                  href={col.cta.href}
+                  className={`${styles.cta} ${col.accent ? styles.ctaAccent : styles.ctaOutline}`}
+                >
+                  {col.cta.label}
+                </Link>
+              )}
             </div>
           ))}
         </div>

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useInView } from "@/hooks/useInView";
 import styles from "./SecondOpinionHero.module.css";
 
@@ -31,9 +30,13 @@ export default function SecondOpinionHero() {
             Most people don&apos;t need another workout. They need answers.
           </p>
           <div className={styles.actions}>
-            <Link href="/contact" className={styles.cta}>
+            <button
+              type="button"
+              className={styles.cta}
+              onClick={() => window.dispatchEvent(new Event("open-so-modal"))}
+            >
               Request Second Opinion Assessment
-            </Link>
+            </button>
           </div>
         </div>
       </header>

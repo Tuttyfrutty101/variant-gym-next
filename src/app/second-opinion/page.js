@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import SecondOpinionAssessment from "@/components/second-opinion/SecondOpinionAssessment";
+import SecondOpinionModal from "@/components/second-opinion/SecondOpinionModal";
 import SecondOpinionHero from "@/components/second-opinion/SecondOpinionHero";
 import SecondOpinionVsOnboarding from "@/components/second-opinion/SecondOpinionVsOnboarding";
 import TrainingJoinCta from "@/components/training/TrainingJoinCta";
@@ -17,6 +18,7 @@ export default function SecondOpinionPage() {
       <SecondOpinionAssessment />
       <SecondOpinionVsOnboarding />
       <TrainingJoinCta />
+      <SecondOpinionModal />
       <Footer />
     </main>
   );

@@ -116,6 +116,7 @@ export async function POST(request) {
     formData.append("surname", name.split(" ").slice(1).join(" ") || "");
     formData.append("email", email);
     formData.append("companyid", companyId);
+    formData.append("promotionid", "277618");
     formData.append("notes", notes);
     if (phone) formData.append("phonecell", phone);
 

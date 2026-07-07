@@ -7,7 +7,7 @@ import styles from "./SecondOpinionAssessment.module.css";
 const SEGMENTS = [
   {
     id: "pt",
-    duration: "60",
+    duration: "30",
     unit: "min",
     label: "Part One",
     title: "Physical Therapy Consultation & Assessment",
@@ -20,18 +20,9 @@ const SEGMENTS = [
     duration: "30",
     unit: "min",
     label: "Part Two",
-    title: "Strength & Movement Screen",
+    title: "Strength, Movement & Data Review",
     description:
-      "A targeted screen of your functional movement and strength capacity. Tests are shaped by your specific goals and current training — no one-size-fits-all protocol.",
-  },
-  {
-    id: "review",
-    duration: "30",
-    unit: "min",
-    label: "Part Three",
-    title: "Data Review & Recommendations",
-    description:
-      "Immediate feedback on everything we found. We walk through your results, explain what the data means, and outline a clear path forward so you leave with answers, not more questions.",
+      "A targeted screen of your functional movement and strength capacity followed by immediate feedback on your results. We walk through what the data means and outline a clear path forward so you leave with answers, not more questions.",
   },
 ];
 
@@ -130,7 +121,7 @@ export default function SecondOpinionAssessment() {
       >
         <p className={styles.tag}>Second Opinion Assessment</p>
         <h2 id="assessment-heading" className={styles.title}>
-          A Complete Picture in Two Hours
+          A Complete Picture in One Hour
         </h2>
         <p className={styles.subtitle}>
           Every assessment is tailored to your goals and current training.

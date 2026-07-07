@@ -155,6 +155,8 @@ export default function SecondOpinionModal() {
       let data = null;
       try { data = await res.json(); } catch {}
       if (!res.ok) { setServerError(data?.error || "Something went wrong. Please try again."); return; }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: "assessment_form_submit" });
       setSubmitted(true);
     } catch {
       setServerError("Something went wrong. Please try again.");

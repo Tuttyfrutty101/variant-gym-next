@@ -35,9 +35,10 @@ const EMPTY = {
 export default function SecondOpinionModal() {
   const dialogRef = useRef(null);
 
-  const [name,    setName]    = useState("");
-  const [email,   setEmail]   = useState("");
-  const [phone,   setPhone]   = useState("");
+  const [name,             setName]             = useState("");
+  const [email,            setEmail]            = useState("");
+  const [phone,            setPhone]            = useState("");
+  const [preferredContact, setPreferredContact] = useState("");
   const [selectedDays,    setSelectedDays]    = useState(() => new Set());
   const [selectedTimes,   setSelectedTimes]   = useState({});
   const [selectedReasons, setSelectedReasons] = useState(() => new Set());
@@ -120,6 +121,7 @@ export default function SecondOpinionModal() {
     if (!name.trim()) errs.name = "Name is required.";
     if (!email.trim() || !simpleEmailOk(email.trim())) errs.email = "A valid email is required.";
     if (!phone.trim() || !simplePhoneOk(phone.trim())) errs.phone = "A valid phone number is required.";
+    if (!preferredContact) errs.preferredContact = "Please select a preferred contact method.";
     if (selectedReasons.has("Other") && !otherText.trim()) {
       errs.otherText = "Please describe what else you'd like a second opinion on.";
     }
@@ -144,6 +146,7 @@ export default function SecondOpinionModal() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: name.trim(), email: email.trim(), phone: phone.trim(),
+          preferredContact,
           availability,
           reasons: Array.from(selectedReasons),
           otherText: otherText.trim(),
@@ -237,6 +240,24 @@ export default function SecondOpinionModal() {
                   value={phone}
                   onChange={(e) => { setPhone(e.target.value); clearErr("phone"); }} />
                 {errors.phone && <p className={styles.fieldError}>{errors.phone}</p>}
+              </div>
+
+              <div className={styles.field}>
+                <span className={styles.label}>Preferred Method of Contact</span>
+                <div className={styles.pillGroup} role="group" aria-label="Preferred method of contact">
+                  {["Call", "Text", "Email"].map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      className={`${styles.pill} ${preferredContact === option ? styles.pillActive : ""}`}
+                      aria-pressed={preferredContact === option}
+                      onClick={() => { setPreferredContact(option); clearErr("preferredContact"); }}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+                {errors.preferredContact && <p className={styles.fieldError}>{errors.preferredContact}</p>}
               </div>
 
               <fieldset className={styles.fieldset}>

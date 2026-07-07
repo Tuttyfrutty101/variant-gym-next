@@ -17,8 +17,9 @@ function simplePhoneOk(phone) {
   return String(phone).replace(/\D/g, "").length >= 10;
 }
 
-function buildNotes({ name, email, phone, availability, reasons, otherText }) {
+function buildNotes({ name, email, phone, preferredContact, availability, reasons, otherText }) {
   const parts = ["Source: Second Opinion Assessment form"];
+  if (preferredContact) parts.push(`Preferred contact method: ${preferredContact}`);
 
   if (reasons.length > 0) {
     const core = reasons.filter((r) => r !== "Other").join(", ");
@@ -51,6 +52,7 @@ export async function POST(request) {
   const name = trimmed(body?.name);
   const email = trimmed(body?.email);
   const phone = trimmed(body?.phone);
+  const preferredContact = trimmed(body?.preferredContact);
   const availability = Array.isArray(body?.availability) ? body.availability : [];
   const reasons = Array.isArray(body?.reasons) ? body.reasons : [];
   const otherText = trimmed(body?.otherText);
@@ -68,7 +70,7 @@ export async function POST(request) {
     return NextResponse.json({ error: "One or more fields are too long." }, { status: 400 });
   }
 
-  const notes = buildNotes({ name, email, phone, availability, reasons, otherText });
+  const notes = buildNotes({ name, email, phone, preferredContact, availability, reasons, otherText });
 
   const supabaseUrl =
     typeof process.env.NEXT_PUBLIC_SUPABASE_URL === "string" &&

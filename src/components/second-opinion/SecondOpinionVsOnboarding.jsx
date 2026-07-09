@@ -16,7 +16,7 @@ const COLUMNS = [
       "Immediate data and feedback",
       "A clear path forward",
     ],
-    cta: { label: "Request the Assessment", modal: true },
+    cta: { label: "Request Pricing", modal: true },
     accent: true,
   },
   {

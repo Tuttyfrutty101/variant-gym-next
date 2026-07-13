@@ -12,7 +12,7 @@ const COLUMNS = [
     body: "Designed for people who want real answers before making a commitment. One focused one-hour session with no membership required. You get objective data, a physical therapy read, and clear recommendations you can act on right away.",
     points: [
       "No membership required",
-      "One-time, two-hour session",
+      "One-time, one-hour session",
       "Immediate data and feedback",
       "A clear path forward",
     ],

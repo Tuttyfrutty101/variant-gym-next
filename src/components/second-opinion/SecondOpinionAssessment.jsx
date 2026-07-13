@@ -38,28 +38,51 @@ const SEGMENTS = [
 const EXPECT_ITEMS = [
   {
     id: "consult",
-    title: "1-on-1 Consultation with Your Trainer",
-    body: "A dedicated conversation about your training history, current habits, goals, and what hasn't been working. We map where you are before prescribing where to go.",
+    title: "1-on-1 Consultation",
+    tagline: "Every assessment starts with a conversation.",
+    body: "We'll discuss your training history, injuries, current routine, and goals. We'll also identify what's been holding you back so we can build a plan that's tailored specifically to you.",
   },
   {
-    id: "inbody",
-    title: "Composition Scan",
-    body: "Precise body composition data covering muscle mass, fat distribution, hydration, and segmental balance, giving us a metabolic and structural baseline to work from.",
+    id: "composition",
+    title: "Body Composition Assessment",
+    tagline: "Looking beyond the number on the scale.",
+    body: "Measure muscle mass, body fat, hydration, and muscle balance to establish an accurate baseline. This gives us objective data to guide your training and accurately track your progress.",
   },
   {
-    id: "vald",
-    title: "Strength Testing and Movement Screen on VALD ForceFrame Equipment",
-    body: "Clinical-grade force measurement to objectively assess muscle output, bilateral symmetry, and strength ratios. The movement screen goes a step further, identifying where your body breaks down under load so we can pinpoint exactly what to train. Whether your goal is to perform better in a sport or stay strong and capable as you age, this tells us where to focus.",
+    id: "strength-movement",
+    title: "Strength & Movement Assessment",
+    tagline: "Find out what's really holding you back.",
+    body: [
+      "Using VALD ForceFrame technology, we objectively assess strength, symmetry, balance, and movement quality to identify areas that could be limiting your progress or increasing your injury risk.",
+      "Whether your goal is to stay active, build strength, recover from injury, or improve performance, we'll show you exactly where to focus.",
+    ],
   },
   {
-    id: "tests",
-    title: "Sample Tests and What You Might Discover",
+    id: "discover",
+    title: "What We Often Discover",
+    tagline: "Every person is different, but common findings include:",
     bullets: [
-      "Shoulder health and rotator cuff function",
-      "Leg asymmetry and single-leg strength deficits",
-      "Posture analysis with clear corrective guidelines",
-      "Hip mobility and stability under load",
-      "Core stability and spinal control",
+      "Balance and stability",
+      "Mobility and flexibility",
+      "Muscle imbalances and left-to-right symmetry",
+      "Posture and movement quality",
+      "Core strength and control",
+      "Whether your training suits your body type and goals",
+      "Signs of doing too much, too soon",
+      "Recovery and rehabilitation priorities",
+      "Areas where small changes can make a big difference",
+    ],
+  },
+  {
+    id: "plan",
+    title: "Your Personal Plan",
+    tagline: "You won't leave with more questions—you'll leave with a clear plan.",
+    body: "You'll leave with a clear understanding of:",
+    bullets: [
+      "What's holding you back",
+      "Where to focus your training",
+      "How to train safely and effectively",
+      "The next steps to achieve your goals",
     ],
   },
 ];
@@ -98,7 +121,17 @@ function AccordionItem({ item }) {
         <ChevronIcon open={open} />
       </button>
       <div className={styles.accordionBody} aria-hidden={!open}>
-        {item.body && <p className={styles.accordionText}>{item.body}</p>}
+        {item.tagline && <p className={styles.accordionTagline}>{item.tagline}</p>}
+        {item.body &&
+          (Array.isArray(item.body) ? (
+            item.body.map((paragraph) => (
+              <p key={paragraph} className={styles.accordionText}>
+                {paragraph}
+              </p>
+            ))
+          ) : (
+            <p className={styles.accordionText}>{item.body}</p>
+          ))}
         {item.bullets && (
           <ul className={styles.bulletList}>
             {item.bullets.map((b) => (

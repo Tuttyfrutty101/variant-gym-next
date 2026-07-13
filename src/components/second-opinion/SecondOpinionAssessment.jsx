@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useInView } from "@/hooks/useInView";
 import styles from "./SecondOpinionAssessment.module.css";
 
@@ -14,6 +15,10 @@ const SEGMENTS = [
     description:
       "An in-house session with Dr. Jon Sakoda covering your injury history, movement limitations, pain patterns, and physical baseline. We identify root causes, not just symptoms.",
     primary: true,
+    image: {
+      src: "/images/DSC02333.jpg",
+      alt: "Dr. Jon Sakoda assessing a client's shoulder mobility during a physical therapy consultation",
+    },
   },
   {
     id: "strength",
@@ -23,6 +28,10 @@ const SEGMENTS = [
     title: "Strength, Movement & Data Review",
     description:
       "A targeted screen of your functional movement and strength capacity followed by immediate feedback on your results. We walk through what the data means and outline a clear path forward so you leave with answers, not more questions.",
+    image: {
+      src: "/images/DSC02587.jpg",
+      alt: "A client performing a strength test on VALD ForceFrame equipment with results displayed on a tablet",
+    },
   },
 ];
 
@@ -136,16 +145,27 @@ export default function SecondOpinionAssessment() {
         {SEGMENTS.map((seg, i) => (
           <div
             key={seg.id}
-            className={`${styles.segCard} ${seg.primary ? styles.segCardPrimary : ""}`}
+            className={`${styles.segRow} ${i % 2 === 1 ? styles.segRowReverse : ""}`}
             style={{ "--delay": `${i * 0.12}s` }}
           >
-            <p className={styles.segLabel}>{seg.label}</p>
-            <div className={styles.segDuration}>
-              <span className={styles.segDurationNum}>{seg.duration}</span>
-              <span className={styles.segDurationUnit}>{seg.unit}</span>
+            <div className={styles.segImageWrap}>
+              <Image
+                src={seg.image.src}
+                alt={seg.image.alt}
+                fill
+                sizes="(max-width: 767px) 100vw, 340px"
+                className={styles.segImage}
+              />
             </div>
-            <h3 className={styles.segTitle}>{seg.title}</h3>
-            <p className={styles.segDesc}>{seg.description}</p>
+            <div className={`${styles.segCard} ${seg.primary ? styles.segCardPrimary : ""}`}>
+              <p className={styles.segLabel}>{seg.label}</p>
+              <div className={styles.segDuration}>
+                <span className={styles.segDurationNum}>{seg.duration}</span>
+                <span className={styles.segDurationUnit}>{seg.unit}</span>
+              </div>
+              <h3 className={styles.segTitle}>{seg.title}</h3>
+              <p className={styles.segDesc}>{seg.description}</p>
+            </div>
           </div>
         ))}
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./SecondOpinionModal.module.css";
 
 const DAYS = [
@@ -34,6 +35,7 @@ const EMPTY = {
 
 export default function SecondOpinionModal() {
   const dialogRef = useRef(null);
+  const router = useRouter();
 
   const [name,             setName]             = useState("");
   const [email,            setEmail]            = useState("");
@@ -47,7 +49,6 @@ export default function SecondOpinionModal() {
   const [errors,      setErrors]      = useState({});
   const [loading,     setLoading]     = useState(false);
   const [serverError, setServerError] = useState(null);
-  const [submitted,   setSubmitted]   = useState(false);
 
   const openModal = useCallback(() => {
     dialogRef.current?.showModal();
@@ -157,7 +158,8 @@ export default function SecondOpinionModal() {
       if (!res.ok) { setServerError(data?.error || "Something went wrong. Please try again."); return; }
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({ event: "assessment_form_submit" });
-      setSubmitted(true);
+      dialogRef.current?.close();
+      router.push("/second-opinion/thank-you");
     } catch {
       setServerError("Something went wrong. Please try again.");
     } finally {
@@ -191,140 +193,124 @@ export default function SecondOpinionModal() {
           </svg>
         </button>
 
-        {submitted ? (
-          <div className={styles.confirmation}>
-            <p className={styles.confirmTitle}>Request received.</p>
-            <p className={styles.confirmBody}>
-              Request received. No obligation. Our team will reach out within
-              24–48 hours with confirmation and pricing, and to find a time that
-              works for you.
-            </p>
-            <button type="button" className={styles.confirmClose} onClick={closeModal}>
-              Close
-            </button>
+        <header className={styles.modalHeader}>
+          <p className={styles.tag}>Second Opinion Assessment</p>
+          <h2 id="so-modal-heading" className={styles.heading}>
+            Request Your Assessment
+          </h2>
+          <p className={styles.subheading}>
+            No obligation. Expect a follow-up within 24–48 hours with confirmation and pricing.
+          </p>
+        </header>
+
+        <form className={styles.form} onSubmit={handleSubmit} noValidate>
+
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="som-name">Full Name</label>
+            <input id="som-name" type="text" autoComplete="name"
+              className={`${styles.input} ${errors.name ? styles.inputError : ""}`}
+              value={name}
+              onChange={(e) => { setName(e.target.value); clearErr("name"); }} />
+            {errors.name && <p className={styles.fieldError}>{errors.name}</p>}
           </div>
-        ) : (
-          <>
-            <header className={styles.modalHeader}>
-              <p className={styles.tag}>Second Opinion Assessment</p>
-              <h2 id="so-modal-heading" className={styles.heading}>
-                Request Your Assessment
-              </h2>
-              <p className={styles.subheading}>
-                No obligation. Expect a follow-up within 24–48 hours with confirmation and pricing.
-              </p>
-            </header>
 
-            <form className={styles.form} onSubmit={handleSubmit} noValidate>
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="som-email">Email</label>
+            <input id="som-email" type="email" autoComplete="email"
+              className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); clearErr("email"); }} />
+            {errors.email && <p className={styles.fieldError}>{errors.email}</p>}
+          </div>
 
-              <div className={styles.field}>
-                <label className={styles.label} htmlFor="som-name">Full Name</label>
-                <input id="som-name" type="text" autoComplete="name"
-                  className={`${styles.input} ${errors.name ? styles.inputError : ""}`}
-                  value={name}
-                  onChange={(e) => { setName(e.target.value); clearErr("name"); }} />
-                {errors.name && <p className={styles.fieldError}>{errors.name}</p>}
-              </div>
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="som-phone">Phone</label>
+            <input id="som-phone" type="tel" autoComplete="tel"
+              className={`${styles.input} ${errors.phone ? styles.inputError : ""}`}
+              value={phone}
+              onChange={(e) => { setPhone(e.target.value); clearErr("phone"); }} />
+            {errors.phone && <p className={styles.fieldError}>{errors.phone}</p>}
+          </div>
 
-              <div className={styles.field}>
-                <label className={styles.label} htmlFor="som-email">Email</label>
-                <input id="som-email" type="email" autoComplete="email"
-                  className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
-                  value={email}
-                  onChange={(e) => { setEmail(e.target.value); clearErr("email"); }} />
-                {errors.email && <p className={styles.fieldError}>{errors.email}</p>}
-              </div>
+          <div className={styles.field}>
+            <span className={styles.label}>Preferred Method of Contact</span>
+            <div className={styles.pillGroup} role="group" aria-label="Preferred method of contact">
+              {["Call", "Text", "Email"].map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  className={`${styles.pill} ${preferredContact === option ? styles.pillActive : ""}`}
+                  aria-pressed={preferredContact === option}
+                  onClick={() => { setPreferredContact(option); clearErr("preferredContact"); }}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+            {errors.preferredContact && <p className={styles.fieldError}>{errors.preferredContact}</p>}
+          </div>
 
-              <div className={styles.field}>
-                <label className={styles.label} htmlFor="som-phone">Phone</label>
-                <input id="som-phone" type="tel" autoComplete="tel"
-                  className={`${styles.input} ${errors.phone ? styles.inputError : ""}`}
-                  value={phone}
-                  onChange={(e) => { setPhone(e.target.value); clearErr("phone"); }} />
-                {errors.phone && <p className={styles.fieldError}>{errors.phone}</p>}
-              </div>
-
-              <div className={styles.field}>
-                <span className={styles.label}>Preferred Method of Contact</span>
-                <div className={styles.pillGroup} role="group" aria-label="Preferred method of contact">
-                  {["Call", "Text", "Email"].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      className={`${styles.pill} ${preferredContact === option ? styles.pillActive : ""}`}
-                      aria-pressed={preferredContact === option}
-                      onClick={() => { setPreferredContact(option); clearErr("preferredContact"); }}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-                {errors.preferredContact && <p className={styles.fieldError}>{errors.preferredContact}</p>}
-              </div>
-
-              <fieldset className={styles.fieldset}>
-                <legend className={styles.legend}>Preferred Availability</legend>
-                <p className={styles.fieldHint}>Select the days and times that work best for you this week.</p>
-                <div className={styles.daysGrid}>
-                  {DAYS.map((day) => (
-                    <div key={day.id} className={styles.dayBlock}>
-                      <label className={styles.checkLabel}>
-                        <input type="checkbox" className={styles.checkbox}
-                          checked={selectedDays.has(day.id)}
-                          onChange={() => toggleDay(day.id)} />
-                        <span className={styles.checkText}>{day.label}</span>
-                      </label>
-                      {selectedDays.has(day.id) && (
-                        <div className={styles.timesWrap}>
-                          {day.times.map((time) => (
-                            <label key={time} className={`${styles.checkLabel} ${styles.timeLabel}`}>
-                              <input type="checkbox" className={styles.checkbox}
-                                checked={(selectedTimes[day.id] || new Set()).has(time)}
-                                onChange={() => toggleTime(day.id, time)} />
-                              <span className={styles.checkText}>{time}</span>
-                            </label>
-                          ))}
-                        </div>
-                      )}
+          <fieldset className={styles.fieldset}>
+            <legend className={styles.legend}>Preferred Availability</legend>
+            <p className={styles.fieldHint}>Select the days and times that work best for you this week.</p>
+            <div className={styles.daysGrid}>
+              {DAYS.map((day) => (
+                <div key={day.id} className={styles.dayBlock}>
+                  <label className={styles.checkLabel}>
+                    <input type="checkbox" className={styles.checkbox}
+                      checked={selectedDays.has(day.id)}
+                      onChange={() => toggleDay(day.id)} />
+                    <span className={styles.checkText}>{day.label}</span>
+                  </label>
+                  {selectedDays.has(day.id) && (
+                    <div className={styles.timesWrap}>
+                      {day.times.map((time) => (
+                        <label key={time} className={`${styles.checkLabel} ${styles.timeLabel}`}>
+                          <input type="checkbox" className={styles.checkbox}
+                            checked={(selectedTimes[day.id] || new Set()).has(time)}
+                            onChange={() => toggleTime(day.id, time)} />
+                          <span className={styles.checkText}>{time}</span>
+                        </label>
+                      ))}
                     </div>
-                  ))}
+                  )}
                 </div>
-              </fieldset>
+              ))}
+            </div>
+          </fieldset>
 
-              <fieldset className={styles.fieldset}>
-                <legend className={styles.legend}>What are you hoping to get a second opinion on?</legend>
-                <p className={styles.fieldHint}>Select all that apply.</p>
-                <div className={styles.reasonsGrid}>
-                  {REASONS.map((reason) => (
-                    <label key={reason} className={styles.checkLabel}>
-                      <input type="checkbox" className={styles.checkbox}
-                        checked={selectedReasons.has(reason)}
-                        onChange={() => toggleReason(reason)} />
-                      <span className={styles.checkText}>{reason}</span>
-                    </label>
-                  ))}
-                </div>
-                {selectedReasons.has("Other") && (
-                  <div className={styles.otherWrap}>
-                    <label className={styles.label} htmlFor="som-other">Please describe</label>
-                    <input id="som-other" type="text"
-                      className={`${styles.input} ${errors.otherText ? styles.inputError : ""}`}
-                      placeholder="Tell us what you'd like a second opinion on"
-                      value={otherText}
-                      onChange={(e) => { setOtherText(e.target.value); clearErr("otherText"); }} />
-                    {errors.otherText && <p className={styles.fieldError}>{errors.otherText}</p>}
-                  </div>
-                )}
-              </fieldset>
+          <fieldset className={styles.fieldset}>
+            <legend className={styles.legend}>What are you hoping to get a second opinion on?</legend>
+            <p className={styles.fieldHint}>Select all that apply.</p>
+            <div className={styles.reasonsGrid}>
+              {REASONS.map((reason) => (
+                <label key={reason} className={styles.checkLabel}>
+                  <input type="checkbox" className={styles.checkbox}
+                    checked={selectedReasons.has(reason)}
+                    onChange={() => toggleReason(reason)} />
+                  <span className={styles.checkText}>{reason}</span>
+                </label>
+              ))}
+            </div>
+            {selectedReasons.has("Other") && (
+              <div className={styles.otherWrap}>
+                <label className={styles.label} htmlFor="som-other">Please describe</label>
+                <input id="som-other" type="text"
+                  className={`${styles.input} ${errors.otherText ? styles.inputError : ""}`}
+                  placeholder="Tell us what you'd like a second opinion on"
+                  value={otherText}
+                  onChange={(e) => { setOtherText(e.target.value); clearErr("otherText"); }} />
+                {errors.otherText && <p className={styles.fieldError}>{errors.otherText}</p>}
+              </div>
+            )}
+          </fieldset>
 
-              <button type="submit" className={styles.submit} disabled={loading}>
-                {loading ? "Sending…" : "Request Second Opinion Assessment"}
-              </button>
+          <button type="submit" className={styles.submit} disabled={loading}>
+            {loading ? "Sending…" : "Request Second Opinion Assessment"}
+          </button>
 
-              {serverError && <p className={styles.serverError}>{serverError}</p>}
-            </form>
-          </>
-        )}
+          {serverError && <p className={styles.serverError}>{serverError}</p>}
+        </form>
       </div>
     </dialog>
   );

@@ -15,9 +15,9 @@ const COLUMNS = [
       "One-time, one-hour session",
       "Immediate data and feedback",
       "A clear path forward",
-      "Investment: [PRICE]",
+      "Investment: $499",
     ],
-    cta: { label: "Request Pricing", modal: true },
+    cta: { label: "Request Appointment", modal: true },
     accent: true,
   },
   {

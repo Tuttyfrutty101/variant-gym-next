@@ -13,7 +13,7 @@ const SEGMENTS = [
     label: "Part One",
     title: "Physical Therapy Consultation & Assessment",
     description:
-      "An in-house session with Dr. Jon Sakoda covering your injury history, movement limitations, pain patterns, and physical baseline. We identify root causes, not just symptoms.",
+      "An in-house session with Dr. Jon Sakoda, one of Santa Barbara's leading physical therapists, covering your injury history, movement limitations, pain patterns, and physical baseline. We identify root causes, not just symptoms.",
     primary: true,
     image: {
       src: "/images/DSC02333.jpg",
@@ -163,7 +163,7 @@ export default function SecondOpinionAssessment() {
       >
         <p className={styles.tag}>Second Opinion Assessment</p>
         <h2 id="assessment-heading" className={styles.title}>
-          A Complete Picture in One Hour
+          A Complete Movement & Strength Assessment in One Hour
         </h2>
         <p className={styles.subtitle}>
           Every assessment is tailored to your goals and current training.

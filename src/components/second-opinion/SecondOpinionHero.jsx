@@ -29,6 +29,13 @@ export default function SecondOpinionHero() {
           <p className={styles.support}>
             Most people don&apos;t need another workout. They need answers.
           </p>
+          <p className={styles.support}>
+            Maybe it&apos;s a shoulder, knee, or back issue that flares up and
+            never quite resolves. Maybe you&apos;ve been to every boutique
+            class and bootcamp Santa Barbara has to offer and you&apos;re
+            still not seeing the changes you want. Either way, you don&apos;t
+            need to guess anymore.
+          </p>
           <div className={styles.actions}>
             <button
               type="button"
@@ -51,7 +58,9 @@ export default function SecondOpinionHero() {
             At Variant, our Test Treat Train system combines advanced performance
             testing, physical therapy insight, recovery modalities, and
             personalized coaching to uncover what&apos;s holding you back and
-            build a plan that delivers measurable results.
+            build a plan that delivers measurable results. Every Second Opinion
+            Assessment includes a full functional movement assessment, giving
+            you an objective look at how your body actually moves.
           </p>
         </div>
       </section>

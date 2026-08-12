@@ -15,6 +15,7 @@ const COLUMNS = [
       "One-time, one-hour session",
       "Immediate data and feedback",
       "A clear path forward",
+      "Investment: [PRICE]",
     ],
     cta: { label: "Request Pricing", modal: true },
     accent: true,

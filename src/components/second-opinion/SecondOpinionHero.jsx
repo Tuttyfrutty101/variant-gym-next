@@ -24,8 +24,11 @@ export default function SecondOpinionHero() {
         <div className={styles.heroInner}>
           <p className={styles.tag}>Second Opinion</p>
           <h1 className={styles.headline}>
-            You&apos;ve Tried Everything. Now Find Out Why It Isn&apos;t Working.
+            You&apos;ve tried everything. Now find out why it isn&apos;t working.
           </h1>
+          <p className={styles.support}>
+            One hour. Objective data. A clear answer. No membership required.
+          </p>
           <p className={styles.support}>
             Most people don&apos;t need another workout. They need answers.
           </p>
@@ -37,6 +40,10 @@ export default function SecondOpinionHero() {
             need to guess anymore.
           </p>
           <div className={styles.actions}>
+            {/* CTA copy options — pick one, current text left unchanged pending your call:
+                1. "Get My Data-Driven Assessment"
+                2. "See What My Data Shows"
+                3. "Start My Second Opinion" */}
             <button
               type="button"
               className={styles.cta}

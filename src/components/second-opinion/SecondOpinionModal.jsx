@@ -196,7 +196,7 @@ export default function SecondOpinionModal() {
         <header className={styles.modalHeader}>
           <p className={styles.tag}>Second Opinion Assessment</p>
           <h2 id="so-modal-heading" className={styles.heading}>
-            Request Your Assessment
+            Get Your Data-Driven Answers
           </h2>
           <p className={styles.subheading}>
             No obligation. Expect a follow-up within 24–48 hours with confirmation and pricing.
@@ -306,7 +306,7 @@ export default function SecondOpinionModal() {
           </fieldset>
 
           <button type="submit" className={styles.submit} disabled={loading}>
-            {loading ? "Sending…" : "Request Second Opinion Assessment"}
+            {loading ? "Sending…" : "Get My Data-Driven Results"}
           </button>
 
           {serverError && <p className={styles.serverError}>{serverError}</p>}

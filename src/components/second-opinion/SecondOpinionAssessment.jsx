@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useInView } from "@/hooks/useInView";
 import styles from "./SecondOpinionAssessment.module.css";
 
@@ -198,6 +199,15 @@ export default function SecondOpinionAssessment() {
               </div>
               <h3 className={styles.segTitle}>{seg.title}</h3>
               <p className={styles.segDesc}>{seg.description}</p>
+              {seg.id === "pt" && (
+                <p className={styles.segCredibility}>
+                  Led by{" "}
+                  <Link href="/physical-therapy" className={styles.segCredibilityLink}>
+                    Dr. Jon Sakoda, DPT, OCS
+                  </Link>
+                  , board-certified in orthopedic physical therapy.
+                </p>
+              )}
             </div>
           </div>
         ))}

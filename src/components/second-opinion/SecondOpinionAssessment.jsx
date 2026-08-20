@@ -23,7 +23,7 @@ const SEGMENTS = [
   },
   {
     id: "strength",
-    duration: "30",
+    duration: "60",
     unit: "min",
     label: "Part Two",
     title: "Strength, Movement & Data Review",
@@ -164,7 +164,7 @@ export default function SecondOpinionAssessment() {
       >
         <p className={styles.tag}>Second Opinion Assessment</p>
         <h2 id="assessment-heading" className={styles.title}>
-          A Complete Movement & Strength Assessment in One Hour
+          A Complete Movement & Strength Assessment in 90 Minutes
         </h2>
         <p className={styles.subtitle}>
           Every assessment is tailored to your goals and current training.

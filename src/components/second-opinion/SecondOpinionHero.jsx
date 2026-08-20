@@ -27,17 +27,7 @@ export default function SecondOpinionHero() {
             You&apos;ve tried everything. Now find out why it isn&apos;t working.
           </h1>
           <p className={styles.support}>
-            One hour. Objective data. A clear answer. No membership required.
-          </p>
-          <p className={styles.support}>
-            Most people don&apos;t need another workout. They need answers.
-          </p>
-          <p className={styles.support}>
-            Maybe it&apos;s a shoulder, knee, or back issue that flares up and
-            never quite resolves. Maybe you&apos;ve been to every boutique
-            class and bootcamp Santa Barbara has to offer and you&apos;re
-            still not seeing the changes you want. Either way, you don&apos;t
-            need to guess anymore.
+            90 minutes. Objective data. A clear answer. No membership required.
           </p>
           <div className={styles.actions}>
             {/* CTA copy options — pick one, current text left unchanged pending your call:
@@ -52,6 +42,7 @@ export default function SecondOpinionHero() {
               Request Second Opinion Assessment
             </button>
           </div>
+          <p className={styles.priceLine}>$499 · Santa Barbara</p>
         </div>
       </header>
 
@@ -61,6 +52,16 @@ export default function SecondOpinionHero() {
         aria-label="About the second opinion program"
       >
         <div className={styles.bodyInner}>
+          <p className={styles.bodyText}>
+            Most people don&apos;t need another workout. They need answers.
+          </p>
+          <p className={styles.bodyText}>
+            Maybe it&apos;s a shoulder, knee, or back issue that flares up and
+            never quite resolves. Maybe you&apos;ve been to every boutique
+            class and bootcamp Santa Barbara has to offer and you&apos;re
+            still not seeing the changes you want. Either way, you don&apos;t
+            need to guess anymore.
+          </p>
           <p className={styles.bodyText}>
             At Variant, our Test Treat Train system combines advanced performance
             testing, physical therapy insight, recovery modalities, and

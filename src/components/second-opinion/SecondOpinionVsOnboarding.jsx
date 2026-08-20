@@ -9,10 +9,10 @@ const COLUMNS = [
     id: "second-opinion",
     eyebrow: "Second Opinion Assessment",
     heading: "A taste of what we do.",
-    body: "Designed for people who want real answers before making a commitment. One focused one-hour session with no membership required. You get objective data, a physical therapy read, and clear recommendations you can act on right away.",
+    body: "Designed for people who want real answers before making a commitment. One focused 90-minute session with no membership required. You get objective data, a physical therapy read, and clear recommendations you can act on right away.",
     points: [
       "No membership required",
-      "One-time, one-hour session",
+      "One-time, 90-minute session",
       "Immediate data and feedback",
       "A clear path forward",
       "Investment: $499",

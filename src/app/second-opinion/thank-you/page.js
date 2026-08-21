@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Script from "next/script";
 import Footer from "@/components/Footer";
 
 export const metadata = {
@@ -13,6 +14,24 @@ export default function SecondOpinionThankYouPage() {
       className="homeMarketingDark siteBelowNav"
       style={{ background: "var(--carbon)", minHeight: "100vh" }}
     >
+      {/* Google tag (gtag.js) event - delayed navigation helper */}
+      <Script id="gtag-send-event" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: `
+  // Helper function to delay opening a URL until a gtag event is sent.
+  // Call it in response to an action that should navigate to a URL.
+  function gtagSendEvent(url) {
+    var callback = function () {
+      if (typeof url === 'string') {
+        window.location = url;
+      }
+    };
+    gtag('event', 'form_submission', {
+      'event_callback': callback,
+      'event_timeout': 2000,
+      // <event_parameters>
+    });
+    return false;
+  }
+` }} />
       <section
         style={{
           maxWidth: 640,

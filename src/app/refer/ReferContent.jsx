@@ -11,7 +11,7 @@ const LOGO_HEIGHT = 1240;
 
 // Edit the referral message here — it's used everywhere on the page (sms link, share, and the copy fallback).
 const MESSAGE =
-  "Ever wonder what training for longevity actually looks like? I can refer you to Variant Training Lab for a Biomechanical Consultation. Fill out the form at varianttraininglab.com/contact and put my name under Goals. Their scheduling team will reach out.";
+  "Thought of you! My gym, Variant Training Lab, lets members refer friends for a Biomechanical Consultation. It's a deep look at how you move and what your body needs to train for the long haul. I think it's worth checking out. Fill out the form at varianttraininglab.com/contact, and they said you can put my name under Goals, and they'll reach out.";
 
 // Open question (flagged, not decided): what should happen to this page after the deadline —
 // stay up with this line removed, or come down entirely? Edit the date here either way.

@@ -1,0 +1,167 @@
+.section {
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: clamp(3.5rem, 9vw, 5.5rem) 1.5rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.logoWrap {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 1.25rem;
+}
+
+.logo {
+  width: 64px;
+  height: auto;
+}
+
+/* Deviates from the site's usual accent-red eyebrow color (rgba(stone,0.9) instead of
+   var(--accent)) — var(--accent) text on --carbon only measures 2.59:1, below this
+   page's required 4.5:1. See chat for the full contrast check. */
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(var(--stone-rgb), 0.9);
+  margin: 0 0 1rem;
+}
+
+.heading {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.85rem, 4.5vw, 3rem);
+  line-height: 1.18;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: var(--linen);
+  margin: 0 0 1rem;
+}
+
+.subhead {
+  font-family: var(--sans);
+  font-size: clamp(0.9rem, 1.9vw, 1.05rem);
+  line-height: 1.6;
+  color: rgba(var(--stone-rgb), 0.95);
+  margin: 0 auto 2rem;
+  max-width: 30rem;
+  letter-spacing: 0.02em;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.85rem;
+  margin: 0 0 2.5rem;
+}
+
+.primaryBtn,
+.secondaryBtn,
+.copyBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.9rem 1.75rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.primaryBtn {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--linen);
+}
+
+.primaryBtn:hover {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+}
+
+.secondaryBtn {
+  background: transparent;
+  border-color: rgba(var(--stone-rgb), 0.4);
+  color: rgba(var(--stone-rgb), 0.9);
+}
+
+.secondaryBtn:hover {
+  border-color: rgba(var(--stone-rgb), 0.7);
+  color: var(--linen);
+}
+
+.primaryBtn:focus-visible,
+.secondaryBtn:focus-visible,
+.copyBtn:focus-visible {
+  outline: 2px solid var(--linen);
+  outline-offset: 3px;
+}
+
+.messageBox {
+  background: rgba(var(--linen-rgb), 0.04);
+  border: 1px solid rgba(var(--stone-rgb), 0.16);
+  padding: clamp(1.75rem, 4vw, 2.25rem);
+  margin: 0 0 2rem;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.messageText {
+  font-family: var(--sans);
+  font-size: clamp(0.84rem, 1.6vw, 0.9rem);
+  line-height: 1.72;
+  color: rgba(var(--stone-rgb), 0.82);
+  margin: 0 0 1.25rem;
+  white-space: pre-wrap;
+}
+
+.copyBtn {
+  width: 100%;
+  background: transparent;
+  border-color: rgba(var(--stone-rgb), 0.4);
+  color: rgba(var(--stone-rgb), 0.9);
+}
+
+.copyBtn:hover {
+  border-color: rgba(var(--stone-rgb), 0.7);
+  color: var(--linen);
+}
+
+.finePrint {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: rgba(var(--stone-rgb), 0.65);
+  margin: 0.75rem 0 0;
+}
+
+@media (min-width: 480px) {
+  .actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    flex: 0 1 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primaryBtn,
+  .secondaryBtn,
+  .copyBtn {
+    transition: none;
+  }
+}

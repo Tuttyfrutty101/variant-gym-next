@@ -154,10 +154,18 @@ export async function POST(request) {
               : null;
 
       if (gmError) {
-        console.error("[contact] GymMaster prospect/create:", gmError);
+        console.error("[contact] GymMaster prospect/create failed:", {
+          status: gmRes.status,
+          body: text,
+        });
+      } else {
+        console.log("[contact] GymMaster prospect/create ok:", {
+          status: gmRes.status,
+          memberid: gmJson?.memberid,
+        });
       }
     } catch (err) {
-      console.error("[contact] GymMaster request failed:", err);
+      console.error("[contact] GymMaster request threw:", err);
     }
   } else {
     console.warn(

@@ -116,7 +116,7 @@ export async function POST(request) {
     formData.append("surname", name.split(" ").slice(1).join(" ") || "");
     formData.append("email", email);
     formData.append("companyid", companyId);
-    formData.append("promotionid", "277618");
+    formData.append("promotion_id", "277618");
     formData.append("notes", notes);
     if (phone) formData.append("phonecell", phone);
 
@@ -131,9 +131,19 @@ export async function POST(request) {
           : gmJson.error && String(gmJson.error).length > 0
             ? String(gmJson.error)
             : !gmRes.ok ? text || gmRes.statusText : null;
-      if (gmError) console.error("[second-opinion] GymMaster:", gmError);
+      if (gmError) {
+        console.error("[second-opinion] GymMaster prospect/create failed:", {
+          status: gmRes.status,
+          body: text,
+        });
+      } else {
+        console.log("[second-opinion] GymMaster prospect/create ok:", {
+          status: gmRes.status,
+          memberid: gmJson?.memberid,
+        });
+      }
     } catch (err) {
-      console.error("[second-opinion] GymMaster request failed:", err);
+      console.error("[second-opinion] GymMaster request threw:", err);
     }
   } else {
     console.warn("[second-opinion] GymMaster skipped: env vars not set");

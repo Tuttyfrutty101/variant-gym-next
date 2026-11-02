@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { verifyTurnstile } from "@/lib/turnstile";
 
 const MAX_LEN = {
   firstName: 120,
@@ -30,6 +31,15 @@ export async function POST(request) {
     return NextResponse.json(
       { error: "Invalid request body." },
       { status: 400 },
+    );
+  }
+  const turnstileToken = trimmedOrEmpty(body?.turnstileToken);
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const isHuman = await verifyTurnstile(turnstileToken, ip);
+  if (!isHuman) {
+    return NextResponse.json(
+      { error: "Verification failed. Please try again." },
+      { status: 403 },
     );
   }
 

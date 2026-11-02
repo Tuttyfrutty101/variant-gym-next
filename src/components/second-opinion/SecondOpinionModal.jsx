@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import TurnstileWidget from "@/components/TurnstileWidget";
 import styles from "./SecondOpinionModal.module.css";
 
 const DAYS = [
@@ -134,6 +135,9 @@ export default function SecondOpinionModal() {
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
 
+    const turnstileToken =
+      e.currentTarget.querySelector('[name="cf-turnstile-response"]')?.value ?? "";
+
     setLoading(true);
     setServerError(null);
 
@@ -151,6 +155,7 @@ export default function SecondOpinionModal() {
           availability,
           reasons: Array.from(selectedReasons),
           otherText: otherText.trim(),
+          turnstileToken,
         }),
       });
       let data = null;
@@ -304,6 +309,8 @@ export default function SecondOpinionModal() {
               </div>
             )}
           </fieldset>
+
+          <TurnstileWidget />
 
           <button type="submit" className={styles.submit} disabled={loading}>
             {loading ? "Sending…" : "Get My Data-Driven Results"}

@@ -293,6 +293,20 @@ export default function Contact({ contactInfo, hours }) {
               Thank you for reaching out to Variant Training Lab. We will be in
               touch shortly.
             </p>
+            <p className={styles.thankYouFollowUp}>
+              To reach someone from our team sooner, please email{" "}
+              <a
+                href="mailto:info@varianttraininglab.com"
+                className={styles.thankYouLink}
+              >
+                info@varianttraininglab.com
+              </a>{" "}
+              or call{" "}
+              <a href="tel:+18058378475" className={styles.thankYouLink}>
+                805-837-8475
+              </a>
+              .
+            </p>
           </div>
         </div>
       </dialog>

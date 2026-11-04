@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { blockedEmailResponse, submissionEmailIsBlocked } from "@/lib/blockedEmailDomains";
 import { verifyTurnstile } from "@/lib/turnstile";
 import { createSupabaseServiceClient } from "@/lib/supabase/service";
 
@@ -93,6 +94,19 @@ export async function POST(request) {
       { status: 500 },
     );
   }
+
+  const block = await submissionEmailIsBlocked(supabase, email, "[contact]");
+  if (block.lookupFailed) {
+    return NextResponse.json(
+      { error: "Something went wrong. Please try again." },
+      { status: 500 },
+    );
+  }
+  if (block.blocked) {
+    const rejected = blockedEmailResponse();
+    return NextResponse.json({ error: rejected.error }, { status: rejected.status });
+  }
+
   const { error: dbError } = await supabase.from("contact_submissions").insert({
     name,
     email,

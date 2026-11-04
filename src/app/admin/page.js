@@ -25,6 +25,9 @@ export default function AdminHomePage() {
         <Link className={styles.cardLink} href="/admin/testimonials">
           Testimonials
         </Link>
+        <Link className={styles.cardLink} href="/admin/blocked-domains">
+          Blocked email domains
+        </Link>
       </div>
     </>
   );

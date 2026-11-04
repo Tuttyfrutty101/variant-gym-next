@@ -12,6 +12,7 @@ const LINKS = [
   { href: "/admin/schedule", label: "Class schedule" },
   { href: "/admin/promotion", label: "Promo block" },
   { href: "/admin/testimonials", label: "Testimonials" },
+  { href: "/admin/blocked-domains", label: "Blocked domains" },
 ];
 
 export default function AdminLayoutClient({ children }) {

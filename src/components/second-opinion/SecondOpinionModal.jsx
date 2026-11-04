@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import TurnstileWidget from "@/components/TurnstileWidget";
 import styles from "./SecondOpinionModal.module.css";
 
 const DAYS = [
@@ -49,6 +50,7 @@ export default function SecondOpinionModal() {
   const [errors,      setErrors]      = useState({});
   const [loading,     setLoading]     = useState(false);
   const [serverError, setServerError] = useState(null);
+  const [dialogOpen,  setDialogOpen]  = useState(false);
 
   const openModal = useCallback(() => {
     dialogRef.current?.showModal();
@@ -69,7 +71,9 @@ export default function SecondOpinionModal() {
     const dialog = dialogRef.current;
     if (!dialog) return;
     const observer = new MutationObserver(() => {
-      document.body.style.overflow = dialog.open ? "hidden" : "";
+      const open = dialog.open;
+      document.body.style.overflow = open ? "hidden" : "";
+      setDialogOpen(open);
     });
     observer.observe(dialog, { attributes: true, attributeFilter: ["open"] });
     return () => {
@@ -131,6 +135,8 @@ export default function SecondOpinionModal() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const turnstileToken =
+      e.currentTarget.querySelector('[name="cf-turnstile-response"]')?.value ?? "";
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
 
@@ -151,6 +157,7 @@ export default function SecondOpinionModal() {
           availability,
           reasons: Array.from(selectedReasons),
           otherText: otherText.trim(),
+          turnstileToken,
         }),
       });
       let data = null;
@@ -304,6 +311,8 @@ export default function SecondOpinionModal() {
               </div>
             )}
           </fieldset>
+
+          {dialogOpen ? <TurnstileWidget /> : null}
 
           <button type="submit" className={styles.submit} disabled={loading}>
             {loading ? "Sending…" : "Get My Data-Driven Results"}

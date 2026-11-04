@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { verifyTurnstile } from "@/lib/turnstile";
+import { createSupabaseServiceClient } from "@/lib/supabase/service";
 
 function hasText(v) {
   return typeof v === "string" && v.trim().length > 0;
@@ -49,6 +50,16 @@ export async function POST(request) {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
   }
 
+  const turnstileToken = trimmed(body?.turnstileToken);
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const isHuman = await verifyTurnstile(turnstileToken, ip);
+  if (!isHuman) {
+    return NextResponse.json(
+      { error: "Verification failed. Please try again." },
+      { status: 403 },
+    );
+  }
+
   const name = trimmed(body?.name);
   const email = trimmed(body?.email);
   const phone = trimmed(body?.phone);
@@ -72,22 +83,13 @@ export async function POST(request) {
 
   const notes = buildNotes({ name, email, phone, preferredContact, availability, reasons, otherText });
 
-  const supabaseUrl =
-    typeof process.env.NEXT_PUBLIC_SUPABASE_URL === "string" &&
-    process.env.NEXT_PUBLIC_SUPABASE_URL.startsWith("http")
-      ? process.env.NEXT_PUBLIC_SUPABASE_URL
-      : null;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseAnonKey) {
-    console.error("[second-opinion] Missing Supabase env vars");
+  const supabase = createSupabaseServiceClient("[second-opinion]");
+  if (!supabase) {
     return NextResponse.json(
       { error: "Server misconfiguration. Please try again later." },
       { status: 500 },
     );
   }
-
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
   const { error: dbError } = await supabase.from("contact_submissions").insert({
     name,
     email,

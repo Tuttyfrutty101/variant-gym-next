@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import BusinessHoursList from "@/components/BusinessHoursList";
+import TurnstileWidget from "@/components/TurnstileWidget";
 import styles from "./Contact.module.css";
 
 const INITIAL = {
@@ -34,6 +35,8 @@ export default function Contact({ contactInfo, hours }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const turnstileToken =
+      e.currentTarget.querySelector('[name="cf-turnstile-response"]')?.value ?? "";
     setLoading(true);
     setError(null);
     if (thankYouDialogRef.current?.open) thankYouDialogRef.current.close();
@@ -49,6 +52,7 @@ export default function Contact({ contactInfo, hours }) {
           phone: form.phone.trim(),
           interest: form.interest,
           goals: form.goals.trim(),
+          turnstileToken,
         }),
       });
 
@@ -243,6 +247,8 @@ export default function Contact({ contactInfo, hours }) {
               onChange={update("goals")}
             />
           </div>
+
+          <TurnstileWidget />
 
           <button
             type="submit"

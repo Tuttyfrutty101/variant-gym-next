@@ -19,9 +19,11 @@ function simplePhoneOk(phone) {
   return String(phone).replace(/\D/g, "").length >= 10;
 }
 
-function buildNotes({ name, email, phone, preferredContact, availability, reasons, otherText }) {
+function buildNotes({ name, email, phone, preferredContact, availability, reasons, otherText, forWhom, startTiming, additionalInfo }) {
   const parts = ["Source: Second Opinion Assessment form"];
   if (preferredContact) parts.push(`Preferred contact method: ${preferredContact}`);
+  if (forWhom) parts.push(`Who this is for: ${forWhom}`);
+  if (startTiming) parts.push(`When to start: ${startTiming}`);
 
   if (reasons.length > 0) {
     const core = reasons.filter((r) => r !== "Other").join(", ");
@@ -39,6 +41,8 @@ function buildNotes({ name, email, phone, preferredContact, availability, reason
     );
     parts.push(`Preferred availability:\n  ${lines.join("\n  ")}`);
   }
+
+  if (additionalInfo) parts.push(`Anything else: ${additionalInfo}`);
 
   return parts.join("\n");
 }
@@ -68,6 +72,9 @@ export async function POST(request) {
   const availability = Array.isArray(body?.availability) ? body.availability : [];
   const reasons = Array.isArray(body?.reasons) ? body.reasons : [];
   const otherText = trimmed(body?.otherText);
+  const forWhom = trimmed(body?.forWhom);
+  const startTiming = trimmed(body?.startTiming);
+  const additionalInfo = trimmed(body?.additionalInfo);
 
   if (!hasText(name)) {
     return NextResponse.json({ error: "Name is required." }, { status: 400 });
@@ -78,11 +85,14 @@ export async function POST(request) {
   if (!hasText(phone) || !simplePhoneOk(phone)) {
     return NextResponse.json({ error: "A valid phone number is required." }, { status: 400 });
   }
-  if (name.length > 240 || email.length > 320 || phone.length > 40) {
+  if (
+    name.length > 240 || email.length > 320 || phone.length > 40 ||
+    forWhom.length > 120 || startTiming.length > 120 || additionalInfo.length > 2000
+  ) {
     return NextResponse.json({ error: "One or more fields are too long." }, { status: 400 });
   }
 
-  const notes = buildNotes({ name, email, phone, preferredContact, availability, reasons, otherText });
+  const notes = buildNotes({ name, email, phone, preferredContact, availability, reasons, otherText, forWhom, startTiming, additionalInfo });
 
   const supabase = createSupabaseServiceClient("[second-opinion]");
   if (!supabase) {

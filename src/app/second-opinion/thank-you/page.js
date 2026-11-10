@@ -4,8 +4,22 @@ import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Thank You",
-  description: "Your Second Opinion Assessment request has been received.",
+  description: "Your request to meet with an expert trainer has been received.",
   robots: { index: false },
+};
+
+const bodyText = {
+  fontFamily: "var(--sans)",
+  fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
+  lineHeight: 1.75,
+  color: "rgba(212,198,183,0.85)",
+  margin: "0 0 1.25rem",
+};
+
+const contactLink = {
+  color: "inherit",
+  textDecoration: "underline",
+  textUnderlineOffset: "0.15em",
 };
 
 export default function SecondOpinionThankYouPage() {
@@ -40,19 +54,6 @@ export default function SecondOpinionThankYouPage() {
           textAlign: "center",
         }}
       >
-        <p
-          style={{
-            fontFamily: "var(--sans)",
-            fontSize: "0.62rem",
-            fontWeight: 600,
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "var(--accent)",
-            marginBottom: "1rem",
-          }}
-        >
-          Second Opinion Assessment
-        </p>
         <h1
           style={{
             fontFamily: "var(--serif)",
@@ -60,21 +61,31 @@ export default function SecondOpinionThankYouPage() {
             fontSize: "clamp(1.8rem, 4.5vw, 2.6rem)",
             color: "var(--linen)",
             margin: "0 0 1.25rem",
+            textTransform: "none",
+            letterSpacing: "0.01em",
           }}
         >
-          Request Received
+          Meet with an Expert Trainer: Request Received
         </h1>
-        <p
-          style={{
-            fontFamily: "var(--sans)",
-            fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
-            lineHeight: 1.75,
-            color: "rgba(212,198,183,0.85)",
-            margin: "0 0 2.5rem",
-          }}
-        >
-          No obligation. Our team will reach out within 24–48 hours with
-          confirmation and pricing, and to find a time that works for you.
+        <p style={bodyText}>
+          A member of our team will contact you to match you with a trainer and
+          schedule your session.
+        </p>
+        <p style={bodyText}>
+          Want a faster response? Call, text, or email us.
+        </p>
+        <p style={{ ...bodyText, color: "var(--linen)" }}>
+          <a href="tel:+18058378475" style={contactLink}>
+            805-837-8475
+          </a>
+          {" · "}
+          <a href="mailto:info@varianttraininglab.com" style={contactLink}>
+            info@varianttraininglab.com
+          </a>
+        </p>
+        <p style={{ ...bodyText, margin: "0 0 2.5rem" }}>
+          Before your session, think about your goals and anything that&apos;s
+          been bothering you.
         </p>
         <Link
           href="/"
@@ -92,7 +103,7 @@ export default function SecondOpinionThankYouPage() {
             textDecoration: "none",
           }}
         >
-          Back to Home
+          Back to Variant Training Lab
         </Link>
       </section>
       <Footer />

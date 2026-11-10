@@ -5,21 +5,20 @@ import { useRouter } from "next/navigation";
 import TurnstileWidget from "@/components/TurnstileWidget";
 import styles from "./SecondOpinionModal.module.css";
 
-const DAYS = [
-  { id: "monday",    label: "Monday",    times: ["1–2pm", "2–3pm", "3–4pm"] },
-  { id: "tuesday",   label: "Tuesday",   times: ["8–9am", "9–10am", "10–11am", "11–12pm"] },
-  { id: "wednesday", label: "Wednesday", times: ["1–2pm", "2–3pm", "3–4pm"] },
-  { id: "thursday",  label: "Thursday",  times: ["8–9am", "9–10am", "10–11am", "11–12pm"] },
+const CONTACT_METHODS = ["Call", "Text"];
+
+// `value` is what the handler receives; "Other" tells it to save the free-text box.
+const GOALS = [
+  { label: "Get stronger", value: "Get stronger" },
+  { label: "Build muscle or lose weight", value: "Build muscle or lose weight" },
+  { label: "Move better or feel less pain", value: "Move better or feel less pain" },
+  { label: "Improve performance for my sport", value: "Improve performance for my sport" },
+  { label: "Something else", value: "Other" },
 ];
 
-const REASONS = [
-  "Current injury or limitation",
-  "Training",
-  "Performance",
-  "Sport-specific goal",
-  "Strength assessment",
-  "Other",
-];
+const FOR_WHOM = ["Myself", "My child (youth athlete)"];
+const START_TIMING = ["This week", "Within 2 weeks", "Before the new year", "Just exploring"];
+const MEET_TIMES = ["Morning", "Afternoon", "Evening"];
 
 function simpleEmailOk(v) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
@@ -28,11 +27,27 @@ function simplePhoneOk(v) {
   return v.replace(/\D/g, "").length >= 10;
 }
 
-const EMPTY = {
-  name: "", email: "", phone: "",
-  selectedDays: new Set(), selectedTimes: {},
-  selectedReasons: new Set(), otherText: "",
-};
+function ChoiceGroup({ name, options, value, onChange, columns }) {
+  return (
+    <div className={`${styles.choices} ${styles[columns]}`}>
+      {options.map((option) => (
+        <label
+          key={option}
+          className={`${styles.choice} ${value === option ? styles.choiceSelected : ""}`}
+        >
+          <input
+            type="radio"
+            name={name}
+            className={styles.radio}
+            checked={value === option}
+            onChange={() => onChange(option)}
+          />
+          <span className={styles.choiceText}>{option}</span>
+        </label>
+      ))}
+    </div>
+  );
+}
 
 export default function SecondOpinionModal() {
   const dialogRef = useRef(null);
@@ -42,10 +57,12 @@ export default function SecondOpinionModal() {
   const [email,            setEmail]            = useState("");
   const [phone,            setPhone]            = useState("");
   const [preferredContact, setPreferredContact] = useState("");
-  const [selectedDays,    setSelectedDays]    = useState(() => new Set());
-  const [selectedTimes,   setSelectedTimes]   = useState({});
-  const [selectedReasons, setSelectedReasons] = useState(() => new Set());
-  const [otherText, setOtherText] = useState("");
+  const [selectedGoals,    setSelectedGoals]    = useState(() => new Set());
+  const [otherText,        setOtherText]        = useState("");
+  const [forWhom,          setForWhom]          = useState("");
+  const [startTiming,      setStartTiming]      = useState("");
+  const [meetTime,         setMeetTime]         = useState("");
+  const [additionalInfo,   setAdditionalInfo]   = useState("");
 
   const [errors,      setErrors]      = useState({});
   const [loading,     setLoading]     = useState(false);
@@ -91,34 +108,12 @@ export default function SecondOpinionModal() {
     setErrors((e) => { const n = { ...e }; delete n[key]; return n; });
   }
 
-  function toggleDay(dayId) {
-    setSelectedDays((prev) => {
+  function toggleGoal(value) {
+    setSelectedGoals((prev) => {
       const next = new Set(prev);
-      if (next.has(dayId)) {
-        next.delete(dayId);
-        setSelectedTimes((t) => { const n = { ...t }; delete n[dayId]; return n; });
-      } else {
-        next.add(dayId);
-      }
+      next.has(value) ? next.delete(value) : next.add(value);
       return next;
     });
-  }
-
-  function toggleTime(dayId, time) {
-    setSelectedTimes((prev) => {
-      const s = new Set(prev[dayId] || []);
-      s.has(time) ? s.delete(time) : s.add(time);
-      return { ...prev, [dayId]: s };
-    });
-  }
-
-  function toggleReason(reason) {
-    setSelectedReasons((prev) => {
-      const next = new Set(prev);
-      next.has(reason) ? next.delete(reason) : next.add(reason);
-      return next;
-    });
-    clearErr("otherText");
   }
 
   function validate() {
@@ -126,10 +121,6 @@ export default function SecondOpinionModal() {
     if (!name.trim()) errs.name = "Name is required.";
     if (!email.trim() || !simpleEmailOk(email.trim())) errs.email = "A valid email is required.";
     if (!phone.trim() || !simplePhoneOk(phone.trim())) errs.phone = "A valid phone number is required.";
-    if (!preferredContact) errs.preferredContact = "Please select a preferred contact method.";
-    if (selectedReasons.has("Other") && !otherText.trim()) {
-      errs.otherText = "Please describe what else you'd like a second opinion on.";
-    }
     return errs;
   }
 
@@ -143,9 +134,10 @@ export default function SecondOpinionModal() {
     setLoading(true);
     setServerError(null);
 
-    const availability = DAYS
-      .filter((d) => selectedDays.has(d.id))
-      .map((d) => ({ day: d.label, times: Array.from(selectedTimes[d.id] || []) }));
+    // Keep typed "something else" text even if its checkbox wasn't ticked.
+    const reasons = Array.from(selectedGoals);
+    if (otherText.trim() && !reasons.includes("Other")) reasons.push("Other");
+    const availability = meetTime ? [{ day: meetTime, times: [] }] : [];
 
     try {
       const res = await fetch("/api/second-opinion", {
@@ -155,8 +147,11 @@ export default function SecondOpinionModal() {
           name: name.trim(), email: email.trim(), phone: phone.trim(),
           preferredContact,
           availability,
-          reasons: Array.from(selectedReasons),
+          reasons,
           otherText: otherText.trim(),
+          forWhom,
+          startTiming,
+          additionalInfo: additionalInfo.trim(),
           turnstileToken,
         }),
       });
@@ -200,122 +195,124 @@ export default function SecondOpinionModal() {
           </svg>
         </button>
 
+        <p className={styles.wordmark}>Variant Training Lab</p>
+
         <header className={styles.modalHeader}>
-          <p className={styles.tag}>Second Opinion Assessment</p>
+          <p className={styles.eyebrow}>Santa Barbara · Meet with an expert trainer</p>
           <h2 id="so-modal-heading" className={styles.heading}>
-            Get Your Data-Driven Answers
+            Match with a trainer
           </h2>
-          <p className={styles.subheading}>
-            No obligation. Expect a follow-up within 24–48 hours with confirmation and pricing.
+          <p className={styles.intro}>
+            Tell us a bit about your goals, and we&apos;ll match you with the right trainer.
           </p>
         </header>
 
         <form className={styles.form} onSubmit={handleSubmit} noValidate>
 
-          <div className={styles.field}>
-            <label className={styles.label} htmlFor="som-name">Full Name</label>
-            <input id="som-name" type="text" autoComplete="name"
-              className={`${styles.input} ${errors.name ? styles.inputError : ""}`}
-              value={name}
-              onChange={(e) => { setName(e.target.value); clearErr("name"); }} />
-            {errors.name && <p className={styles.fieldError}>{errors.name}</p>}
-          </div>
+          <section className={styles.section} aria-labelledby="som-about">
+            <h3 id="som-about" className={styles.sectionLabel}>About you</h3>
 
-          <div className={styles.field}>
-            <label className={styles.label} htmlFor="som-email">Email</label>
-            <input id="som-email" type="email" autoComplete="email"
-              className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
-              value={email}
-              onChange={(e) => { setEmail(e.target.value); clearErr("email"); }} />
-            {errors.email && <p className={styles.fieldError}>{errors.email}</p>}
-          </div>
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="som-name">
+                Full name <span className={styles.required} aria-hidden>*</span>
+              </label>
+              <input id="som-name" type="text" autoComplete="name" aria-required="true"
+                className={`${styles.input} ${errors.name ? styles.inputError : ""}`}
+                value={name}
+                onChange={(e) => { setName(e.target.value); clearErr("name"); }} />
+              {errors.name && <p className={styles.fieldError}>{errors.name}</p>}
+            </div>
 
-          <div className={styles.field}>
-            <label className={styles.label} htmlFor="som-phone">Phone</label>
-            <input id="som-phone" type="tel" autoComplete="tel"
-              className={`${styles.input} ${errors.phone ? styles.inputError : ""}`}
-              value={phone}
-              onChange={(e) => { setPhone(e.target.value); clearErr("phone"); }} />
-            {errors.phone && <p className={styles.fieldError}>{errors.phone}</p>}
-          </div>
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="som-email">
+                Email <span className={styles.required} aria-hidden>*</span>
+              </label>
+              <input id="som-email" type="email" autoComplete="email" aria-required="true"
+                className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); clearErr("email"); }} />
+              {errors.email && <p className={styles.fieldError}>{errors.email}</p>}
+            </div>
 
-          <div className={styles.field}>
-            <span className={styles.label}>Preferred Method of Contact</span>
-            <div className={styles.pillGroup} role="group" aria-label="Preferred method of contact">
-              {["Call", "Text", "Email"].map((option) => (
-                <button
-                  key={option}
-                  type="button"
-                  className={`${styles.pill} ${preferredContact === option ? styles.pillActive : ""}`}
-                  aria-pressed={preferredContact === option}
-                  onClick={() => { setPreferredContact(option); clearErr("preferredContact"); }}
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="som-phone">
+                Phone <span className={styles.required} aria-hidden>*</span>
+              </label>
+              <input id="som-phone" type="tel" autoComplete="tel" aria-required="true"
+                className={`${styles.input} ${errors.phone ? styles.inputError : ""}`}
+                value={phone}
+                onChange={(e) => { setPhone(e.target.value); clearErr("phone"); }} />
+              {errors.phone && <p className={styles.fieldError}>{errors.phone}</p>}
+            </div>
+
+            <fieldset className={styles.fieldset}>
+              <legend className={styles.label}>Best way to reach you</legend>
+              <ChoiceGroup name="som-contact" options={CONTACT_METHODS} columns="cols2"
+                value={preferredContact} onChange={setPreferredContact} />
+            </fieldset>
+          </section>
+
+          <fieldset className={`${styles.section} ${styles.fieldset}`}>
+            <legend className={styles.sectionLabel}>
+              What are you hoping to work on?
+              <span className={styles.hint}>Select all that apply.</span>
+            </legend>
+            <div className={styles.choices}>
+              {GOALS.map((goal) => (
+                <label
+                  key={goal.value}
+                  className={`${styles.choice} ${selectedGoals.has(goal.value) ? styles.choiceSelected : ""}`}
                 >
-                  {option}
-                </button>
-              ))}
-            </div>
-            {errors.preferredContact && <p className={styles.fieldError}>{errors.preferredContact}</p>}
-          </div>
-
-          <fieldset className={styles.fieldset}>
-            <legend className={styles.legend}>Preferred Availability</legend>
-            <p className={styles.fieldHint}>Select the days and times that work best for you this week.</p>
-            <div className={styles.daysGrid}>
-              {DAYS.map((day) => (
-                <div key={day.id} className={styles.dayBlock}>
-                  <label className={styles.checkLabel}>
-                    <input type="checkbox" className={styles.checkbox}
-                      checked={selectedDays.has(day.id)}
-                      onChange={() => toggleDay(day.id)} />
-                    <span className={styles.checkText}>{day.label}</span>
-                  </label>
-                  {selectedDays.has(day.id) && (
-                    <div className={styles.timesWrap}>
-                      {day.times.map((time) => (
-                        <label key={time} className={`${styles.checkLabel} ${styles.timeLabel}`}>
-                          <input type="checkbox" className={styles.checkbox}
-                            checked={(selectedTimes[day.id] || new Set()).has(time)}
-                            onChange={() => toggleTime(day.id, time)} />
-                          <span className={styles.checkText}>{time}</span>
-                        </label>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </fieldset>
-
-          <fieldset className={styles.fieldset}>
-            <legend className={styles.legend}>What are you hoping to get a second opinion on?</legend>
-            <p className={styles.fieldHint}>Select all that apply.</p>
-            <div className={styles.reasonsGrid}>
-              {REASONS.map((reason) => (
-                <label key={reason} className={styles.checkLabel}>
                   <input type="checkbox" className={styles.checkbox}
-                    checked={selectedReasons.has(reason)}
-                    onChange={() => toggleReason(reason)} />
-                  <span className={styles.checkText}>{reason}</span>
+                    checked={selectedGoals.has(goal.value)}
+                    onChange={() => toggleGoal(goal.value)} />
+                  <span className={styles.choiceText}>{goal.label}</span>
                 </label>
               ))}
             </div>
-            {selectedReasons.has("Other") && (
-              <div className={styles.otherWrap}>
-                <label className={styles.label} htmlFor="som-other">Please describe</label>
-                <input id="som-other" type="text"
-                  className={`${styles.input} ${errors.otherText ? styles.inputError : ""}`}
-                  placeholder="Tell us what you'd like a second opinion on"
-                  value={otherText}
-                  onChange={(e) => { setOtherText(e.target.value); clearErr("otherText"); }} />
-                {errors.otherText && <p className={styles.fieldError}>{errors.otherText}</p>}
-              </div>
-            )}
+            <input type="text" aria-label="If something else, tell us in a few words (optional)"
+              className={styles.input}
+              placeholder="If something else, tell us in a few words (optional)"
+              maxLength={500}
+              value={otherText}
+              onChange={(e) => setOtherText(e.target.value)} />
           </fieldset>
+
+          <fieldset className={`${styles.section} ${styles.fieldset}`}>
+            <legend className={styles.sectionLabel}>Who is this for?</legend>
+            <ChoiceGroup name="som-for-whom" options={FOR_WHOM} columns="cols2"
+              value={forWhom} onChange={setForWhom} />
+          </fieldset>
+
+          <fieldset className={`${styles.section} ${styles.fieldset}`}>
+            <legend className={styles.sectionLabel}>When would you like to start?</legend>
+            <ChoiceGroup name="som-start" options={START_TIMING} columns="cols2"
+              value={startTiming} onChange={setStartTiming} />
+          </fieldset>
+
+          <fieldset className={`${styles.section} ${styles.fieldset}`}>
+            <legend className={styles.sectionLabel}>Best time to meet</legend>
+            <ChoiceGroup name="som-meet-time" options={MEET_TIMES} columns="cols3"
+              value={meetTime} onChange={setMeetTime} />
+          </fieldset>
+
+          <section className={styles.section}>
+            <label className={styles.sectionLabel} htmlFor="som-additional">
+              Anything else we should know?{" "}
+              <span className={styles.optional}>(optional)</span>
+            </label>
+            <textarea id="som-additional" rows={4}
+              className={`${styles.input} ${styles.textarea}`}
+              placeholder="For example: an injury, a sport, or what you've tried before."
+              maxLength={2000}
+              value={additionalInfo}
+              onChange={(e) => setAdditionalInfo(e.target.value)} />
+          </section>
 
           {dialogOpen ? <TurnstileWidget /> : null}
 
           <button type="submit" className={styles.submit} disabled={loading}>
-            {loading ? "Sending…" : "Get My Data-Driven Results"}
+            {loading ? "Sending…" : "Match me with a trainer"}
           </button>
 
           {serverError && <p className={styles.serverError}>{serverError}</p>}

@@ -1,9 +1,6 @@
 import Footer from "@/components/Footer";
-import SecondOpinionAssessment from "@/components/second-opinion/SecondOpinionAssessment";
 import SecondOpinionModal from "@/components/second-opinion/SecondOpinionModal";
-import SecondOpinionHero from "@/components/second-opinion/SecondOpinionHero";
-import SecondOpinionVsOnboarding from "@/components/second-opinion/SecondOpinionVsOnboarding";
-import TrainingJoinCta from "@/components/training/TrainingJoinCta";
+import TrainerSessionLanding from "@/components/second-opinion/TrainerSessionLanding";
 
 export const metadata = {
   title: { absolute: "Second Opinion Assessment: Strength & Movement Testing | Santa Barbara" },
@@ -14,10 +11,7 @@ export const metadata = {
 export default function SecondOpinionPage() {
   return (
     <main className="homeMarketingDark siteBelowNav">
-      <SecondOpinionHero />
-      <SecondOpinionAssessment />
-      <SecondOpinionVsOnboarding />
-      <TrainingJoinCta />
+      <TrainerSessionLanding />
       <SecondOpinionModal />
       <Footer />
     </main>

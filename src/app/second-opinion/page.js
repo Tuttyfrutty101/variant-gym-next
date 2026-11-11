@@ -3,9 +3,9 @@ import SecondOpinionModal from "@/components/second-opinion/SecondOpinionModal";
 import TrainerSessionLanding from "@/components/second-opinion/TrainerSessionLanding";
 
 export const metadata = {
-  title: { absolute: "Second Opinion Assessment: Strength & Movement Testing | Santa Barbara" },
+  title: { absolute: "Meet with a Trainer in Santa Barbara | Variant Training Lab" },
   description:
-    "Most people don't need another workout. They need answers. Our Second Opinion Assessment pairs a physical therapy consultation with functional movement and strength testing to uncover what's holding you back. Santa Barbara.",
+    "Meet with an expert trainer for 60 minutes in Santa Barbara. Find out if we're the right fit, and leave with a plan.",
 };
 
 export default function SecondOpinionPage() {

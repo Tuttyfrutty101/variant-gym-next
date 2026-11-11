@@ -170,7 +170,7 @@ export default function TrainerSessionLanding() {
           style={{ backgroundImage: `url(${HERO_IMG})` }}
           aria-hidden
         />
-        <div className={styles.heroOverlay} aria-hidden />
+        <div className={styles.heroShade} aria-hidden />
         <div className={styles.heroInner}>
           <p className={styles.eyebrow}>Santa Barbara</p>
           <h1 className={styles.headline}>

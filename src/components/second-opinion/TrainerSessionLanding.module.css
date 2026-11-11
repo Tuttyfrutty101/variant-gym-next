@@ -18,7 +18,9 @@
   transform: scale(1.04);
 }
 
-.heroOverlay {
+/* Named "heroShade" rather than "heroOverlay" so the global dark-page
+   override for [class*="heroOverlay"] doesn't replace the desktop gradient. */
+.heroShade {
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -474,5 +476,45 @@
 
   .bandCta:hover {
     transform: none;
+  }
+}
+
+/* Desktop hero: text on the left, so the trainer and client on the right
+   stay visible. Kept last so it overrides the base hero rules above. */
+@media (min-width: 900px) {
+  .hero {
+    justify-content: flex-start;
+    padding-left: clamp(4rem, 10vw, 7rem);
+  }
+
+  .heroShade {
+    background: linear-gradient(
+      to right,
+      rgba(var(--carbon-rgb), 0.92) 0%,
+      rgba(var(--carbon-rgb), 0.78) 45%,
+      rgba(0, 0, 0, 0.45) 100%
+    );
+  }
+
+  .heroInner {
+    max-width: 40rem;
+    text-align: left;
+  }
+
+  .headlineLine {
+    white-space: nowrap;
+  }
+
+  .lede {
+    margin-left: 0;
+  }
+}
+
+/* Smaller laptops: enlarge the photo and anchor it left so the people
+   sit to the right of the text instead of behind it. */
+@media (min-width: 900px) and (max-width: 1279px) {
+  .heroBg {
+    background-size: 120% auto;
+    background-position: left center;
   }
 }

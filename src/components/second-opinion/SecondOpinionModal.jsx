@@ -203,7 +203,8 @@ export default function SecondOpinionModal() {
             Match with a trainer
           </h2>
           <p className={styles.intro}>
-            Tell us a bit about your goals, and we&apos;ll match you with the right trainer.
+            Complete the form with your goals, and someone from our team will get
+            in touch to book your first session and to match you with a trainer.
           </p>
         </header>
 
